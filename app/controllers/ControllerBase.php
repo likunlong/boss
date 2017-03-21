@@ -79,6 +79,20 @@ class ControllerBase extends Controller
 
     public function afterExecuteRoute(Dispatcher $dispatcher)
     {
+        if (!isset($_SERVER['HTTP_X_PJAX'])) {
+            $this->view->common = [
+                'user_id'   => $this->session->get('user_id'),
+                'name'      => $this->session->get('name'),
+                'username'  => $this->session->get('username'),
+                'avatar'    => $this->session->get('avatar'),
+                'menu_true' => $this->session->get('resources')['menu_tree'],
+            ];
+        } else {
+            // 视图渲染控制
+            // https://docs.phalconphp.com/zh/latest/api/Phalcon_Mvc_View.html
+            // $this->view->setLayoutsDir();
+            $this->view->setMainView('');
+        }
     }
 
 }
