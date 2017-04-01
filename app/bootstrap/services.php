@@ -122,6 +122,19 @@ $di->set('dbData', function () use ($di) {
 }, true);
 
 
+$di->set('dbTrade', function () use ($di) {
+    $connection = new DbAdapter(array(
+        'host'     => $di['config']->db_trade->host,
+        'username' => $di['config']->db_trade->username,
+        'password' => $di['config']->db_trade->password,
+        'dbname'   => $di['config']->db_trade->dbname,
+        'charset'  => $di['config']->db_trade->charset
+    ));
+    $connection->setEventsManager($di['eventsManager']);
+    return $connection;
+}, true);
+
+
 $di->set('dbBackend', function () use ($di) {
     $connection = new DbAdapter(array(
         'host'     => $di['config']->db_backend->host,
