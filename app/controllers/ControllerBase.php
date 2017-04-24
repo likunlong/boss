@@ -3,16 +3,15 @@
 
 namespace MyApp\Controllers;
 
+
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger;
 
-
 class ControllerBase extends Controller
 {
 
-    public $_app;
     public $_user_id;
 
 
@@ -39,11 +38,6 @@ class ControllerBase extends Controller
 
     public function initialize()
     {
-
-        // set appId
-        $this->_app = $this->dispatcher->getParam("app");
-
-
         // set userId
         $this->_user_id = $this->session->get('user_id');
 
@@ -57,7 +51,8 @@ class ControllerBase extends Controller
             if (isset($_REQUEST['_url'])) {
                 $_url = $_REQUEST['_url'];
                 unset($_REQUEST['_url']);
-            } else {
+            }
+            else {
                 $_url = '/';
             }
             $log = empty($_REQUEST) ? $_url : ($_url . '?' . urldecode(http_build_query($_REQUEST)));
@@ -87,7 +82,8 @@ class ControllerBase extends Controller
                 'avatar'    => $this->session->get('avatar'),
                 'menu_true' => $this->session->get('resources')['menu_tree'],
             ];
-        } else {
+        }
+        else {
             // 视图渲染控制
             // https://docs.phalconphp.com/zh/latest/api/Phalcon_Mvc_View.html
             // $this->view->setLayoutsDir();
