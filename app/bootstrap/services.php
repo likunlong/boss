@@ -112,6 +112,7 @@ $di->set('dispatcher', function () use ($di) {
 $di->set('dbData', function () use ($di) {
     $connection = new DbAdapter(array(
         'host'     => $di['config']->db_data->host,
+        'port'     => $di['config']->db_data->port,
         'username' => $di['config']->db_data->username,
         'password' => $di['config']->db_data->password,
         'dbname'   => $di['config']->db_data->dbname,
@@ -138,6 +139,7 @@ $di->set('dbTrade', function () use ($di) {
 $di->set('dbBackend', function () use ($di) {
     $connection = new DbAdapter(array(
         'host'     => $di['config']->db_backend->host,
+        'port'     => $di['config']->db_data->port,
         'username' => $di['config']->db_backend->username,
         'password' => $di['config']->db_backend->password,
         'dbname'   => $di['config']->db_backend->dbname,
@@ -151,6 +153,7 @@ $di->set('dbBackend', function () use ($di) {
 $di->set('dbLog', function () use ($di) {
     $connection = new DbAdapter(array(
         'host'     => $di['config']->db_log->host,
+        'port'     => $di['config']->db_data->port,
         'username' => $di['config']->db_log->username,
         'password' => $di['config']->db_log->password,
         'dbname'   => $di['config']->db_log->dbname,

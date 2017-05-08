@@ -11,29 +11,29 @@ setting:
 db_data:
     adapter     : Mysql
     host        : localhost
+    port        : 3306
     username    : root
     password    : 123456
     dbname      : test
     charset     : utf8mb4
-    port        : 3306
 
 db_backend:
     adapter     : Mysql
     host        : localhost
+    port        : 3306
     username    : root
     password    : 123456
     dbname      : test
     charset     : utf8mb4
-    port        : 3306
 
 db_log:
     adapter     : Mysql
     host        : localhost
+    port        : 3306
     username    : root
     password    : 123456
     dbname      : test
     charset     : utf8mb4
-    port        : 3306
 
 redis:
     host        : 127.0.0.1
