@@ -27,6 +27,12 @@ $di->set('config', function () use ($config) {
 }, true);
 
 
+$di->set('logger', function () use ($config) {
+    $logger = new FileLogger(APP_DIR . '/logs/' . date('Ymd'));
+    return $logger;
+}, true);
+
+
 $di->set('router', function () {
     return require __DIR__ . '/routes.php';
 }, true);

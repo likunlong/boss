@@ -45,7 +45,8 @@ class ControllerBase extends Controller
             if (isset($_REQUEST['_url'])) {
                 $_url = $_REQUEST['_url'];
                 unset($_REQUEST['_url']);
-            } else {
+            }
+            else {
                 $_url = '/';
             }
             $log = empty($_REQUEST) ? $_url : ($_url . '?' . urldecode(http_build_query($_REQUEST)));
