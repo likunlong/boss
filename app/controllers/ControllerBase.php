@@ -14,6 +14,8 @@ class ControllerBase extends Controller
 
     public $_user_id;
 
+    public $_app;
+
 
     /**
      * @link http://php.net/manual/en/book.gettext.php
@@ -42,6 +44,10 @@ class ControllerBase extends Controller
         $this->_user_id = $this->session->get('user_id');
 
 
+        // set appId
+        $this->_app = $this->session->get('app');
+
+
         // set timezone
         ini_set("date.timezone", $this->config->setting->timezone);
 
@@ -67,6 +73,13 @@ class ControllerBase extends Controller
                 header('Location:/login');
                 exit;
             }
+        }
+
+
+        // check app
+        if (!$this->_app) {
+            header('Location: /utils/switch_app');
+            exit;
         }
 
     }
