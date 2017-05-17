@@ -35,82 +35,102 @@ class SettingController extends ControllerBase
      */
     public function gatewaysAction()
     {
-        $this->view->gateways = $this->gatewaysModel->getList();
+
+        $do = $this->request->get('do', 'string');
+
+        switch ($do) {
+
+            case 'create':
+                if ($_POST) {
+                    $this->creategateways();
+                }
+
+                $this->view->pick("setting/creategateways");
+                $this->view->parent = $this->gatewaysModel->getParent();
+                break;
+
+            case 'edit':
+                $id = $this->request->get('id');
+                if (!$id) {
+                    Utils::tips('error', '数据不完整', '/setting/gateways');
+                }
+
+                $gateways = $this->gatewaysModel->findFirst($id);
+                if (!$gateways) {
+                    Utils::tips('error', '没有此数据', '/setting/gateways');
+                }
+
+                if ($_POST) {
+                    $this->editgateways($gateways);
+                }
+
+                $this->view->parent = $this->gatewaysModel->getParent();
+                $this->view->gateways = $gateways->toArray();
+                $this->view->pick("setting/editgateways");
+                break;
+
+            case 'remove':
+                $this->removegateways();
+            default:
+                $this->view->gateways = $this->gatewaysModel->getList();
+                $this->view->pick("setting/gateways");
+        }
     }
 
     /**
      * 创建网关
      */
-    public function creategatewaysAction()
+    private function creategateways()
     {
-        if ($_POST) {
-            $this->gatewaysModel->app_id = $this->session->get('app');
-            $this->gatewaysModel->gateway = $this->request->get('gateway', 'string');
-            $this->gatewaysModel->name = $this->request->get('name', 'string');
-            $this->gatewaysModel->sub = $this->request->get('sub', 'string');
-            $this->gatewaysModel->type = $this->request->get('type', 'string');
-            $this->gatewaysModel->remark = $this->request->get('remark', 'string');
-            $this->gatewaysModel->currency = $this->request->get('currency', 'string');
-            $this->gatewaysModel->parent = $this->request->get('parent', 'int');
-            $this->gatewaysModel->sort = $this->request->get('sort', 'int');
-            $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
-            $this->gatewaysModel->tips = $this->request->get('tips', 'string');
+        $this->gatewaysModel->app_id = $this->session->get('app');
+        $this->gatewaysModel->gateway = $this->request->get('gateway', 'string');
+        $this->gatewaysModel->name = $this->request->get('name', 'string');
+        $this->gatewaysModel->sub = $this->request->get('sub', 'string');
+        $this->gatewaysModel->type = $this->request->get('type', 'string');
+        $this->gatewaysModel->remark = $this->request->get('remark', 'string');
+        $this->gatewaysModel->currency = $this->request->get('currency', 'string');
+        $this->gatewaysModel->parent = $this->request->get('parent', 'int');
+        $this->gatewaysModel->sort = $this->request->get('sort', 'int');
+        $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
+        $this->gatewaysModel->tips = $this->request->get('tips', 'string');
 
-            if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway || !$this->gatewaysModel->sub) {
-                Utils::tips('error', '数据不完整', '/setting/creategateways');
-            }
-
-            $this->gatewaysModel->save();
-            Utils::tips('success', '添加成功', '/setting/gateways');
+        if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway || !$this->gatewaysModel->sub) {
+            Utils::tips('error', '数据不完整', '/setting/creategateways');
         }
 
-        $this->view->parent = $this->gatewaysModel->getParent();
+        $this->gatewaysModel->save();
+        Utils::tips('success', '添加成功', '/setting/gateways');
     }
 
     /**
      * 修改网关
      */
-    public function editgatewaysAction()
+    private function editgateways($gateways)
     {
-        $id = $this->request->get('id');
-        if (!$id) {
-            Utils::tips('error', '数据不完整', '/setting/gateways');
+        $gateways->app_id = $this->session->get('app');
+        $gateways->gateway = $this->request->get('gateway', 'string');
+        $gateways->name = $this->request->get('name', 'string');
+        $gateways->sub = $this->request->get('sub', 'string');
+        $gateways->type = $this->request->get('type', 'string');
+        $gateways->remark = $this->request->get('remark', 'string');
+        $gateways->currency = $this->request->get('currency', 'string');
+        $gateways->parent = $this->request->get('parent', 'int');
+        $gateways->sort = $this->request->get('sort', 'int');
+        $gateways->sandbox = $this->request->get('sandbox', 'int');
+        $gateways->tips = $this->request->get('tips', 'string');
+
+        if (!$gateways->name || !$gateways->app_id || !$gateways->gateway || !$gateways->sub) {
+            Utils::tips('error', '数据不完整', '/setting/editgateways?id=' . $gateways['id']);
         }
 
-        $gateways = $this->gatewaysModel->findFirst($id);
-        if (!$gateways) {
-            Utils::tips('error', '没有此数据', '/setting/gateways');
-        }
-
-        if ($_POST) {
-            $gateways->app_id = $this->session->get('app');
-            $gateways->gateway = $this->request->get('gateway', 'string');
-            $gateways->name = $this->request->get('name', 'string');
-            $gateways->sub = $this->request->get('sub', 'string');
-            $gateways->type = $this->request->get('type', 'string');
-            $gateways->remark = $this->request->get('remark', 'string');
-            $gateways->currency = $this->request->get('currency', 'string');
-            $gateways->parent = $this->request->get('parent', 'int');
-            $gateways->sort = $this->request->get('sort', 'int');
-            $gateways->sandbox = $this->request->get('sandbox', 'int');
-            $gateways->tips = $this->request->get('tips', 'string');
-
-            if (!$gateways->name || !$gateways->app_id || !$gateways->gateway || !$gateways->sub) {
-                Utils::tips('error', '数据不完整', '/setting/editgateways?id=' . $gateways['id']);
-            }
-
-            $gateways->save();
-            Utils::tips('success', '修改成功', '/setting/gateways');
-        }
-
-        $this->view->parent = $this->gatewaysModel->getParent();
-        $this->view->gateways = $gateways->toArray();
+        $gateways->save();
+        Utils::tips('success', '修改成功', '/setting/gateways');
     }
 
     /**
      * 修改网关
      */
-    public function removegatewaysAction()
+    private function removegateways()
     {
         $id = $this->request->get('id');
         if (!$id) {

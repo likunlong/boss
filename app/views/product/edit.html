@@ -43,10 +43,10 @@
                                 <label for="lastname" class="col-sm-2 control-label">网关</label>
                                 <div class="col-sm-4">
                                     <select name="gateway" class="form-control">
-                                        <option value="alipay" {%if pro['gateway']=='alipay'%}selected{%endif%}>支付宝</option>
-                                        <option value="mol" {%if pro['gateway']=='mol'%}selected{%endif%}>摩尔</option>
-                                        <option value="paypal" {%if pro['gateway']=='paypal'%}selected{%endif%}>PayPal</option>
-                                        <option value="wechar" {%if pro['gateway']=='wechar'%}selected{%endif%}>微信</option>
+                                        <option value="0" {% if pro['gateway'] == 0 %}selected{% endif %}>无</option>
+                                        {% for item in parent %}
+                                        <option value="{{item['gateway']}}" {% if pro['gateway'] == item['gateway'] %}selected{% endif %}>{{item['name']}}[{{item['gateway']}}]</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>

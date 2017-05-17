@@ -42,10 +42,10 @@
                                 <label for="lastname" class="col-sm-2 control-label">网关</label>
                                 <div class="col-sm-4">
                                     <select name="gateway" class="form-control">
-                                        <option value="alipay">支付宝</option>
-                                        <option value="mol">摩尔</option>
-                                        <option value="paypal">PayPal</option>
-                                        <option value="wechar">微信</option>
+                                        <option value="0">无</option>
+                                        {% for item in parent %}
+                                        <option value="{{item['gateway']}}">{{item['name']}}[{{item['gateway']}}]</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>

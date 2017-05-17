@@ -13,7 +13,7 @@
                         <i class="fa fa-cube"></i> 支付信息
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal " method="post" action="/setting/editgateways"  role="form">
+                        <form class="form-horizontal " method="post" action="/setting/gateways?do=edit"  role="form">
                             <input type="hidden" name="id" value="{{gateways['id']}}">
                             <div class="form-group">
                                 <label for="firstname" class="col-sm-2 control-label">名称</label>
@@ -98,7 +98,7 @@
                                 <div class="col-sm-8 col-sm-offset-2">
                                     <button type="submit" class="btn btn-info">确认修改</button>
                                     <a class="btn btn-default" onclick="javascript:history.back(-1)">取消修改</a>
-                                    <a href="/setting/removegateways?id={{gateways['id']}}" class="btn btn-danger pull-right" onclick="return confirm('确认删除?')">
+                                    <a href="/setting/gateways?do=remove&id={{gateways['id']}}" class="btn btn-danger pull-right" onclick="return confirm('确认删除?')">
                                         <i class="fa fa-trash-o text"></i><span class="text">删除</span>
                                     </a>
                                 </div>

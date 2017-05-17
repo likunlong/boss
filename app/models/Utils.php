@@ -86,7 +86,8 @@ class Utils extends Model
                     $result[$value['parent']]['sub'][$id] = $value;
                 }
                 unset($result[$id]);
-            } else {
+            }
+            else {
                 $left_item_id[] = $id;
                 $left[] = $value;
             }
@@ -119,4 +120,58 @@ class Utils extends Model
         return $location;
     }
 
+
+    /*
+     * 时区转换
+     */
+
+    public function toTimeZone($src, $to_tz = '', $from_tz = 'Asia/Shanghai', $fm = 'Y-m-d H:i:s')
+    {
+        if ($to_tz) {
+            $datetime = new \DateTime($src, new \DateTimeZone($from_tz));
+            $datetime->setTimezone(new \DateTimeZone($to_tz));
+            return $datetime->format($fm);
+        }
+        else {
+            return $src;
+        }
+    }
+
+    /**
+     * 获取时区
+     */
+
+    public function getTimeZone()
+    {
+        if (empty(DI::getDefault()->get('session')->get('timezone'))) {
+            $sql = "SELECT id,app_id,user_id,timezone,create_time FROM setting_timezone WHERE 1=1 ";
+
+            $sql .= " AND user_id=:user_id";
+            $bind['user_id'] = DI::getDefault()->get('session')->get('user_id');
+
+            if (!empty(DI::getDefault()->get('session')->get('app'))) {
+                $sql .= " AND app_id=:app_id";
+                $bind['app_id'] = DI::getDefault()->get('session')->get('app');
+            }
+
+            $query = DI::getDefault()->get('dbData')->query($sql, $bind);
+            $query->setFetchMode(Db::FETCH_ASSOC);
+            $timezone = $query->fetch();
+            DI::getDefault()->set('timezone', $timezone['timezone']);
+        }
+        return DI::getDefault()->get('session')->get('timezone');
+    }
+
+
+    public function yarRequest($class, $fun, $data)
+    {
+        global $config;
+        $service = DI::getDefault()->get('session')->get('class_id');
+        $lang = DI::getDefault()->get('session')->get('lang');
+        $app_id = DI::getDefault()->get('session')->get('app');
+
+        $yar_url = "http://$app_id." . $config->api->rpc_host . "/$service/$lang/yar/$class";
+        $client = new \Yar_Client($yar_url);
+        return $client->$fun($data);
+    }
 }

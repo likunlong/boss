@@ -64,6 +64,8 @@ class ProductController extends ControllerBase
 
             Utils::tips('success', '添加成功', '/product/index');
         }
+
+        $this->view->parent = $this->gatewaysModel->getParent();
     }
 
     /**
@@ -104,6 +106,7 @@ class ProductController extends ControllerBase
             Utils::tips('success', '修改成功', '/product/index');
         }
 
+        $this->view->parent = $this->gatewaysModel->getParent();
         $this->view->pro = $product->toArray();
     }
 
