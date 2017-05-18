@@ -38,7 +38,7 @@
         $(".btn_add").click(function () {
             var gameid = $(this).attr('id');
             $.ajax({
-                url:'/utils/index',
+                url:'/utils/switch_app',
                 type:'POST', //GET
                 async:true,    //或false,是否异步
                 data:{
