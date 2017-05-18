@@ -62,7 +62,8 @@ class UtilsController extends Controller
                 exit;
             }
 
-            DI::getDefault()->get('session')->set('class_id', $version->class_id);
+            DI::getDefault()->get('session')->set('app', $version->game_id);
+            DI::getDefault()->get('session')->set('group', $version->class_id);
             DI::getDefault()->get('session')->set('lang', $version->version);
 
             echo json_encode(array('error' => 0, 'data' => array()));

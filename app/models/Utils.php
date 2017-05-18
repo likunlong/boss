@@ -166,7 +166,7 @@ class Utils extends Model
     public function yarRequest($class, $fun, $data)
     {
         global $config;
-        $service = DI::getDefault()->get('session')->get('class_id');
+        $service = DI::getDefault()->get('session')->get('group');
         $lang = DI::getDefault()->get('session')->get('lang');
         $app_id = DI::getDefault()->get('session')->get('app');
 
