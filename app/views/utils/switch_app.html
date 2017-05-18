@@ -11,7 +11,6 @@
                 </a>
             </div>
             {% endfor %}
-
         </div>
     </div>
 </div>
@@ -38,7 +37,6 @@
     $(document).ready(function() {
         $(".btn_add").click(function () {
             var gameid = $(this).attr('id');
-
             $.ajax({
                 url:'/utils/index',
                 type:'POST', //GET
@@ -64,10 +62,8 @@
             });
         });
 
-
         $(".modal-body").on("click",'.btn-success',function(){
             var versionid = $(this).attr('id');
-
             $.ajax({
                 url:'/utils/setgameversion',
                 type:'post', //GET

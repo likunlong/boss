@@ -13,21 +13,22 @@ use Phalcon\Mvc\Dispatcher;
 use MyApp\Models\Game;
 use Phalcon\DI;
 
-class UtilsController extends ControllerBase
+class UtilsController extends Controller
 {
     private $gameModel;
 
     public function initialize()
     {
+        $this->view->common = ['user_id' => '', 'name' => '', 'username' => '', 'avatar' => ''];
         $this->gameModel = new Game();
     }
 
-    public function indexAction()
+    public function switch_appAction()
     {
         if ($_POST) {
             $gameid = $this->request->get('gameid');
 
-            if(!$gameid){
+            if (!$gameid) {
                 echo json_encode(array('error' => 1, 'data' => '参数错误'));
                 exit;
             }
