@@ -30,12 +30,12 @@ class NoticeController extends ControllerBase
      */
     public function indexAction()
     {
-        $currentPage = $this->request->get('page', 'int') ? $this->request->get('page', 'int') : 1;
+        $currentPage = $this->request->get('page', ['int','trim']) ? $this->request->get('page', ['int','trim']) : 1;
         $pagesize = 10;
 
-        $data['title'] = $this->request->get('title', 'string');
-        $data['start_time'] = $this->request->get('start_time', 'string');
-        $data['end_time'] = $this->request->get('end_time', 'string');
+        $data['title'] = $this->request->get('title', ['string','trim']);
+        $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+        $data['end_time'] = $this->request->get('end_time', ['string','trim']);
         $data['page'] = $currentPage;
         $data['size'] = $pagesize;
 
@@ -52,13 +52,13 @@ class NoticeController extends ControllerBase
     public function createAction()
     {
         if ($_POST) {
-            $data['title'] = $this->request->get('title', 'string');
-            $data['start_time'] = $this->request->get('start_time', 'string');
-            $data['end_time'] = $this->request->get('end_time', 'string');
-            $data['img'] = $this->request->get('img', 'string');
-            $data['status'] = $this->request->get('status', 'string');
-            $data['sort'] = $this->request->get('sort', 'string',0);
-            $data['content'] = $this->request->get('formcontent', 'string');
+            $data['title'] = $this->request->get('title', ['string','trim']);
+            $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+            $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['img'] = $this->request->get('img', ['string','trim']);
+            $data['status'] = $this->request->get('status', ['int','trim']);
+            $data['sort'] = $this->request->get('sort', ['int','trim']);
+            $data['content'] = $this->request->get('formcontent', ['string','trim']);
 
 
             if (!$data['title'] || !$data['start_time'] || !$data['end_time'] || !$data['content']) {
@@ -80,7 +80,7 @@ class NoticeController extends ControllerBase
      */
     public function editAction()
     {
-        $data['id'] = $this->request->get('id');
+        $data['id'] = $this->request->get('id', ['int','trim']);
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/notice/index');
         }
@@ -91,14 +91,14 @@ class NoticeController extends ControllerBase
         }
 
         if ($_POST) {
-            $data['id'] = $this->request->get('id', 'string');
-            $data['title'] = $this->request->get('title', 'string');
-            $data['start_time'] = $this->request->get('start_time', 'string');
-            $data['end_time'] = $this->request->get('end_time', 'string');
-            $data['img'] = $this->request->get('img', 'string');
-            $data['status'] = $this->request->get('status', 'string');
-            $data['sort'] = $this->request->get('sort', 'string');
-            $data['content'] = $this->request->get('formcontent', 'string');
+            $data['id'] = $this->request->get('id', ['int','trim']);
+            $data['title'] = $this->request->get('title', ['string','trim']);
+            $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+            $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['img'] = $this->request->get('img', ['string','trim']);
+            $data['status'] = $this->request->get('status', ['int','trim']);
+            $data['sort'] = $this->request->get('sort', ['int','trim']);
+            $data['content'] = $this->request->get('formcontent', ['string','trim']);
 
             if (!$data['title'] || !$data['start_time'] || !$data['end_time'] || !$data['content']) {
                 Utils::tips('error', '数据不完整', '/notice/index');
@@ -120,7 +120,7 @@ class NoticeController extends ControllerBase
      * 删除公告
      */
     public function removeAction(){
-        $data['id'] = $this->request->get('id');
+        $data['id'] = $this->request->get('id', ['int','trim']);
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/notice/index');
         }

@@ -30,13 +30,13 @@ class ActivityController extends ControllerBase
      */
     public function indexAction()
     {
-        $currentPage = $this->request->get('page', 'int') ? $this->request->get('page', 'int') : 1;
+        $currentPage = $this->request->get('page', ['int','trim']) ? $this->request->get('page', ['int','trim']) : 1;
         $pagesize = 10;
 
-        $data['search'] = $this->request->get('search', 'string');
-        $data['type'] = $this->request->get('type', 'string');
-        $data['start_time'] = $this->request->get('start_time', 'string');
-        $data['end_time'] = $this->request->get('end_time', 'string');
+        $data['search'] = $this->request->get('search', ['string','trim']);
+        $data['type'] = $this->request->get('type', ['string','trim']);
+        $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+        $data['end_time'] = $this->request->get('end_time', ['string','trim']);
         $data['page'] = $currentPage;
         $data['size'] = $pagesize;
 
@@ -53,20 +53,19 @@ class ActivityController extends ControllerBase
     public function createAction()
     {
         if ($_POST) {
-            $data['title'] = $this->request->get('title', 'string');
-            $data['type'] = $this->request->get('type', 'string');
-            $data['start_time'] = $this->request->get('start_time', 'string');
-            $data['end_time'] = $this->request->get('end_time', 'string');
-            $data['url'] = $this->request->get('url', 'string');
-            $data['img'] = $this->request->get('img', 'string');
-            $data['img_small'] = $this->request->get('img_small', 'string');
-            $data['custom'] = $this->request->get('custom', 'string');
-            $data['visible'] = $this->request->get('visible', 'string');
-            $data['status'] = $this->request->get('status', 'string');
-            $data['sort'] = $this->request->get('sort', 'string');
-            $data['content'] = $this->request->get('formcontent', 'string');
+            $data['title'] = $this->request->get('title', ['string','trim']);
+            $data['type'] = $this->request->get('type', ['string','trim']);
+            $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+            $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['url'] = $this->request->get('url', ['string','trim']);
+            $data['img'] = $this->request->get('img', ['string','trim']);
+            $data['img_small'] = $this->request->get('img_small', ['string','trim']);
+            $data['custom'] = $this->request->get('formcontent', ['string','trim']);
+            $data['visible'] = $this->request->get('visible', ['int','trim']);
+            $data['status'] = $this->request->get('status', ['int','trim']);
+            $data['sort'] = $this->request->get('sort', ['int','trim']);
 
-            if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible'] || !$data['content']) {
+            if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible']) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
 
@@ -85,7 +84,7 @@ class ActivityController extends ControllerBase
      */
     public function editAction()
     {
-        $data['id'] = $this->request->get('id');
+        $data['id'] = $this->request->get('id',['int','trim']);
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/activity/index');
         }
@@ -96,21 +95,20 @@ class ActivityController extends ControllerBase
         }
 
         if ($_POST) {
-            $data['id'] = $this->request->get('id', 'string');
-            $data['title'] = $this->request->get('title', 'string');
-            $data['type'] = $this->request->get('type', 'string');
-            $data['start_time'] = $this->request->get('start_time', 'string');
-            $data['end_time'] = $this->request->get('end_time', 'string');
-            $data['url'] = $this->request->get('url', 'string');
-            $data['img'] = $this->request->get('img', 'string');
-            $data['img_small'] = $this->request->get('img_small', 'string');
-            $data['custom'] = $this->request->get('custom', 'string');
-            $data['visible'] = $this->request->get('visible', 'string');
-            $data['status'] = $this->request->get('status', 'string');
-            $data['sort'] = $this->request->get('sort', 'string');
-            $data['content'] = $this->request->get('formcontent', 'string');
+            $data['id'] = $this->request->get('id', ['int','trim']);
+            $data['title'] = $this->request->get('title', ['string','trim']);
+            $data['type'] = $this->request->get('type', ['string','trim']);
+            $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+            $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['url'] = $this->request->get('url', ['string','trim']);
+            $data['img'] = $this->request->get('img', ['string','trim']);
+            $data['img_small'] = $this->request->get('img_small', ['string','trim']);
+            $data['custom'] = $this->request->get('formcontent', ['string','trim']);
+            $data['visible'] = $this->request->get('visible', ['int','trim']);
+            $data['status'] = $this->request->get('status', ['int','trim']);
+            $data['sort'] = $this->request->get('sort', ['int','trim']);
 
-            if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible'] || !$data['content']) {
+            if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible']) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
 
@@ -130,7 +128,7 @@ class ActivityController extends ControllerBase
      * 删除活动
      */
     public function removeAction(){
-        $data['id'] = $this->request->get('id');
+        $data['id'] = $this->request->get('id', ['string','trim']);
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/activity/index');
         }
@@ -153,7 +151,7 @@ class ActivityController extends ControllerBase
      * 查看活动配置
      */
     public function viewAction(){
-        $data['item_id'] = $this->request->get('id');
+        $data['item_id'] = $this->request->get('id', ['string','trim']);
         if (!$data['item_id']) {
             Utils::tips('error', '数据不完整', '/activity/index');
         }
@@ -173,25 +171,25 @@ class ActivityController extends ControllerBase
             Utils::tips('error', '数据不完整', '/activity/index');
         }
 
-        $dataNew['item_id'] = $data['item_id'] = $this->request->get('id');
+        $dataNew['item_id'] = $data['item_id'] = $this->request->get('id',['string','trim']);
 
         if (!$data['item_id']) {
             Utils::tips('error', '数据不完整', '/activity/index');
         }
 
-        $cfgid = $this->request->get('cfgid');
-        $step = $this->request->get('step');
-        $prop = $this->request->get('prop');
-        $sort = $this->request->get('sort');
-        $title = $this->request->get('title');
-        $content = $this->request->get('content');
-        $remark = $this->request->get('remark');
-        $stepNew = $this->request->get('stepNew');
-        $propNew = $this->request->get('propNew');
-        $sortNew = $this->request->get('sortNew');
-        $titleNew = $this->request->get('titleNew');
-        $contentNew = $this->request->get('contentNew');
-        $remarkNew = $this->request->get('remarkNew');
+        $cfgid = $this->request->get('cfgid', ['int','trim']);
+        $step = $this->request->get('step', ['int','trim']);
+        $prop = $this->request->get('prop', ['string','trim']);
+        $sort = $this->request->get('sort', ['int','trim']);
+        $title = $this->request->get('title', ['string','trim']);
+        $content = $this->request->get('content', ['string','trim']);
+        $remark = $this->request->get('remark', ['string','trim']);
+        $stepNew = $this->request->get('stepNew', ['int','trim']);
+        $propNew = $this->request->get('propNew', ['string','trim']);
+        $sortNew = $this->request->get('sortNew', ['int','trim']);
+        $titleNew = $this->request->get('titleNew', ['string','trim']);
+        $contentNew = $this->request->get('contentNew', ['string','trim']);
+        $remarkNew = $this->request->get('remarkNew', ['string','trim']);
 
         if($cfgid){
             foreach($cfgid as $item){

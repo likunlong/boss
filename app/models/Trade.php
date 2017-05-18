@@ -41,7 +41,7 @@ class Trade extends Model
     {
         $result = $this->getWhere($data);
 
-        $sql = "SELECT t.id, t.transaction, t.user_id, t.currency, t.amount, t.status, t.gateway, t.product_id, t.custom, t.create_time, tm.trans_id FROM transactions AS t LEFT JOIN trans_more AS tm ON t.transaction = tm.trans_id WHERE 1=1 " . $result['where'];
+        $sql = "SELECT t.id, t.transaction, t.user_id, t.currency, t.amount, t.status, t.gateway, t.product_id, t.custom, t.create_time, tm.trans_id, tm.trade_no FROM transactions AS t LEFT JOIN trans_more AS tm ON t.transaction = tm.trans_id WHERE 1=1 " . $result['where'];
 
         if (!empty(DI::getDefault()->get('session')->get('app'))) {
             $sql .= " AND t.app_id=:app_id";
@@ -63,7 +63,7 @@ class Trade extends Model
 
     public function getTradeById($id)
     {
-        $sql = "SELECT t.id, t.transaction, t.user_id, t.currency, t.amount, t.status, t.amount_usd, t.gateway, t.product_id, t.custom, t.device, t.channel, t.create_time,t.ip, t.uuid, t.complete_time, tm.trans_id FROM transactions AS t LEFT JOIN trans_more AS tm ON t.transaction = tm.trans_id WHERE 1=1 ";
+        $sql = "SELECT t.id, t.transaction, t.user_id, t.currency, t.amount, t.status, t.amount_usd, t.gateway, t.product_id, t.custom, t.device, t.channel, t.create_time,t.ip, t.uuid, t.complete_time, tm.trans_id, tm.trade_no FROM transactions AS t LEFT JOIN trans_more AS tm ON t.transaction = tm.trans_id WHERE 1=1 ";
 
         $sql .= " AND t.id=:id";
         $bind['id'] = $id;

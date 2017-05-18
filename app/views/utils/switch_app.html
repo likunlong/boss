@@ -75,13 +75,20 @@
                 success:function(respon){
                     if(respon['error'] == 0){
                         $('.modal-body').html('<div class="col-xs-12"><span class="text-danger">切换版本成功</span></div>');
+                        $('.btn-default').attr('id','jump');
+                        $('.close').attr('id','close');
                         $('#myModal').modal();
+
                     }else{
                         $('.modal-body').html('<div class="col-xs-12"><span class="text-danger">'+respon['data']+'</span></div>');
                         $('#myModal').modal();
                     }
                 }
             });
+        });
+
+        $("#myModal").on("click","#jump, #close",function(){
+            window.location = "/";
         });
     });
 </script>

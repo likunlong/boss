@@ -1,0 +1,137 @@
+<div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">User Manage</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-pills pull-right">
+                    <!--<li><a href="javascript:void(0);" id="btn_add"><i class="fa fa-eye"></i> 查询 </a></li>-->
+                </ul>
+                玩家查询
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" method="post" role="form">
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">服务器</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="server" id="server">
+                                {% for item in lists %}
+                                <option value="{{item['id']}}">{{item['name']}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">角色ID</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="role_id" name="role_id" class="form-control" id="txt_parentdepartment" placeholder="角色ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">角色名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="role_name" name="role_name" class="form-control" id="txt_departmentlevel" placeholder="角色名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">账号ID</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="user_id" name="user_id" class="form-control" id="txt_statu" placeholder="账号ID">
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <button type="button" id="btn_submit"  class="btn btn-info">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">玩家查询</h4>
+            </div>
+            <div class="modal-body">
+                <div class="portlet-body row">
+                    <!--<div class="line-lg media-heading container">-->
+                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
+                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
+                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
+                    <!--</div>-->
+                    <!--<div class="line-lg media-heading container">-->
+                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
+                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
+                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
+                    <!--</div>-->
+                    <!--<div class="line-lg media-heading container">-->
+                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
+                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
+                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+//        $('#myModal').modal();
+
+        $('#btn_submit').click(function () {
+            $('.form-horizontal').submit();
+
+//           var server = $('#server').val();
+//           var role_id = $('#role_id').val();
+//           var role_name = $('#role_name').val();
+//           var user_id = $('#user_id').val();
+//
+//            $.ajax({
+//                url:'/game/index',
+//                type:'POST', //GET
+//                async:true,    //或false,是否异步
+//                data:{
+//                    server:server,
+//                    role_id:role_id,
+//                    role_name:role_name,
+//                    user_id:user_id,
+//                },
+//                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+//                success:function(respon){
+//                    if(respon['error'] == 0){
+//                        var html = '';
+//
+//                        if(respon['count'] == 1){
+//                            window.location = '/game/player';
+//                        }else{
+//                            var data = respon['data'];
+//                            debugger;
+//                            for(var item in data){
+//                                html += '<div class="line-lg media-heading container">';
+//                                html += '<div class="col-md-2 name">角色ID：<a href="/game/player">'+data[item]['user_id']+'</a> </div>';
+//                                html += '<div class="col-md-3 name">角色名称：<a href="/game/player">'+data[item]['name']+'</a> </div>';
+//                                html += '<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>';
+//                                html += '</div>';
+//                            }
+//                            $('.portlet-body').html(html);
+//                            $('#myModal').modal();
+//                        }
+//                    }
+//                }
+//            });
+        });
+
+    });
+</script>

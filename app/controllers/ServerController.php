@@ -34,12 +34,12 @@ class ServerController extends ControllerBase
     public function createAction()
     {
         if ($_POST) {
-            $data['id'] = $this->request->get('id', 'string');
-            $data['name'] = $this->request->get('name', 'string');
-            $data['host'] = $this->request->get('host', 'string');
-            $data['port'] = $this->request->get('port', 'string');
-            $data['status'] = $this->request->get('status', 'string');
-            $data['tag'] = $this->request->get('tag', 'string');
+            $data['id'] = $this->request->get('id', ['string','trim']);
+            $data['name'] = $this->request->get('name', ['string','trim']);
+            $data['host'] = $this->request->get('host', ['string','trim']);
+            $data['port'] = $this->request->get('port', ['int','trim']);
+            $data['status'] = $this->request->get('status', ['string','trim']);
+            $data['tag'] = $this->request->get('tag', ['string','trim']);
 
             if (!$data['id'] || !$data['name'] || !$data['host'] || !$data['status'] || !$data['tag']) {
                 Utils::tips('error', '数据不完整', '/server/index');
@@ -60,7 +60,7 @@ class ServerController extends ControllerBase
      */
     public function editAction()
     {
-        $data['id'] = $this->request->get('id');
+        $data['id'] = $this->request->get('id', ['int','trim']);
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/server/index');
         }
@@ -71,11 +71,11 @@ class ServerController extends ControllerBase
         }
 
         if ($_POST) {
-            $data['name'] = $this->request->get('name', 'string');
-            $data['host'] = $this->request->get('host', 'string');
-            $data['port'] = $this->request->get('port', 'string');
-            $data['status'] = $this->request->get('status', 'string');
-            $data['tag'] = $this->request->get('tag', 'string');
+            $data['name'] = $this->request->get('name', ['string','trim']);
+            $data['host'] = $this->request->get('host', ['string','trim']);
+            $data['port'] = $this->request->get('port', ['int','trim']);
+            $data['status'] = $this->request->get('status', ['string','trim']);
+            $data['tag'] = $this->request->get('tag', ['string','trim']);
 
             if (!$data['id'] || !$data['name'] || !$data['host'] || !$data['status'] || !$data['tag']) {
                 Utils::tips('error', '数据不完整', '/server/index');
@@ -97,7 +97,7 @@ class ServerController extends ControllerBase
      * 删除服务器
      */
     public function removeAction(){
-        $data['id'] = $this->request->get('id');
+        $data['id'] = $this->request->get('id', ['int','trim']);
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/server/index');
         }

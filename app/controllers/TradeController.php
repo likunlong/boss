@@ -30,17 +30,17 @@ class TradeController extends ControllerBase
      */
     public function indexAction()
     {
-        $currentPage = $this->request->get('page', 'int') ? $this->request->get('page', 'int') : 1;
+        $currentPage = $this->request->get('page', ['int','trim']) ? $this->request->get('page', ['int','trim']) : 1;
         $pagesize = 10;
-        $data['transaction'] = $this->request->get('transaction', 'string');
-        $data['user_id'] = $this->request->get('user_id', 'string');
-        $data['status'] = $this->request->get('status', 'string');
-        $data['gateway'] = $this->request->get('gateway', 'string');
-        $data['product_id'] = $this->request->get('product_id', 'string');
-        $data['custom'] = $this->request->get('custom', 'string');
-        $data['start_time'] = $this->request->get('start_time', 'string');
-        $data['end_time'] = $this->request->get('end_time', 'string');
-        $data['trade_no'] = $this->request->get('trade_no', 'string');
+        $data['transaction'] = $this->request->get('transaction', ['string','trim']);
+        $data['user_id'] = $this->request->get('user_id', ['string','trim']);
+        $data['status'] = $this->request->get('status', ['string','trim']);
+        $data['gateway'] = $this->request->get('gateway', ['string','trim']);
+        $data['product_id'] = $this->request->get('product_id', ['string','trim']);
+        $data['custom'] = $this->request->get('custom', ['string','trim']);
+        $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+        $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+        $data['trade_no'] = $this->request->get('trade_no', ['string','trim']);
 
         $count = $this->tradeModel->getCount($data);
         $this->view->trade = $this->tradeModel->getList($data, $currentPage, $pagesize);
@@ -55,7 +55,7 @@ class TradeController extends ControllerBase
      */
     public function viewAction()
     {
-        $id = $this->request->get('id');
+        $id = $this->request->get('id', ['int','trim']);
         if (!$id) {
             Utils::tips('error', '数据不完整', '/trade/index');
         }

@@ -30,30 +30,36 @@ class Game extends Model
         return $result;
     }
 
-    public function attach($data){
+    public function attach($data)
+    {
         $result = $this->utilsModel->yarRequest('prop', 'attach', $data);
-        if($result['code'] == 0){
+        if ($result['code'] == 0) {
             return true;
-        }else{
+        }
+        else {
             return false;
         }
     }
 
-    public function prop($type, $data){
+    public function prop($type, $data)
+    {
         $result = $this->utilsModel->yarRequest('prop', $type, $data);
-        if($result['code'] == 0){
+        if ($result['code'] == 0) {
             return true;
-        }else{
+        }
+        else {
             return false;
         }
     }
 
-    public function attribute(){
+    public function attribute()
+    {
         $result = $this->utilsModel->yarRequest('prop', 'attribute', array());
         return $result;
     }
 
-    public function getGame(){
+    public function getGame()
+    {
         $sql = "SELECT * FROM class WHERE 1=1  ORDER BY create_time DESC";
         $query = DI::getDefault()->get('dbData')->query($sql);
         $query->setFetchMode(Db::FETCH_ASSOC);
@@ -61,8 +67,9 @@ class Game extends Model
         return $data;
     }
 
-    public function getVersionList($gameid){
-        $sql = "SELECT * FROM games WHERE 1=1 AND game_id LIKE '".$gameid."%' ORDER BY id DESC";
+    public function getVersionList($gameid)
+    {
+        $sql = "SELECT * FROM games WHERE 1=1 AND game_id LIKE '" . $gameid . "%' ORDER BY id DESC";
         $query = DI::getDefault()->get('dbData')->query($sql);
         $query->setFetchMode(Db::FETCH_ASSOC);
         $data = $query->fetchAll();

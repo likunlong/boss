@@ -87,12 +87,12 @@
                         <th>ID</th>
                         <th>订单ID</th>
                         <th>账号ID</th>
-                        <th>支付状态</th>
+                        <th>状态</th>
                         <th>币种</th>
                         <th>金额</th>
                         <th>产品ID</th>
                         <th>自定义</th>
-                        <th>支付网关</th>
+                        <th>网关</th>
                         <th>网关ID</th>
                         <th>创建时间</th>
                         <th>更多</th>
@@ -110,7 +110,7 @@
                         <td>{{item['product_id']}}</td>
                         <td>{{item['custom']}}</td>
                         <td>{{item['gateway']}}</td>
-                        <td>{{item['trans_id']}}</td>
+                        <td>{{item['trade_no']}}</td>
                         <td>{{item['create_time']}}</td>
                         <td>
                             <a class="btn btn-sm btn-info" data-pjax="" href="/trade/view?id={{item['id']}}">View</a>

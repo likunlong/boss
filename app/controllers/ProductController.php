@@ -28,6 +28,7 @@ class ProductController extends ControllerBase
     public function indexAction()
     {
         $gateways = $this->gatewaysModel->getGatewaysList();
+        $data = [];
         foreach ($gateways as $item) {
             $item['product'] = $this->productModel->getProductList($item['gateway']);
             $data[] = $item;
@@ -42,17 +43,17 @@ class ProductController extends ControllerBase
     {
         if ($_POST) {
             $this->productModel->app_id = $this->session->get('app');
-            $this->productModel->gateway = $this->request->get('gateway', 'string');
-            $this->productModel->name = $this->request->get('name', 'string');
-            $this->productModel->product_id = $this->request->get('product_id', 'string');
-            $this->productModel->package = $this->request->get('package', 'string');
-            $this->productModel->price = $this->request->get('price', 'float');
-            $this->productModel->currency = $this->request->get('currency', 'string');
-            $this->productModel->coin = $this->request->get('coin', 'int');
-            $this->productModel->image = $this->request->get('image', 'string');
-            $this->productModel->remark = $this->request->get('remark', 'string');
-            $this->productModel->status = $this->request->get('status', 'int');
-            $this->productModel->sort = $this->request->get('sort', 'int');
+            $this->productModel->gateway = $this->request->get('gateway', ['string','trim']);
+            $this->productModel->name = $this->request->get('name', ['string','trim']);
+            $this->productModel->product_id = $this->request->get('product_id', ['string','trim']);
+            $this->productModel->package = $this->request->get('package', ['string','trim']);
+            $this->productModel->price = $this->request->get('price', ['string','trim']);
+            $this->productModel->currency = $this->request->get('currency', ['string','trim']);
+            $this->productModel->coin = $this->request->get('coin', ['int','trim']);
+            $this->productModel->image = $this->request->get('image', ['string','trim']);
+            $this->productModel->remark = $this->request->get('remark', ['string','trim']);
+            $this->productModel->status = $this->request->get('status', ['int','trim']);
+            $this->productModel->sort = $this->request->get('sort', ['string','trim']);
             $this->productModel->create_time = date('Y-m-d H:i:s');
             $this->productModel->update_time = date('Y-m-d H:i:s');
 
@@ -73,7 +74,7 @@ class ProductController extends ControllerBase
      */
     public function editAction()
     {
-        $id = $this->request->get('id');
+        $id = $this->request->get('id', ['int','trim']);
         if (!$id) {
             Utils::tips('error', '数据不完整', '/product/index');
         }
@@ -85,17 +86,17 @@ class ProductController extends ControllerBase
 
         if ($_POST) {
             $product->app_id = $this->session->get('app');
-            $product->gateway = $this->request->get('gateway', 'string');
-            $product->name = $this->request->get('name', 'string');
-            $product->product_id = $this->request->get('product_id', 'string');
-            $product->package = $this->request->get('package', 'string');
-            $product->price = $this->request->get('price', 'float');
-            $product->currency = $this->request->get('currency', 'string');
-            $product->coin = $this->request->get('coin', 'int');
-            $product->image = $this->request->get('image', 'string');
-            $product->remark = $this->request->get('remark', 'string');
-            $product->status = $this->request->get('status', 'int');
-            $product->sort = $this->request->get('sort', 'int');
+            $product->gateway = $this->request->get('gateway', ['string','trim']);
+            $product->name = $this->request->get('name', ['string','trim']);
+            $product->product_id = $this->request->get('product_id', ['string','trim']);
+            $product->package = $this->request->get('package', ['string','trim']);
+            $product->price = $this->request->get('price', ['string','trim']);
+            $product->currency = $this->request->get('currency', ['string','trim']);
+            $product->coin = $this->request->get('coin', ['int','trim']);
+            $product->image = $this->request->get('image', ['string','trim']);
+            $product->remark = $this->request->get('remark', ['string','trim']);
+            $product->status = $this->request->get('status', ['int','trim']);
+            $product->sort = $this->request->get('sort', ['int','trim']);
             $product->update_time = date('Y-m-d H:i:s');
 
             if (!$product->name || !$product->app_id || !$product->price) {
@@ -116,7 +117,7 @@ class ProductController extends ControllerBase
      */
     public function removeAction()
     {
-        $id = $this->request->get('id');
+        $id = $this->request->get('id', ['int','trim']);
         if (!$id) {
             Utils::tips('error', '数据不完整', '/product/index');
         }
