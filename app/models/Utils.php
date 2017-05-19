@@ -169,9 +169,27 @@ class Utils extends Model
         $service = DI::getDefault()->get('session')->get('group');
         $lang = DI::getDefault()->get('session')->get('lang');
         $app_id = DI::getDefault()->get('session')->get('app');
+        $host = str_replace('*', $app_id, $config->api->rpc_host);
 
-        $yar_url = "http://$app_id." . $config->api->rpc_host . "/$service/$lang/yar/$class";
-        $client = new \Yar_Client($yar_url);
-        return $client->$fun($data);
+        $protocol = 'yar';
+
+        switch ($protocol) {
+
+            case 'yar':
+                $client = new \Yar_Client($host . "/$service/$lang/yar/$class");
+                return $client->$fun($data);
+                break;
+
+            case 'soap':
+                $client = new \SoapClient(null, array(
+                    'location' => $host . "/$service/$lang/soap/$class",
+                    'uri'      => 'app',
+                    'style'    => SOAP_RPC,
+                    'use'      => SOAP_ENCODED,
+                    'trace'    => true
+                ));
+                return $client->$fun($data);
+                break;
+        }
     }
 }
