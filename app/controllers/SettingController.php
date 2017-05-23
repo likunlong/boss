@@ -50,7 +50,7 @@ class SettingController extends ControllerBase
                 break;
 
             case 'edit':
-                $id = $this->request->get('id',['int','trim']);
+                $id = $this->request->get('id','int');
                 if (!$id) {
                     Utils::tips('error', '数据不完整', '/setting/gateways');
                 }
@@ -89,9 +89,9 @@ class SettingController extends ControllerBase
         $this->gatewaysModel->type = $this->request->get('type', ['string','trim']);
         $this->gatewaysModel->remark = $this->request->get('remark', ['string','trim']);
         $this->gatewaysModel->currency = $this->request->get('currency', ['string','trim']);
-        $this->gatewaysModel->parent = $this->request->get('parent', ['int','trim']);
-        $this->gatewaysModel->sort = $this->request->get('sort', ['int','trim']);
-        $this->gatewaysModel->sandbox = $this->request->get('sandbox', ['int','trim']);
+        $this->gatewaysModel->parent = $this->request->get('parent', 'int');
+        $this->gatewaysModel->sort = $this->request->get('sort', 'int');
+        $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
         $this->gatewaysModel->tips = $this->request->get('tips', ['string','trim']);
 
         if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway || !$this->gatewaysModel->sub) {
@@ -114,9 +114,9 @@ class SettingController extends ControllerBase
         $gateways->type = $this->request->get('type', ['string','trim']);
         $gateways->remark = $this->request->get('remark', ['string','trim']);
         $gateways->currency = $this->request->get('currency', ['string','trim']);
-        $gateways->parent = $this->request->get('parent', ['int','trim']);
-        $gateways->sort = $this->request->get('sort', ['int','trim']);
-        $gateways->sandbox = $this->request->get('sandbox', ['int','trim']);
+        $gateways->parent = $this->request->get('parent', 'int');
+        $gateways->sort = $this->request->get('sort', 'int');
+        $gateways->sandbox = $this->request->get('sandbox', 'int');
         $gateways->tips = $this->request->get('tips', ['string','trim']);
 
         if (!$gateways->name || !$gateways->app_id || !$gateways->gateway || !$gateways->sub) {
@@ -132,7 +132,7 @@ class SettingController extends ControllerBase
      */
     private function removegateways()
     {
-        $id = $this->request->get('id', ['int','trim']);
+        $id = $this->request->get('id', 'int');
         if (!$id) {
             Utils::tips('error', '数据不完整', '/setting/gateways');
         }

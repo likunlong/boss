@@ -41,4 +41,83 @@ class Products extends Model
 
         return $newData;
     }
+
+    public function createProduct($data)
+    {
+        $result = $this->utilsModel->yarRequest('Product', 'create', $data);
+        if ($result['code'] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function editProduct($data){
+        $result = $this->utilsModel->yarRequest('Product', 'modify', $data);
+        if ($result['code'] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function removeProduct($data)
+    {
+        $result = $this->utilsModel->yarRequest('Product', 'remove', $data);
+        if ($result['code'] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function item($data){
+        $result = $this->utilsModel->yarRequest('Product', 'item', $data);
+        if($result['code'] == 1){
+            return false;
+        }
+
+        if($result['data']['more']){
+            foreach($result['data']['more'] as $key=>$item)
+            $result['data']['more'][$key]['start_time'] = $this->utilsModel->toTimeZone($item['start_time'],
+                $this->utilsModel->getTimeZone());
+            $result['data']['more'][$key]['end_time'] = $this->utilsModel->toTimeZone($item['end_time'],
+                $this->utilsModel->getTimeZone());
+        }
+        return $result;
+    }
+
+    public function createOption($data)
+    {
+        $result = $this->utilsModel->yarRequest('Product', 'create_option', $data);
+        if ($result['code'] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function editOption($data)
+    {
+        $result = $this->utilsModel->yarRequest('Product', 'modify_option', $data);
+        if ($result['code'] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function removeOption($data){
+        $result = $this->utilsModel->yarRequest('Product', 'remove_option', $data);
+        if($result['code'] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

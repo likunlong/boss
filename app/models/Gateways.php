@@ -58,7 +58,7 @@ class Gateways extends Model
 
     public function getGatewaysList()
     {
-        $sql = "SELECT id,gateway,name, COUNT(DISTINCT gateway) FROM gateways WHERE 1=1  ";
+        $sql = "SELECT id,gateway,name FROM gateways WHERE 1=1 AND parent = 0 ";
         $bind = [];
         if (!empty(DI::getDefault()->get('session')->get('app'))) {
             $sql .= " AND app_id=:app_id";

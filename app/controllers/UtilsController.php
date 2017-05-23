@@ -26,7 +26,7 @@ class UtilsController extends Controller
     public function switch_appAction()
     {
         if ($_POST) {
-            $gameid = $this->request->get('gameid', ['int','trim']);
+            $gameid = $this->request->get('gameid', 'int');
 
             if (!$gameid) {
                 echo json_encode(array('error' => 1, 'data' => '参数错误'));
@@ -48,7 +48,7 @@ class UtilsController extends Controller
     public function setGameVersionAction()
     {
         if ($_POST) {
-            $id = $this->request->get('id', ['int','trim']);
+            $id = $this->request->get('id', 'int');
 
             if (!$id) {
                 echo json_encode(array('error' => 1, 'data' => '参数错误'));

@@ -30,7 +30,7 @@ class TradeController extends ControllerBase
      */
     public function indexAction()
     {
-        $currentPage = $this->request->get('page', ['int','trim']) ? $this->request->get('page', ['int','trim']) : 1;
+        $currentPage = $this->request->get('page', 'int') ? $this->request->get('page', 'int') : 1;
         $pagesize = 10;
         $data['transaction'] = $this->request->get('transaction', ['string','trim']);
         $data['user_id'] = $this->request->get('user_id', ['string','trim']);
@@ -55,7 +55,7 @@ class TradeController extends ControllerBase
      */
     public function viewAction()
     {
-        $id = $this->request->get('id', ['int','trim']);
+        $id = $this->request->get('id', 'int');
         if (!$id) {
             Utils::tips('error', '数据不完整', '/trade/index');
         }

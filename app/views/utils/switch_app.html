@@ -74,13 +74,15 @@
                 dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success:function(respon){
                     if(respon['error'] == 0){
-                        $('.modal-body').html('<div class="col-xs-12"><span class="text-danger">切换版本成功</span></div>');
+                        $('.modal-body').attr('class', 'modal-body font-thin h1');
+                        $('.modal-body').html('<span>切换版本成功</span>');
                         $('.btn-default').attr('id','jump');
                         $('.close').attr('id','close');
                         $('#myModal').modal();
 
                     }else{
-                        $('.modal-body').html('<div class="col-xs-12"><span class="text-danger">'+respon['data']+'</span></div>');
+                        $('.modal-body').attr('class', 'modal-body font-thin h1');
+                        $('.modal-body').html('<span>'+respon['data']+'</span>');
                         $('#myModal').modal();
                     }
                 }

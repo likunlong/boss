@@ -125,7 +125,7 @@ class Utils extends Model
      * 时区转换
      */
 
-    public function toTimeZone($src, $to_tz = '', $from_tz = 'Asia/Shanghai', $fm = 'Y-m-d H:i:s')
+    public function toTimeZone($src, $to_tz = '', $from_tz = 'Asia/Shanghai', $fm = 'Y-m-d H:i:s O')
     {
         if ($to_tz) {
             $datetime = new \DateTime($src, new \DateTimeZone($from_tz));
