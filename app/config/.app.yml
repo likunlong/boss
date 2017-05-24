@@ -17,7 +17,7 @@ db_data:
     dbname      : test
     charset     : utf8mb4
 
-db_backend:
+db_trade:
     adapter     : Mysql
     host        : localhost
     port        : 3306
@@ -50,3 +50,6 @@ mq:
 
 sso:
     base_url    : http://www.example.com/api/sso/
+
+api:
+  rpc_host: http://*.rpc.localhost.com

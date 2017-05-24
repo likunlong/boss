@@ -142,20 +142,6 @@ $di->set('dbTrade', function () use ($di) {
 }, true);
 
 
-$di->set('dbBackend', function () use ($di) {
-    $connection = new DbAdapter(array(
-        'host'     => $di['config']->db_backend->host,
-        'port'     => $di['config']->db_data->port,
-        'username' => $di['config']->db_backend->username,
-        'password' => $di['config']->db_backend->password,
-        'dbname'   => $di['config']->db_backend->dbname,
-        'charset'  => $di['config']->db_backend->charset
-    ));
-    $connection->setEventsManager($di['eventsManager']);
-    return $connection;
-}, true);
-
-
 $di->set('dbLog', function () use ($di) {
     $connection = new DbAdapter(array(
         'host'     => $di['config']->db_log->host,
