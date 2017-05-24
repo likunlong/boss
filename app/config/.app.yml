@@ -52,4 +52,6 @@ sso:
     base_url    : http://www.example.com/api/sso/
 
 api:
+  # soap yar http
+  rpc_protocol: yar
   rpc_host: http://*.rpc.localhost.com

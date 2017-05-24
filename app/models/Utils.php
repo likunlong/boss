@@ -171,7 +171,7 @@ class Utils extends Model
         $app_id = DI::getDefault()->get('session')->get('app');
         $host = str_replace('*', $app_id, $config->api->rpc_host);
 
-        $protocol = 'yar';
+        $protocol = $config->api->rpc_protocol;
 
         switch ($protocol) {
 
