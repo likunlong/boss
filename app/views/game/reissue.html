@@ -78,7 +78,7 @@
                         <!--站内邮件-->
                         <div class="tab-pane fade in active" id="fademail">
                             <div class="panel-body">
-                                <form class="form-horizontal " method="post" action="/game/attach" role="form">
+                                <form class="form-horizontal " method="post" action="/game/reissue" data-pjax="" role="form">
                                     <div class="form-group">
                                         <label for="firstname" class="col-sm-2 control-label"></label>
                                         <div class="col-sm-8">
@@ -95,13 +95,13 @@
                                         <label for="firstname" class="col-sm-2 control-label">礼包ID</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="attach" name="attach"
-                                                   placeholder="(道具1数量,道具2数量) 例: 12345610,6543215" required>
+                                                   placeholder="(道具1数量,道具2数量) 例: 12345610,6543215" >
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="lastname" class="col-sm-2 control-label">正文</label>
                                         <div class="col-sm-8">
-                                            <textarea class="form-control" rows="3" name="coin_msg"></textarea>
+                                            <textarea class="form-control" rows="3" name="msg"></textarea>
                                         </div>
                                     </div>
                                     <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -267,7 +267,7 @@
             }
 
             $.ajax({
-                url:'/game/other',
+                url:'/game/reissue',
                 type:'POST', //GET
                 async:true,    //或false,是否异步
                 data:{

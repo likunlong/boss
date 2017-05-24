@@ -20,9 +20,14 @@
                             {% for item in lists %}
                             <div class="alert panel-footer alert-dismissable">
                                 <!--<a class=""><i class="close icon-close m-t-lg m-r"></i></a>-->
-                                <a href="/notice/edit?id={{item['id']}}"><i class="close icon-wrench m-t-lg m-r"></i></a>
+                                <a href="/notice/edit?id={{item['id']}}" data-pjax=""><i class="close icon-wrench m-t-lg m-r"></i></a>
                                 <div ng-transclude="">
-                                    <h4 class="block"><a href="/notice/edit?id={{item['id']}}" class="h4 text-info block m-b-xs">{{item['title']}}</a></h4>
+                                    <h4 class="block"><a href="/notice/edit?id={{item['id']}}" class="h4 text-info block m-b-xs" data-pjax="">{{item['title']}}</a></h4>
+                                    {%if item['status'] == 1%}
+                                    <span class="label bg-success" title="">正常</span>
+                                    {% else %}
+                                    <span class="label bg-warning" title="">限制</span>
+                                    {% endif %}
                                     <p>{{item['content']}}</p>
                                     <span>{{item['start_time']}}</span>
                                 </div>
@@ -86,7 +91,7 @@
         });
 
         $(".form_datetime").datetimepicker({
-            format: "yyyy-mm-dd",
+            format: "yyyy-mm-dd hh:00:00",
             autoclose: true,
             todayBtn: true,
             todayHighlight: true,
@@ -94,7 +99,7 @@
             pickerPosition: "bottom-left",
             language: 'zh-CN',//中文，需要引用zh-CN.js包
             startView: 2,//月视图
-            minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
+            minView: 1//日期时间选择器所能够提供的最精确的时间选择视图
         });
     });
 </script>

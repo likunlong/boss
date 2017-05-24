@@ -75,9 +75,9 @@ class Trade extends Model
         $query = DI::getDefault()->get('dbTrade')->query($sql, $bind);
         $query->setFetchMode(Db::FETCH_ASSOC);
         $data = $query->fetch();
-        $data['create_time'] = $this->utilsModel->toTimeZone($data['create_time'], $this->utilsModel->getTimeZone());
+        $data['create_time'] = $this->utilsModel->toTimeZone($data['create_time'], $this->utilsModel->getTimeZone(),'Asia/Shanghai', 'Y-m-d H:i:s O');
         $data['complete_time'] = $this->utilsModel->toTimeZone($data['complete_time'],
-            $this->utilsModel->getTimeZone());
+            $this->utilsModel->getTimeZone(),'Asia/Shanghai', 'Y-m-d H:i:s O');
         return $data;
     }
 

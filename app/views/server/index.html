@@ -6,7 +6,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-pills pull-right">
-                <li><a href="/server/create"><i class="fa fa-plus"></i> 创建服务器 </a></li>
+                <li><a href="/server/create" data-pjax=""><i class="fa fa-plus"></i> 创建服务器 </a></li>
                 </ul>
                 服务器概况
             </div>
@@ -30,7 +30,15 @@
                         <td>{{item['name']}}</td>
                         <td>{{item['host']}}</td>
                         <td>{{item['port']}}</td>
-                        <td>{{item['status']}}</td>
+                        <td>
+                            {%if item['status'] == 'on'%}
+                            <span class="label bg-success" title="">{{item['status']}}</span>
+                            {% elseif  item['status'] == 'off'%}
+                            <span class="label bg-warning" title="">{{item['status']}}</span>
+                            {% else %}
+                            <span class="label bg-info" title="">{{item['status']}}</span>
+                            {% endif %}
+                        </td>
                         <td>{{item['tag']}}</td>
                         <td>
                             <a class="btn btn-sm btn-info" data-pjax="" href="/server/edit?id={{item['id']}}">Edit</a>

@@ -125,9 +125,13 @@ class Utils extends Model
      * 时区转换
      */
 
-    public function toTimeZone($src, $to_tz = '', $from_tz = 'Asia/Shanghai', $fm = 'Y-m-d H:i:s O')
+    public function toTimeZone($src, $to_tz = '', $from_tz = 'Asia/Shanghai', $fm = 'Y-m-d H:i:s')
     {
+        if($src == '0000-00-00 00:00:00'){
+            return '暂无时间';
+        }
         if ($to_tz) {
+
             $datetime = new \DateTime($src, new \DateTimeZone($from_tz));
             $datetime->setTimezone(new \DateTimeZone($to_tz));
             return $datetime->format($fm);

@@ -30,17 +30,6 @@ class Game extends Model
         return $result;
     }
 
-    public function attach($data)
-    {
-        $result = $this->utilsModel->yarRequest('prop', 'attach', $data);
-        if ($result['code'] == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
     public function prop($type, $data)
     {
         $result = $this->utilsModel->yarRequest('prop', $type, $data);

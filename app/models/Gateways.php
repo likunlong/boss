@@ -45,13 +45,6 @@ class Gateways extends Model
                     }
                 }
             }
-
-            if ($value['sandbox'] == 1) {
-                $data[$key]['sandboxname'] = '是';
-            }
-            else {
-                $data[$key]['sandboxname'] = '否';
-            }
         }
         return $data;
     }

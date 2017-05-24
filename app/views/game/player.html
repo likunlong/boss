@@ -1,134 +1,137 @@
-<div class="wrapper-md">
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="clearfix text-center m-t">
-                        <div class="inline">
-                            <div ui-jq="easyPieChart" >
-                                <div>
-                                    <img width="120" height="120" src="https://secure.gravatar.com/avatar/a0b7f00f544581296bb9eadb283482fa?s=300&d=wavatar" class="img-circle" alt="...">
-                                </div>
-                            </div>
-                            <div class="h4 m-t m-b-xs">{{user['name']}}</div>
-                        </div>
-                    </div>
-                </div>
-                <footer class="panel-footer bg-info text-center no-padder">
-                    <div class="row no-gutter">
-                        <div class="col-xs-4">
-                            <div class="wrapper">
-                                <span class="m-b-xs h3 block text-white">{{user['account_id']}}</span>
-                                <small class="text-muted">平台账号ID</small>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 dk">
-                            <div class="wrapper">
-                                <span class="m-b-xs h3 block text-white">{{server}}</span>
-                                <small class="text-muted">服务器</small>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="wrapper">
-                                <span class="m-b-xs h3 block text-white">{{user['user_id']}}</span>
-                                <small class="text-muted">用户ID</small>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </div>
-
-        <div class="col-sm-7">
-            <div class="list-group">
-                <a href="javascript:void(0);" class="list-group-item">
-                    <!--<i class="fa fa-chevron-right text-muted"></i>-->
-                    <!--<span class="badge bg-success">14</span>-->
-                    <i class="fa icon-calendar fa-fw m-r-xs"></i> 创建时间 : {{user['create_time']}}
-                </a>
-                <a href="javascript:void(0);" class="list-group-item">
-                    <!--<span class="badge bg-dark">20</span>-->
-                    <i class="fa icon-graduation fa-fw m-r-xs"></i> 等级 : {{user['level']}}
-                </a>
-                <a href="javascript:void(0);" class="list-group-item">
-                    <!--<span class="badge bg-warning">14</span>-->
-                    <i class="fa fa-bookmark fa-fw m-r-xs"></i>  经验 : {{user['exp']}}
-                </a>
-                <a href="javascript:void(0);" class="list-group-item">
-                    <!--<span class="badge bg-info">30</span>-->
-                    <i class="fa icon-graph fa-fw m-r-xs"></i>  VIP积分 : {{user['vip']}}
-                </a>
-                <a href="javascript:void(0);" class="list-group-item">
-                    <!--<span class="badge bg-danger">10</span>-->
-                    <i class="fa icon-eye fa-fw m-r-xs"></i> 货币 : {{user['coin']}}
-                </a>
-            </div>
-        </div>
+<div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">User Manage</h1>
     </div>
-    <!-- tab -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div ng-controller="TabsDemoCtrl">
-                <ul id="myTab" class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#home" data-toggle="tab">属性</a>
-                    </li>
-                    <li><a href="#ios" data-toggle="tab">最近充值记录</a></li>
-
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-pills pull-right">
+                    <!--<li><a href="javascript:void(0);" id="btn_add"><i class="fa fa-eye"></i> 查询 </a></li>-->
                 </ul>
-                <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade in active" id="home" style="background: #fff">
-                        <table class="table table-bordered">
+                玩家查询
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" data-pjax="" method="post" role="form">
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">服务器</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="server" id="server">
+                                {% for item in lists %}
+                                <option value="{{item['id']}}">{{item['name']}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">角色ID</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="role_id" name="role_id" class="form-control" id="txt_parentdepartment" placeholder="角色ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">角色名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="role_name" name="role_name" class="form-control" id="txt_departmentlevel" placeholder="角色名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-2 control-label">账号ID</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="user_id" name="user_id" class="form-control" id="txt_statu" placeholder="账号ID">
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
 
-                            <thead>
-                            <tr>
-                                <th><i class="fa icon-badge fa-fw m-r-xs"></i>属性</th>
-                                <th><i class="fa icon-equalizer fa-fw m-r-xs"></i>值</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for name, value in user['attribute'] %}
-                            <tr>
-                                <td width="40%">{{name}}</td>
-                                <td>{{value}}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <button type="button" id="btn_submit"  class="btn btn-info">提交</button>
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="ios" style="background: #fff;">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>订单ID</th>
-                                <th>支付状态</th>
-                                <th>币种</th>
-                                <th>金额</th>
-                                <th>产品ID</th>
-                                <th>支付网关</th>
-                                <!--<th>网关ID</th>-->
-                                <th>创建时间</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in trade %}
-                            <tr>
-                                <td>{{item['transaction']}}</td>
-                                <td>{{item['status']}}</td>
-                                <td>{{item['currency']}}</td>
-                                <td>{{item['amount']}}</td>
-                                <td>{{item['product_id']}}</td>
-                                <td>{{item['gateway']}}</td>
-                                <!--<td>{{item['trans_id']}}</td>-->
-                                <td>{{item['create_time']}}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- / tab -->
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">玩家查询</h4>
+            </div>
+            <div class="modal-body">
+                <div class="portlet-body row">
+                    <!--<div class="line-lg media-heading container">-->
+                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
+                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
+                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
+                    <!--</div>-->
+                    <!--<div class="line-lg media-heading container">-->
+                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
+                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
+                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
+                    <!--</div>-->
+                    <!--<div class="line-lg media-heading container">-->
+                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
+                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
+                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+//        $('#myModal').modal();
+
+        $('#btn_submit').click(function () {
+            $('.form-horizontal').submit();
+
+//           var server = $('#server').val();
+//           var role_id = $('#role_id').val();
+//           var role_name = $('#role_name').val();
+//           var user_id = $('#user_id').val();
+//
+//            $.ajax({
+//                url:'/game/index',
+//                type:'POST', //GET
+//                async:true,    //或false,是否异步
+//                data:{
+//                    server:server,
+//                    role_id:role_id,
+//                    role_name:role_name,
+//                    user_id:user_id,
+//                },
+//                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+//                success:function(respon){
+//                    if(respon['error'] == 0){
+//                        var html = '';
+//
+//                        if(respon['count'] == 1){
+//                            window.location = '/game/player';
+//                        }else{
+//                            var data = respon['data'];
+//                            debugger;
+//                            for(var item in data){
+//                                html += '<div class="line-lg media-heading container">';
+//                                html += '<div class="col-md-2 name">角色ID：<a href="/game/player">'+data[item]['user_id']+'</a> </div>';
+//                                html += '<div class="col-md-3 name">角色名称：<a href="/game/player">'+data[item]['name']+'</a> </div>';
+//                                html += '<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>';
+//                                html += '</div>';
+//                            }
+//                            $('.portlet-body').html(html);
+//                            $('#myModal').modal();
+//                        }
+//                    }
+//                }
+//            });
+        });
+
+    });
+</script>

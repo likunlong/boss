@@ -67,7 +67,6 @@ class ProductController extends ControllerBase
             $data['price'] = $this->productModel->price;
             $data['currency'] = $this->productModel->currency;
             $data['coin'] = $this->productModel->coin;
-//            $data['custom'] = $this->productModel->custom;
             $data['status'] = $this->productModel->status;
             $data['sort'] = $this->productModel->sort;
             $data['name'] = $this->productModel->name;
@@ -188,7 +187,6 @@ class ProductController extends ControllerBase
         $this->view->parent = $this->gatewaysModel->getParent();
         $this->view->pro = $product->toArray();
 
-
         if (count($rpcProduct['data']['more']) == 1) {
             $this->view->more = $rpcProduct['data']['more'];
             $this->view->isone = 1;
@@ -232,7 +230,6 @@ class ProductController extends ControllerBase
 
         $product->delete();
         $this->productModel->removeProduct(array('product_id' => $product->product_id));
-
 
         Utils::tips('success', '删除成功', '/product/index');
     }

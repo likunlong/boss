@@ -27,40 +27,6 @@ class GameController extends ControllerBase
 
     public function indexAction()
     {
-        if ($_POST) {
-            $server = $this->request->get('server', ['string', 'trim']);
-            $role_id = $this->request->get('role_id', ['string', 'trim']);
-            $data['role_name'] = $this->request->get('role_name', ['string', 'trim']);
-            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
-            $data['id'] = $server . '-' . $role_id;
-
-            if (!$data['id']) {
-                Utils::tips('error', '数据不完整', '/game/index');
-                exit;
-            }
-
-            $result = $this->gameModel->profile($data);
-
-            if ($result['code'] == 1) {
-                Utils::tips('error', '没有该用户', '/game/index');
-                exit;
-            }
-            if ($result['data']['account_id']) {
-                $where['user_id'] = $result['data']['account_id'];
-                $count = $this->tradeModel->getCount($where);
-                $this->view->trade = $this->tradeModel->getList($where, 1, $count);
-
-                $this->view->user = $result['data'];
-                $this->view->server = $server;
-                $this->view->pick("game/player");
-            }
-            else {
-                $this->view->pick("game/index");
-            }
-        }
-
-        $result = $this->serverModel->getLists();
-        $this->view->lists = $result;
 
     }
 
@@ -70,7 +36,41 @@ class GameController extends ControllerBase
      */
     public function playerAction()
     {
+        if ($_POST) {
+            $server = $this->request->get('server', ['string', 'trim']);
+            $role_id = $this->request->get('role_id', ['string', 'trim']);
+            $data['role_name'] = $this->request->get('role_name', ['string', 'trim']);
+            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
+//            $data['id'] = $server . '-' . $role_id;
+            $data['id'] = 12001 . '-' . $role_id;
 
+            if (!$data['id']) {
+                Utils::tips('error', '数据不完整', '/game/player');
+                exit;
+            }
+
+            $result = $this->gameModel->profile($data);
+
+            if ($result['code'] == 1) {
+                Utils::tips('error', '没有该用户', '/game/player');
+                exit;
+            }
+            if ($result['data']['account_id']) {
+                $where['user_id'] = $result['data']['account_id'];
+                $count = $this->tradeModel->getCount($where);
+                $this->view->trade = $this->tradeModel->getList($where, 1, $count);
+
+                $this->view->user = $result['data'];
+                $this->view->server = $server;
+                $this->view->pick("game/playerone");
+            }
+            else {
+                $this->view->pick("game/player");
+            }
+        }
+
+        $result = $this->serverModel->getLists();
+        $this->view->lists = $result;
     }
 
 
@@ -110,6 +110,69 @@ class GameController extends ControllerBase
      */
     public function reissueAction()
     {
+        if ($_POST) {
+            $type = $this->request->get('action', ['string', 'trim']);
+            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
+            $data['amount'] = $this->request->get('amount', ['string', 'trim']);
+            $data['msg'] = $this->request->get('msg', ['string', 'trim']);
+
+            if(empty($type)){
+                unset($data['amount']);
+                $type = 'attach';
+                $data['attach'] = $this->request->get('attach', ['string', 'trim']);
+            }
+
+            $fail = 0;
+            $tmparray = explode('-',$data['user_id']);
+            if(count($tmparray) <= 1){
+                $fail = 1;
+            }
+
+            if($type == 'attach'){
+                if($fail == 1){
+                    Utils::tips('error', '用户ID不正确', '/game/reissue');
+                }
+                if (!$data['attach']) {
+                    Utils::tips('error', '数据不完整', '/game/reissue');
+                }
+            }else{
+                if($fail == 1){
+                    echo json_encode(array('error' => 1, 'data' => '用户ID不正确'));
+                    exit;
+                }
+                if ($type == 'mail'){
+                    if (!$data['msg']) {
+                        echo json_encode(array('error' => 1, 'data' => '数据不完整'));
+                        exit;
+                    }
+                }else{
+                    if (!$data['amount']) {
+                        echo json_encode(array('error' => 1, 'data' => '数据不完整'));
+                        exit;
+                    }
+                }
+            }
+
+            $result = $this->gameModel->prop($type, $data);
+
+            if ($result) {
+                if($type == 'attach'){
+                    Utils::tips('success', '补发成功', '/game/reissue');
+                }else{
+                    echo json_encode(array('error' => 0, 'data' => '补发成功'));
+                    exit;
+                }
+            }
+            else {
+                if($type == 'attach'){
+                    Utils::tips('error', '补发失败', '/game/reissue');
+                }else{
+                    echo json_encode(array('error' => 1, 'data' => '补发失败'));
+                    exit;
+                }
+            }
+        }
+
         $result = $this->gameModel->attribute();
         $this->view->lists = $result['data'];
     }
@@ -119,24 +182,7 @@ class GameController extends ControllerBase
      */
     public function otherAction()
     {
-        if ($_POST) {
-            $type = $this->request->get('action', ['string', 'trim']);
-            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
-            $data['amount'] = $this->request->get('amount', ['string', 'trim']);
-            $data['msg'] = $this->request->get('msg', ['string', 'trim']);
 
-            $result = $this->gameModel->prop($type, $data);
-
-            if ($result) {
-                echo json_encode(array('error' => 0, 'data' => '补发成功'));
-                exit;
-            }
-            else {
-
-                echo json_encode(array('error' => 1, 'data' => '补发失败'));
-                exit;
-            }
-        }
     }
 
     /**
@@ -153,34 +199,6 @@ class GameController extends ControllerBase
     public function levelAction()
     {
 
-    }
-
-    /**
-     * 补发道具
-     */
-    public function attachAction()
-    {
-        if ($_POST) {
-            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
-            $data['attach'] = $this->request->get('attach', ['string', 'trim']);
-            $data['msg'] = $this->request->get('coin_msg', ['string', 'trim']);
-
-            if (!$data['user_id'] || !$data['attach']) {
-                Utils::tips('error', '数据不完整', '/game/reissue');
-            }
-            
-            $result = $this->gameModel->attach($data);
-
-            if ($result) {
-                Utils::tips('success', '补发道具成功', '/game/reissue');
-            }
-            else {
-                Utils::tips('error', '补发道具失败', '/game/reissue');
-            }
-        }
-
-        header('Location: /game/reissue');
-        exit;
     }
 
 }
