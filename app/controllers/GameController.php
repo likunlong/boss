@@ -41,8 +41,7 @@ class GameController extends ControllerBase
             $role_id = $this->request->get('role_id', ['string', 'trim']);
             $data['role_name'] = $this->request->get('role_name', ['string', 'trim']);
             $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
-//            $data['id'] = $server . '-' . $role_id;
-            $data['id'] = 12001 . '-' . $role_id;
+            $data['id'] = $server . '-' . $role_id;
 
             if (!$data['id']) {
                 Utils::tips('error', '数据不完整', '/game/player');
