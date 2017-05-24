@@ -60,16 +60,19 @@ class UtilsController extends Controller
                 exit;
             }
 
-            $version = $this->gameModel->findFirst($id);
-
-            if (!$version) {
+            $game = $this->gameModel->findFirst($id);
+            if (!$game) {
                 echo json_encode(array('error' => 1, 'data' => '没有此版本'));
                 exit;
             }
+            if (!in_array($game->game_id, DI::getDefault()->get('session')->get('resources')['allow_game'])) {
+                echo json_encode(array('error' => 1, 'data' => '没有权限'));
+                exit;
+            }
 
-            DI::getDefault()->get('session')->set('app', $version->game_id);
-            DI::getDefault()->get('session')->set('group', $version->class_id);
-            DI::getDefault()->get('session')->set('lang', $version->version);
+            DI::getDefault()->get('session')->set('app', $game->game_id);
+            DI::getDefault()->get('session')->set('group', $game->class_id);
+            DI::getDefault()->get('session')->set('lang', $game->version);
 
             echo json_encode(array('error' => 0, 'data' => array()));
             exit;
