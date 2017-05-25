@@ -11,7 +11,7 @@
                 玩家查询
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" data-pjax="" method="post" role="form">
+                <form class="form-horizontal" action="/game/player" data-pjax="" method="post" role="form">
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">服务器</label>
                         <div class="col-sm-8">
@@ -25,26 +25,26 @@
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">角色ID</label>
                         <div class="col-sm-8">
-                            <input type="text" id="role_id" name="role_id" class="form-control" id="txt_parentdepartment" placeholder="角色ID">
+                            <input type="text" id="user_id" name="user_id" class="form-control" id="txt_parentdepartment" placeholder="角色ID">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">角色名称</label>
                         <div class="col-sm-8">
-                            <input type="text" id="role_name" name="role_name" class="form-control" id="txt_departmentlevel" placeholder="角色名称">
+                            <input type="text" id="name" name="name" class="form-control" id="txt_departmentlevel" placeholder="角色名称">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">账号ID</label>
                         <div class="col-sm-8">
-                            <input type="text" id="user_id" name="user_id" class="form-control" id="txt_statu" placeholder="账号ID">
+                            <input type="text" id="account_id" name="account_id" class="form-control" id="txt_statu" placeholder="账号ID">
                         </div>
                     </div>
                     <div class="line line-dashed b-b line-lg pull-in"></div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-8">
-                            <button type="button" id="btn_submit"  class="btn btn-info">提交</button>
+                            <button type="submit" id="btn_submit"  class="btn btn-info">提交</button>
                         </div>
                     </div>
                 </form>
@@ -52,7 +52,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -62,21 +61,17 @@
             </div>
             <div class="modal-body">
                 <div class="portlet-body row">
-                    <!--<div class="line-lg media-heading container">-->
-                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
-                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
-                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
-                    <!--</div>-->
-                    <!--<div class="line-lg media-heading container">-->
-                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
-                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
-                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
-                    <!--</div>-->
-                    <!--<div class="line-lg media-heading container">-->
-                        <!--<div class="col-md-2 name">角色ID：<a href="/game/player">123123123</a></div>-->
-                        <!--<div class="col-md-3 name">角色名称：<a href="/game/player">的身份的三个地方</a> </div>-->
-                        <!--<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>-->
-                    <!--</div>-->
+                    {% for item in users %}
+                    <div class="line-lg media-heading container">
+                        <div class="col-md-2 name">角色ID：{{item['user_id']}}</div>
+                        <div class="col-md-3 name">角色名称：{{item['name']}}</div>
+                        <div class="col-md-1 value"><a class="btn btn-sm btn-info" uid="{{item['user_id']}}" href="javascript:void(0);">View</a> </div>
+                        <form id="form-{{item['user_id']}}" action="/game/player" method="post">
+                            <input type="hidden" value="{{item['user_id']}}" name="user_id">
+                            <input type="hidden" value="{{item['user_id']}}" name="server">
+                        </form>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="modal-footer">
@@ -88,50 +83,15 @@
 
 <script>
     $(document).ready(function() {
-//        $('#myModal').modal();
+        var show = {{show}};
+        if(show == 1){
+            $('#myModal').modal();
+        }
 
-        $('#btn_submit').click(function () {
-            $('.form-horizontal').submit();
-
-//           var server = $('#server').val();
-//           var role_id = $('#role_id').val();
-//           var role_name = $('#role_name').val();
-//           var user_id = $('#user_id').val();
-//
-//            $.ajax({
-//                url:'/game/index',
-//                type:'POST', //GET
-//                async:true,    //或false,是否异步
-//                data:{
-//                    server:server,
-//                    role_id:role_id,
-//                    role_name:role_name,
-//                    user_id:user_id,
-//                },
-//                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-//                success:function(respon){
-//                    if(respon['error'] == 0){
-//                        var html = '';
-//
-//                        if(respon['count'] == 1){
-//                            window.location = '/game/player';
-//                        }else{
-//                            var data = respon['data'];
-//                            debugger;
-//                            for(var item in data){
-//                                html += '<div class="line-lg media-heading container">';
-//                                html += '<div class="col-md-2 name">角色ID：<a href="/game/player">'+data[item]['user_id']+'</a> </div>';
-//                                html += '<div class="col-md-3 name">角色名称：<a href="/game/player">'+data[item]['name']+'</a> </div>';
-//                                html += '<div class="col-md-1 value"><a class="btn btn-sm btn-info" href="/game/player">View</a> </div>';
-//                                html += '</div>';
-//                            }
-//                            $('.portlet-body').html(html);
-//                            $('#myModal').modal();
-//                        }
-//                    }
-//                }
-//            });
+        $('.btn-sm').click(function () {
+            var uid = $(this).attr('uid');
+            $('#form-'+uid).submit();
+            $('#myModal').modal();
         });
-
     });
 </script>

@@ -36,25 +36,32 @@ class GameController extends ControllerBase
      */
     public function playerAction()
     {
+        $show = $server = 0;
+        $users = [];
         if ($_POST) {
             $server = $this->request->get('server', ['string', 'trim']);
-            $role_id = $this->request->get('role_id', ['string', 'trim']);
-            $data['role_name'] = $this->request->get('role_name', ['string', 'trim']);
-            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
-            $data['id'] = $server . '-' . $role_id;
+            $user_id = $this->request->get('user_id', ['string', 'trim']);
+            $data['name'] = $this->request->get('name', ['string', 'trim']);
+            $data['account_id'] = $this->request->get('account_id', ['string', 'trim']);
+            $data['user_id'] = $server . '-' . $user_id;
+            $data['user_id'] = 12001 . '-' . $user_id;
 
-            if (!$data['id']) {
+            if (empty($user_id) && !isset($data['name']) && !isset($data['account_id'])) {
                 Utils::tips('error', '数据不完整', '/game/player');
                 exit;
             }
 
             $result = $this->gameModel->profile($data);
+            if(empty($result)){
+                Utils::tips('error', '服务器ID错误', '/game/player');
+                exit;
+            }
 
             if ($result['code'] == 1) {
                 Utils::tips('error', '没有该用户', '/game/player');
                 exit;
             }
-            if ($result['data']['account_id']) {
+            if ($result['count'] == 1) {
                 $where['user_id'] = $result['data']['account_id'];
                 $count = $this->tradeModel->getCount($where);
                 $this->view->trade = $this->tradeModel->getList($where, 1, $count);
@@ -64,11 +71,17 @@ class GameController extends ControllerBase
                 $this->view->pick("game/playerone");
             }
             else {
+                $show = 1;
+                $users = $result['data'];
                 $this->view->pick("game/player");
             }
         }
 
         $result = $this->serverModel->getLists();
+
+        $this->view->users = $users;
+        $this->view->show = $show;
+        $this->view->server = $server;
         $this->view->lists = $result;
     }
 
