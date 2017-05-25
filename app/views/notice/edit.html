@@ -84,15 +84,15 @@
 <script>
     $(document).ready(function() {
         var markupStr = "{{notice['content']}}";
+        $("#summernote").summernote({
+            height: 300,                 // set editor height
+        });
+
         $('#summernote').summernote('code', markupStr);
 
         $('#summernote').on('summernote.change', function(we, contents, $editable) {
             var markupStr = $('#summernote').summernote('code');
             $('#formcontent').val(markupStr);
-        });
-
-        $("#summernote").summernote({
-            height: 300,                 // set editor height
         });
 
         $(".form_datetime").datetimepicker({
