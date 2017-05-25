@@ -114,4 +114,8 @@ class Activity extends Model
         }
     }
 
+    public function logs($data){
+        $result = $this->utilsModel->yarRequest('Activity', 'logs', $data);
+        return $result;
+    }
 }

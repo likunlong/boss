@@ -227,6 +227,28 @@ class ActivityController extends ControllerBase
         Utils::tips('success', '配置活动成功', '/activity/index');
     }
 
+    public function logsAction(){
+        $currentPage = $this->request->get('page', 'int') ? $this->request->get('page', 'int') : 1;
+        $pagesize = 30;
+
+        $data['item_id'] = $this->request->get('item_id', ['string','trim']);
+        $data['user_id'] = $this->request->get('user_id', ['string','trim']);
+        $data['cfg_id'] = $this->request->get('cfg_id', ['string','trim']);
+        $data['prop'] = $this->request->get('prop', ['string','trim']);
+        $data['start_time'] = $this->request->get('start_time', ['string','trim']);
+        $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+        $isquery = empty(array_filter($data)) ? 0 : 1;
+        $data['page'] = $currentPage;
+        $data['size'] = $pagesize;
+
+        $result = $this->activityModel->logs($data);
+
+        $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
+        $this->view->lists = $result['data'];
+        $this->view->query = $data;
+        $this->view->isquery = $isquery;
+    }
+
     /**
      * 导入活动
      */
