@@ -66,7 +66,6 @@ class GameController extends ControllerBase
                 $this->view->trade = $this->tradeModel->getList($where, 1, $count);
 
                 $this->view->user = $result['data'];
-                $this->view->server = $server;
                 $this->view->pick("game/playerone");
             }
             else {
@@ -77,7 +76,6 @@ class GameController extends ControllerBase
         }
 
         $result = $this->serverModel->getLists();
-
         $this->view->users = $users;
         $this->view->show = $show;
         $this->view->server = $server;
