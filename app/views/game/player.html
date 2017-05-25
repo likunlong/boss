@@ -68,7 +68,7 @@
                         <div class="col-md-1 value"><a class="btn btn-sm btn-info" uid="{{item['user_id']}}" href="javascript:void(0);">View</a> </div>
                         <form id="form-{{item['user_id']}}" action="/game/player" method="post">
                             <input type="hidden" value="{{item['user_id']}}" name="user_id">
-                            <input type="hidden" value="{{item['user_id']}}" name="server">
+                            <input type="hidden" value="{{item['server']}}" name="server">
                         </form>
                     </div>
                     {% endfor %}

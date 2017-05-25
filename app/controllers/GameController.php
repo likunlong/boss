@@ -44,7 +44,6 @@ class GameController extends ControllerBase
             $data['name'] = $this->request->get('name', ['string', 'trim']);
             $data['account_id'] = $this->request->get('account_id', ['string', 'trim']);
             $data['user_id'] = $server . '-' . $user_id;
-            $data['user_id'] = 12001 . '-' . $user_id;
 
             if (empty($user_id) && !isset($data['name']) && !isset($data['account_id'])) {
                 Utils::tips('error', '数据不完整', '/game/player');
