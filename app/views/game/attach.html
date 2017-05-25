@@ -78,7 +78,7 @@
                         <!--站内邮件-->
                         <div class="tab-pane fade in active" id="fademail">
                             <div class="panel-body">
-                                <form class="form-horizontal " method="post" action="/game/reissue" data-pjax="" role="form">
+                                <form class="form-horizontal " method="post" action="/game/attach" data-pjax="" role="form">
                                     <div class="form-group">
                                         <label for="firstname" class="col-sm-2 control-label"></label>
                                         <div class="col-sm-8">
@@ -234,7 +234,7 @@
         $('#prop').change(function(){
             var action = this.value;
 
-            if(action == 'prop'){
+            if(action == 'attach'){
                 $('#fadeother').attr('class','tab-pane fade');
                 $('#fademail').attr('class','tab-pane fade in active');
                 $('#myTab li').attr('class','');
@@ -267,7 +267,7 @@
             }
 
             $.ajax({
-                url:'/game/reissue',
+                url:'/game/attach',
                 type:'POST', //GET
                 async:true,    //或false,是否异步
                 data:{

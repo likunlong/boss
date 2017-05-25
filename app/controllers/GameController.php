@@ -90,15 +90,6 @@ class GameController extends ControllerBase
     {
     }
 
-
-    /**
-     * 站内邮件以及附件
-     */
-    public function mailAction()
-    {
-    }
-
-
     /**
      * 充值排行
      */
@@ -107,17 +98,9 @@ class GameController extends ControllerBase
     }
 
     /**
-     * 玩家查询
-     */
-    public function searchAction()
-    {
-
-    }
-
-    /**
      * 补发管理
      */
-    public function reissueAction()
+    public function attachAction()
     {
         if ($_POST) {
             $type = $this->request->get('action', ['string', 'trim']);
@@ -187,25 +170,9 @@ class GameController extends ControllerBase
     }
 
     /**
-     * 补发其他属性
-     */
-    public function otherAction()
-    {
-
-    }
-
-    /**
      * 补发记录
      */
     public function logAction()
-    {
-
-    }
-
-    /**
-     * 等级分布
-     */
-    public function levelAction()
     {
 
     }
