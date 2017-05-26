@@ -50,7 +50,7 @@ class GameController extends ControllerBase
             }
 
             $result = $this->gameModel->profile($data);
-            if(empty($result)){
+            if (empty($result)) {
                 Utils::tips('error', '服务器ID错误', '/game/player');
                 exit;
             }
@@ -103,68 +103,52 @@ class GameController extends ControllerBase
     {
         if ($_POST) {
             $type = $this->request->get('action', ['string', 'trim']);
+            $data['zone'] = $this->request->get('server', ['string', 'trim']);
             $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
             $data['amount'] = $this->request->get('amount', ['string', 'trim']);
             $data['msg'] = $this->request->get('msg', ['string', 'trim']);
 
-            if(empty($type)){
+            if (empty($type) || empty($data['zone']) || empty($data['user_id'])) {
+                echo json_encode(array('error' => 1, 'data' => '数1据不完整'));
+                exit;
+            }
+
+            if ($type == 'attach' && empty($data['amount'])) {
+                echo json_encode(array('error' => 1, 'data' => '数2据不完整'));
+                exit;
+            }
+
+            if (($type == 'coin' || $type == 'exp') && empty($data['amount'])) {
+                echo json_encode(array('error' => 1, 'data' => '数3据不完整'));
+                exit;
+            }
+
+            if ($type == 'mail' && empty($data['msg'])) {
+                echo json_encode(array('error' => 1, 'data' => '数4据不完整'));
+                exit;
+            }
+
+            if ($type == 'attach') {
+                $data['attach'] = $data['amount'];
                 unset($data['amount']);
-                $type = 'attach';
-                $data['attach'] = $this->request->get('attach', ['string', 'trim']);
-            }
-
-            $fail = 0;
-            $tmparray = explode('-',$data['user_id']);
-            if(count($tmparray) <= 1){
-                $fail = 1;
-            }
-
-            if($type == 'attach'){
-                if($fail == 1){
-                    Utils::tips('error', '用户ID不正确', '/game/reissue');
-                }
-                if (!$data['attach']) {
-                    Utils::tips('error', '数据不完整', '/game/reissue');
-                }
-            }else{
-                if($fail == 1){
-                    echo json_encode(array('error' => 1, 'data' => '用户ID不正确'));
-                    exit;
-                }
-                if ($type == 'mail'){
-                    if (!$data['msg']) {
-                        echo json_encode(array('error' => 1, 'data' => '数据不完整'));
-                        exit;
-                    }
-                }else{
-                    if (!$data['amount']) {
-                        echo json_encode(array('error' => 1, 'data' => '数据不完整'));
-                        exit;
-                    }
-                }
             }
 
             $result = $this->gameModel->prop($type, $data);
 
-            if ($result) {
-                if($type == 'attach'){
-                    Utils::tips('success', '补发成功', '/game/reissue');
-                }else{
-                    echo json_encode(array('error' => 0, 'data' => '补发成功'));
-                    exit;
-                }
+            if (!empty($result)) {
+                echo json_encode(array('error' => 0, 'data' => '补发成功'));
+                exit;
             }
             else {
-                if($type == 'attach'){
-                    Utils::tips('error', '补发失败', '/game/reissue');
-                }else{
-                    echo json_encode(array('error' => 1, 'data' => '补发失败'));
-                    exit;
-                }
+                echo json_encode(array('error' => 1, 'data' => '补发失败'));
+                exit;
             }
         }
 
         $result = $this->gameModel->attribute();
+        $server = $this->serverModel->getLists();
+
+        $this->view->server = $server;
         $this->view->lists = $result['data'];
     }
 

@@ -33,12 +33,7 @@ class Game extends Model
     public function prop($type, $data)
     {
         $result = $this->utilsModel->yarRequest('prop', $type, $data);
-        if ($result['code'] == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return $result;
     }
 
     public function attribute()
