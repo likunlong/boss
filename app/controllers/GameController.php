@@ -128,7 +128,7 @@ class GameController extends ControllerBase
                 exit;
             }
 
-            if ($type == 'attach') {
+            if (stristr($type, 'attach')) {
                 $data['attach'] = $data['amount'];
                 unset($data['amount']);
             }
