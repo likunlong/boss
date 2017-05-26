@@ -60,7 +60,8 @@ class ActivityController extends ControllerBase
             $data['url'] = $this->request->get('url', ['string','trim']);
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['img_small'] = $this->request->get('img_small', ['string','trim']);
-            $data['custom'] = $this->request->get('formcontent', ['string','trim']);
+            $data['custom'] = $this->request->get('custom', ['string','trim']);
+            $data['content'] = $this->request->get('formcontent');
             $data['visible'] = $this->request->get('visible', 'int');
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
@@ -103,7 +104,8 @@ class ActivityController extends ControllerBase
             $data['url'] = $this->request->get('url', ['string','trim']);
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['img_small'] = $this->request->get('img_small', ['string','trim']);
-            $data['custom'] = $this->request->get('formcontent', ['string','trim']);
+            $data['custom'] = $this->request->get('custom', ['string','trim']);
+            $data['content'] = $this->request->get('formcontent');
             $data['visible'] = $this->request->get('visible', 'int');
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');

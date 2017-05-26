@@ -58,7 +58,7 @@ class NoticeController extends ControllerBase
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
-            $data['content'] = $this->request->get('formcontent', ['string','trim']);
+            $data['content'] = $this->request->get('formcontent');
 
 
             if (!$data['title'] || !$data['start_time'] || !$data['end_time'] || !$data['content']) {
@@ -98,7 +98,7 @@ class NoticeController extends ControllerBase
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
-            $data['content'] = $this->request->get('formcontent', ['string','trim']);
+            $data['content'] = $this->request->get('formcontent');
 
             if (!$data['title'] || !$data['start_time'] || !$data['end_time'] || !$data['content']) {
                 Utils::tips('error', '数据不完整', '/notice/index');
