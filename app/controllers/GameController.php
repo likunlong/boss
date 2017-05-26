@@ -39,13 +39,12 @@ class GameController extends ControllerBase
         $show = $server = 0;
         $users = [];
         if ($_POST) {
-            $server = $this->request->get('server', ['string', 'trim']);
-            $user_id = $this->request->get('user_id', ['string', 'trim']);
+            $data['zone'] = $this->request->get('server', ['string', 'trim']);
+            $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
             $data['name'] = $this->request->get('name', ['string', 'trim']);
             $data['account_id'] = $this->request->get('account_id', ['string', 'trim']);
-            $data['user_id'] = $server . '-' . $user_id;
 
-            if (empty($user_id) && !isset($data['name']) && !isset($data['account_id'])) {
+            if (empty($data['zone']) || (empty($data['user_id']) && empty($data['name']) && empty($data['account_id']))) {
                 Utils::tips('error', '数据不完整', '/game/player');
                 exit;
             }
