@@ -109,22 +109,22 @@ class GameController extends ControllerBase
             $data['msg'] = $this->request->get('msg', ['string', 'trim']);
 
             if (empty($type) || empty($data['zone']) || empty($data['user_id'])) {
-                echo json_encode(array('error' => 1, 'data' => '数1据不完整'));
+                echo json_encode(array('error' => 1, 'data' => '数据不完整'));
                 exit;
             }
 
             if ($type == 'attach' && empty($data['amount'])) {
-                echo json_encode(array('error' => 1, 'data' => '数2据不完整'));
+                echo json_encode(array('error' => 1, 'data' => '数据不完整'));
                 exit;
             }
 
             if (($type == 'coin' || $type == 'exp') && empty($data['amount'])) {
-                echo json_encode(array('error' => 1, 'data' => '数3据不完整'));
+                echo json_encode(array('error' => 1, 'data' => '数据不完整'));
                 exit;
             }
 
             if ($type == 'mail' && empty($data['msg'])) {
-                echo json_encode(array('error' => 1, 'data' => '数4据不完整'));
+                echo json_encode(array('error' => 1, 'data' => '数据不完整'));
                 exit;
             }
 
