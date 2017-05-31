@@ -73,6 +73,7 @@ class UtilsController extends Controller
             DI::getDefault()->get('session')->set('app', $game->game_id);
             DI::getDefault()->get('session')->set('group', $game->class_id);
             DI::getDefault()->get('session')->set('lang', $game->version);
+            DI::getDefault()->get('session')->set('game_name', $game->name);
 
             echo json_encode(array('error' => 0, 'data' => array()));
             exit;
