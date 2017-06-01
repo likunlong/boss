@@ -106,7 +106,8 @@ class GameController extends ControllerBase
             $data['zone'] = $this->request->get('server', ['string', 'trim']);
             $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
             $data['amount'] = $this->request->get('amount', ['string', 'trim']);
-            $data['msg'] = $this->request->get('msg', ['string', 'trim']);
+            $data['title'] = $this->request->get('title', ['string', 'trim']);
+            $data['msg'] = $this->request->get('msg', 'string');
 
             if (empty($type) || empty($data['zone']) || empty($data['user_id'])) {
                 echo json_encode(array('error' => 1, 'data' => '数据不完整'));
