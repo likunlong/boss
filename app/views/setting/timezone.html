@@ -1,6 +1,6 @@
 <div class="app-content-body ">
     <div class="bg-light lter b-b wrapper-md">
-        <h1 class="m-n font-thin h3">设置 - 时区设置</h1>
+        <h1 class="m-n font-thin h3">设置 - 时区设置 -  <span><?php if(!empty($_SESSION['zone_text'])){  echo '当前时区：'. $_SESSION['zone_text']; }?> </span></h1>
     </div>
     <div class="wrapper-md">
         <div class="row row-sm">
@@ -15,13 +15,13 @@
                     </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="javascript:void(0);" timeZone="Asia/Shanghai" class="btn btn-success font-bold m">上海</a>
-                            <a href="javascript:void(0);" timeZone="Asia/Taipei" class="btn btn-success font-bold m">台北</a>
-                            <a href="javascript:void(0);" timeZone="Asia/Seoul" class="btn btn-success font-bold m">韩国</a>
-                            <a href="javascript:void(0);" timeZone="Asia/Tokyo" class="btn btn-success font-bold m">日本</a>
-                            <a href="javascript:void(0);" timeZone="Asia/Bangkok" class="btn btn-success font-bold m">泰国</a>
-                            <a href="javascript:void(0);" timeZone="Asia/Bangkok" class="btn btn-success font-bold m">越南</a>
-                            <a href="javascript:void(0);" timeZone="Asia/Singapore" class="btn btn-success font-bold m">马来西亚</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Shanghai" class="btn btn-success font-bold m-xs">上海</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Taipei" class="btn btn-success font-bold m-xs">台北</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Seoul" class="btn btn-success font-bold m-xs">韩国</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Tokyo" class="btn btn-success font-bold m-xs">日本</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Bangkok" class="btn btn-success font-bold m-xs">泰国</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Bangkok" class="btn btn-success font-bold m-xs">越南</a>
+                            <a href="javascript:void(0);" timeZone="Asia/Singapore" class="btn btn-success font-bold m-xs">马来西亚</a>
                         </li>
                     </ul>
                 </div>
@@ -37,10 +37,10 @@
                     </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="javascript:void(0);" timeZone="Europe/London" class="btn btn-success font-bold m">伦敦</a>
-                            <a href="javascript:void(0);" timeZone="Europe/Paris" class="btn btn-success font-bold m">巴黎</a>
-                            <a href="javascript:void(0);" timeZone="Europe/Rome" class="btn btn-success font-bold m">罗马</a>
-                            <a href="javascript:void(0);" timeZone="Europe/Berlin" class="btn btn-success font-bold m">柏林</a>
+                            <a href="javascript:void(0);" timeZone="Europe/London" class="btn btn-success font-bold m-xs">伦敦</a>
+                            <a href="javascript:void(0);" timeZone="Europe/Paris" class="btn btn-success font-bold m-xs">巴黎</a>
+                            <a href="javascript:void(0);" timeZone="Europe/Rome" class="btn btn-success font-bold m-xs">罗马</a>
+                            <a href="javascript:void(0);" timeZone="Europe/Berlin" class="btn btn-success font-bold m-xs">柏林</a>
                         </li>
                     </ul>
                 </div>
@@ -56,9 +56,9 @@
                     </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="javascript:void(0);" timeZone="America/Los_Angeles" class="btn btn-success font-bold m">洛杉矶</a>
-                            <a href="javascript:void(0);" timeZone="America/Chicago" class="btn btn-success font-bold m">芝加哥</a>
-                            <a href="javascript:void(0);" timeZone="America/Vancouver" class="btn btn-success font-bold m">温哥华</a>
+                            <a href="javascript:void(0);" timeZone="America/Los_Angeles" class="btn btn-success font-bold m-xs">洛杉矶</a>
+                            <a href="javascript:void(0);" timeZone="America/Chicago" class="btn btn-success font-bold m-xs">芝加哥</a>
+                            <a href="javascript:void(0);" timeZone="America/Vancouver" class="btn btn-success font-bold m-xs">温哥华</a>
                         </li>
                     </ul>
                 </div>
@@ -88,6 +88,7 @@
     $(document).ready(function() {
         $(".btn-success").click(function () {
             var timeZone = $(this).attr('timeZone');
+            var zonetext = $(this).text();
 
             $.ajax({
                 url:'/setting/timezone',
@@ -95,10 +96,12 @@
                 async:true,    //或false,是否异步
                 data:{
                     timeZone:timeZone,
+                    zonetext:zonetext,
                 },
                 dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success:function(respon){
                     if(respon['error'] == 0){
+                        $('.m-n span').html('当前时区：'+zonetext);
                         $('.modal-body').html('<span>'+ respon['data'] +'</span>');
                         $('#myModal').modal();
                     }

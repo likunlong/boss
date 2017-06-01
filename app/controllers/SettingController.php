@@ -153,6 +153,7 @@ class SettingController extends ControllerBase
     {
         if ($_POST) {
             $timeZone = $this->request->get('timeZone', ['string','trim']);
+            $zonetext = $this->request->get('zonetext', ['string','trim']);
 
             if (!$timeZone) {
                 echo json_encode(array('error' => 0, 'data' => '参数错误'));
@@ -173,6 +174,7 @@ class SettingController extends ControllerBase
             }
 
             $this->session->set('timezone', $timeZone);
+            $this->session->set('zone_text', $zonetext);
             echo json_encode(array('error' => 0, 'data' => '时区切换成功'));
             exit;
         }
