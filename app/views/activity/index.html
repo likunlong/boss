@@ -29,8 +29,8 @@
                                         <div class="line line-lg b-b b-light"></div>
                                         <div class="text-muted">
                                             <i class="fa fa-clock-o text-muted"></i> {{item['start_time']}}
-                                            <a href="/activity/edit?id={{item['id']}}" class="m-l-sm"><i class="fa fa-user icon-note text-muted"></i> 修改 </a>
-                                            <a href="/activity/view?id={{item['id']}}" class="m-l-sm"><i class="fa fa-comment-o icon-settings text-muted"></i> 查看 </a>
+                                            <a href="/activity/edit?id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-user icon-note text-muted"></i> 修改 </a>
+                                            <a href="/activity/view?id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-comment-o icon-settings text-muted"></i> 查看 </a>
                                             {%if item['status'] == 1%}
                                             <span class="label bg-success m-l-sm" title="">正常</span>
                                             {% else %}
