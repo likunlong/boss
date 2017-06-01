@@ -39,7 +39,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="show other" id="coin">
+                                    <div class="hide other" id="coin">
                                         <div class="form-group">
                                             <label for="user_id" class="col-sm-2 control-label">玩家ID</label>
                                             <div class="col-sm-8">
@@ -146,6 +146,16 @@
         $("#summernote").summernote({
             height: 300,                 // set editor height
         });
+
+        var show = $('#prop').val();
+        $('#act').val(show);
+        if (show == 'attach'){
+            $('#attach').attr('class','show other');
+        }else if(show == 'mail'){
+            $('#mail').attr('class','show other');
+        }else{
+            $('#coin').attr('class','show other');
+        }
 
         $('#prop').change(function(){
             var action = this.value;
