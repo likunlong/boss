@@ -94,7 +94,7 @@ class SettingController extends ControllerBase
         $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
         $this->gatewaysModel->tips = $this->request->get('tips', ['string','trim']);
 
-        if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway || !$this->gatewaysModel->sub) {
+        if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway) {
             Utils::tips('error', '数据不完整', '/setting/creategateways');
         }
 
@@ -119,7 +119,7 @@ class SettingController extends ControllerBase
         $gateways->sandbox = $this->request->get('sandbox', 'int');
         $gateways->tips = $this->request->get('tips', ['string','trim']);
 
-        if (!$gateways->name || !$gateways->app_id || !$gateways->gateway || !$gateways->sub) {
+        if (!$gateways->name || !$gateways->app_id || !$gateways->gateway) {
             Utils::tips('error', '数据不完整', '/setting/editgateways?id=' . $gateways['id']);
         }
 
