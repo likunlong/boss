@@ -42,12 +42,12 @@ class Game extends Model
         return $result;
     }
 
-    public function getGame()
+    public function getGame($class_id)
     {
-        $sql = "SELECT * FROM class WHERE 1=1  ORDER BY create_time DESC";
+        $sql = "SELECT * FROM class WHERE 1=1 AND id = '$class_id' ORDER BY create_time DESC";
         $query = DI::getDefault()->get('dbData')->query($sql);
         $query->setFetchMode(Db::FETCH_ASSOC);
-        $data = $query->fetchAll();
+        $data = $query->fetch();
         return $data;
     }
 

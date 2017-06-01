@@ -30,6 +30,7 @@ class UtilsController extends Controller
 
     public function switch_appAction()
     {
+        $allow_game = DI::getDefault()->get('session')->get('resources')['allow_game'];
         if ($_POST) {
             $gameid = $this->request->get('gameid', 'int');
 
@@ -37,13 +38,22 @@ class UtilsController extends Controller
                 echo json_encode(array('error' => 1, 'data' => '参数错误'));
                 exit;
             }
-
             $version = $this->gameModel->getVersionList($gameid);
+
+            foreach ($version as $key => $item) {
+                if (!in_array($item['game_id'], $allow_game)) {
+                    unset($version[$key]);
+                }
+            }
             echo json_encode(array('error' => 0, 'data' => $version));
             exit;
         }
 
-        $gameList = $this->gameModel->getGame();
+        foreach ($allow_game as $item) {
+            $class_id = substr($item, 0, 3);
+            $gameList[$class_id] = $this->gameModel->getGame($class_id);
+        }
+
         $this->view->lists = empty($gameList) ? array() : $gameList;
     }
 
