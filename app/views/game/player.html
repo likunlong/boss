@@ -90,8 +90,8 @@
 
         $('.btn-sm').click(function () {
             var uid = $(this).attr('uid');
-            $('#form-'+uid).submit();
             $('#myModal').modal('hide');
+            setTimeout("$('#form-'+uid).submit()",500);
         });
     });
 </script>
