@@ -91,7 +91,7 @@
         $('.btn-sm').click(function () {
             var uid = $(this).attr('uid');
             $('#form-'+uid).submit();
-            setTimeout("$('.in ').removeClass('modal-backdrop')",1000);
+            $('#myModal').modal('hide');
         });
     });
 </script>

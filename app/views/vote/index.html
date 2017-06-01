@@ -63,16 +63,16 @@
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <form id="collapseOne" role="form" data-pjax="">
+        <form id="collapseOne" action="/vote/index" method="get" role="form" data-pjax="">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="myModalLabel">活动查询</h4>
+                    <h4 class="modal-title" id="myModalLabel">投票查询</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="txt_parentdepartment">关键字</label>
-                        <input type="text" name="search" class="form-control" value="{{query['title']}}" id="txt_parentdepartment" placeholder="">
+                        <input type="text" name="title" class="form-control" value="{{query['title']}}" id="txt_parentdepartment" placeholder="">
                     </div>
 
                     <div class="form-group">
@@ -100,9 +100,9 @@
             $('#myModal').modal();
         });
 
-        $("#btn_submit").click(function () {
-            $('#collapseOne').submit();
-            setTimeout("$('.in ').removeClass('modal-backdrop')",1000);
+        $(".btn-primary").click(function () {
+            $('#myModal').modal('hide');
+            setTimeout("$('#collapseOne').submit()",500);
         });
 
         $(".form_datetime").datetimepicker({
