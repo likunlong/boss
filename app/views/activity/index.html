@@ -20,33 +20,30 @@
                         <div class="m-b-md">
                             <div class="panel-body">
                                 {% for item in lists %}
-                                <article class="media">
-                                    <div class="pull-left">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x text-info"></i>
-                                            <i class="fa fa-file-o fa-stack-1x text-white"></i>
-                                        </span>
+                                <div class="panel b-b ">
+                                    <div class="wrapper-lg">
+                                        <h2 class="m-t-none"><a class="text-info" href="/activity/edit?id={{item['id']}}">{{item['title']}}</a></h2>
+                                        <div>
+                                            <p>{{item['content']}}</p>
+                                        </div>
+                                        <div class="line line-lg b-b b-light"></div>
+                                        <div class="text-muted">
+                                            <i class="fa fa-clock-o text-muted"></i> {{item['start_time']}}
+                                            <a href="/activity/edit?id={{item['id']}}" class="m-l-sm"><i class="fa fa-user icon-note text-muted"></i> 修改 </a>
+                                            <a href="/activity/view?id={{item['id']}}" class="m-l-sm"><i class="fa fa-comment-o icon-settings text-muted"></i> 查看 </a>
+                                            {%if item['status'] == 1%}
+                                            <span class="label bg-success m-l-sm" title="">正常</span>
+                                            {% else %}
+                                            <span class="label bg-warning m-l-sm" title="">限制</span>
+                                            {% endif %}
+                                            {%if item['visible'] == 1%}
+                                            <span class="label bg-info m-l-sm" title="">显示</span>
+                                            {% else %}
+                                            <span class="label bg-dark m-l-sm" title="">隐藏</span>
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                    <div class="pull-right">
-                                        <a class="" href="/activity/edit?id={{item['id']}}" data-pjax=""><i class="close icon-wrench m-t-lg m-r"></i></a>
-                                        <a class="" href="/activity/view?id={{item['id']}}" data-pjax=""><i class="close icon-settings m-t-lg m-r"></i></a>
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="/activity/edit?id={{item['id']}}" class="h4 text-info block m-b-xs" data-pjax="">{{item['title']}}</a>
-                                        {%if item['status'] == 1%}
-                                        <span class="label bg-success" title="">正常</span>
-                                        {% else %}
-                                        <span class="label bg-warning" title="">限制</span>
-                                        {% endif %}
-                                        {%if item['visible'] == 1%}
-                                        <span class="label bg-info" title="">显示</span>
-                                        {% else %}
-                                        <span class="label bg-dark" title="">隐藏</span>
-                                        {% endif %}
-                                        <small class="block m-t-xs">{{item['content']}}</small>
-                                        <em class="text-xs">{{item['start_time']}}</em>
-                                    </div>
-                                </article>
+                                </div>
                                 <!--<div class="line line-dashed b-b line-lg pull-in"></div>-->
                                 {% endfor %}
                             </div>
