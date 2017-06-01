@@ -22,7 +22,7 @@
                                 {% for item in lists %}
                                 <div class="panel b-b ">
                                     <div class="wrapper-lg">
-                                        <h2 class="m-t-none"><a class="text-info" href="/activity/edit?id={{item['id']}}">{{item['title']}}</a></h2>
+                                        <h2 class="m-t-none"><a class="text-info" href="/activity/edit?id={{item['id']}}" data-pjax>{{item['title']}}</a></h2>
                                         <div>
                                             <p>{{item['content']}}</p>
                                         </div>
