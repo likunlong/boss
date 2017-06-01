@@ -70,6 +70,7 @@ class GameController extends ControllerBase
             else {
                 $show = 1;
                 $users = $result['data'];
+                $server = $data['zone'];
                 $this->view->pick("game/player");
             }
         }
