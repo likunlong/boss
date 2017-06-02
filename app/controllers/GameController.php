@@ -36,10 +36,11 @@ class GameController extends ControllerBase
      */
     public function playerAction()
     {
+        $data['zone'] = $this->request->get('server', ['string', 'trim']);
         $show = $server = 0;
         $users = [];
-        if ($_POST) {
-            $data['zone'] = $this->request->get('server', ['string', 'trim']);
+        if ($data['zone']) {
+
             $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
             $data['name'] = $this->request->get('name', ['string', 'trim']);
             $data['account_id'] = $this->request->get('account_id', ['string', 'trim']);
