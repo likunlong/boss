@@ -11,7 +11,7 @@
                 玩家查询
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" action="/game/player" data-pjax="" method="get" role="form">
+                <form class="form-horizontal" action="/game/player" data-pjax="" method="post" role="form">
                     <div class="form-group">
                         <label for="firstname" class="col-sm-2 control-label">服务器</label>
                         <div class="col-sm-8">
@@ -66,7 +66,7 @@
                         <div class="col-md-2 name">角色ID：{{item['user_id']}}</div>
                         <div class="col-md-3 name">角色名称：{{item['name']}}</div>
                         <div class="col-md-1 value"><a class="btn btn-sm btn-info" uid="{{item['user_id']}}" href="javascript:void(0);">View</a> </div>
-                        <form id="form-{{item['user_id']}}" action="/game/player" data-pjax="" method="get">
+                        <form id="form-{{item['user_id']}}" action="/game/player" data-pjax="" method="post">
                             <input type="hidden" value="{{item['user_id']}}" name="user_id">
                             <input type="hidden" value="{{server}}" name="server">
                         </form>
@@ -90,8 +90,8 @@
 
         $('.btn-sm').click(function () {
             var uid = $(this).attr('uid');
-            $('#form-'+uid).submit();
             $('#myModal').modal('hide');
+            setTimeout(function(){$('#form-'+uid).submit()},300);
         });
     });
 </script>
