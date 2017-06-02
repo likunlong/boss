@@ -96,7 +96,12 @@ class ProductController extends ControllerBase
             Utils::tips('success', '添加成功', '/product/index');
         }
 
-        $this->view->parent = $this->gatewaysModel->getParent();
+        $parent = $this->gatewaysModel->getParent();
+
+        if(empty($parent)){
+            Utils::tips('error', '请先创建网关', '/setting/gateways?do=create');
+        }
+        $this->view->parent = $parent;
     }
 
     /**

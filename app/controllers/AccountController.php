@@ -24,4 +24,41 @@ class AccountController extends ControllerBase
     {
     }
 
+
+    /**
+     * 信息完善 - 配置预览
+     */
+    public function fillAction()
+    {
+    }
+
+
+    /**
+     * 信息完善 - 日志
+     */
+    public function fill_logsAction()
+    {
+    }
+
+
+    /**
+     * 信息完善 - 配置管理
+     */
+    public function fill_manageAction()
+    {
+        $do = $this->request->get('do', ['string', 'trim']);
+
+        switch ($do) {
+            case 'create':
+                // do something
+                break;
+            case 'edit':
+                // do something
+                break;
+            case 'remove':
+                // do something
+                break;
+        }
+    }
+
 }
