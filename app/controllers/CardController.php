@@ -2,18 +2,18 @@
 
 
 /**
- * 邀请
+ * 礼品卡
  */
 namespace MyApp\Controllers;
 
 
 use Phalcon\Mvc\Dispatcher;
 
-class InviteController extends ControllerBase
+class CardController extends ControllerBase
 {
 
     /**
-     * 邀请 - 预览
+     * 卡片 - 概况信息
      */
     public function indexAction()
     {
@@ -21,7 +21,7 @@ class InviteController extends ControllerBase
 
 
     /**
-     * 邀请 - 日志
+     * 卡片 - 日志
      */
     public function logsAction()
     {
@@ -29,7 +29,7 @@ class InviteController extends ControllerBase
 
 
     /**
-     * 邀请 - 配置管理
+     * 卡片 - 管理
      */
     public function manageAction()
     {
