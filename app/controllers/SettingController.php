@@ -16,7 +16,9 @@ class SettingController extends ControllerBase
 {
 
     private $gatewaysModel;
+
     private $timezoneModel;
+
 
     public function initialize()
     {
@@ -25,10 +27,11 @@ class SettingController extends ControllerBase
         $this->timezoneModel = new Timezone();
     }
 
+
     public function indexAction()
     {
-
     }
+
 
     /**
      * 网关
@@ -36,21 +39,21 @@ class SettingController extends ControllerBase
     public function gatewaysAction()
     {
 
-        $do = $this->request->get('do', ['string','trim']);
+        $do = $this->request->get('do', ['string', 'trim']);
 
         switch ($do) {
 
             case 'create':
                 if ($_POST) {
-                    $this->creategateways();
+                    $this->_gateways_create();
                 }
 
-                $this->view->pick("setting/creategateways");
+                $this->view->pick("setting/gateways_create");
                 $this->view->parent = $this->gatewaysModel->getParent();
                 break;
 
             case 'edit':
-                $id = $this->request->get('id','int');
+                $id = $this->request->get('id', 'int');
                 if (!$id) {
                     Utils::tips('error', '数据不完整', '/setting/gateways');
                 }
@@ -61,63 +64,65 @@ class SettingController extends ControllerBase
                 }
 
                 if ($_POST) {
-                    $this->editgateways($gateways);
+                    $this->_gateways_edit($gateways);
                 }
 
                 $this->view->parent = $this->gatewaysModel->getParent();
                 $this->view->gateways = $gateways->toArray();
-                $this->view->pick("setting/editgateways");
+                $this->view->pick("setting/gateways_edit");
                 break;
 
             case 'remove':
-                $this->removegateways();
+                $this->_gateways_remove();
             default:
                 $this->view->gateways = $this->gatewaysModel->getList();
                 $this->view->pick("setting/gateways");
         }
     }
 
+
     /**
      * 创建网关
      */
-    private function creategateways()
+    private function _gateways_create()
     {
         $this->gatewaysModel->app_id = $this->session->get('app');
-        $this->gatewaysModel->gateway = $this->request->get('gateway', ['string','trim']);
-        $this->gatewaysModel->name = $this->request->get('name', ['string','trim']);
-        $this->gatewaysModel->sub = $this->request->get('sub', ['string','trim']);
-        $this->gatewaysModel->type = $this->request->get('type', ['string','trim']);
-        $this->gatewaysModel->remark = $this->request->get('remark', ['string','trim']);
-        $this->gatewaysModel->currency = $this->request->get('currency', ['string','trim']);
+        $this->gatewaysModel->gateway = $this->request->get('gateway', ['string', 'trim']);
+        $this->gatewaysModel->name = $this->request->get('name', ['string', 'trim']);
+        $this->gatewaysModel->sub = $this->request->get('sub', ['string', 'trim']);
+        $this->gatewaysModel->type = $this->request->get('type', ['string', 'trim']);
+        $this->gatewaysModel->remark = $this->request->get('remark', ['string', 'trim']);
+        $this->gatewaysModel->currency = $this->request->get('currency', ['string', 'trim']);
         $this->gatewaysModel->parent = $this->request->get('parent', 'int');
         $this->gatewaysModel->sort = $this->request->get('sort', 'int');
         $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
-        $this->gatewaysModel->tips = $this->request->get('tips', ['string','trim']);
+        $this->gatewaysModel->tips = $this->request->get('tips', ['string', 'trim']);
 
         if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway) {
-            Utils::tips('error', '数据不完整', '/setting/creategateways');
+            Utils::tips('error', '数据不完整', '/setting/gateways?do=create');
         }
 
         $this->gatewaysModel->save();
         Utils::tips('success', '添加成功', '/setting/gateways');
     }
 
+
     /**
      * 修改网关
      */
-    private function editgateways($gateways)
+    private function _gateways_edit($gateways)
     {
         $gateways->app_id = $this->session->get('app');
-        $gateways->gateway = $this->request->get('gateway', ['string','trim']);
-        $gateways->name = $this->request->get('name', ['string','trim']);
-        $gateways->sub = $this->request->get('sub', ['string','trim']);
-        $gateways->type = $this->request->get('type', ['string','trim']);
-        $gateways->remark = $this->request->get('remark', ['string','trim']);
-        $gateways->currency = $this->request->get('currency', ['string','trim']);
+        $gateways->gateway = $this->request->get('gateway', ['string', 'trim']);
+        $gateways->name = $this->request->get('name', ['string', 'trim']);
+        $gateways->sub = $this->request->get('sub', ['string', 'trim']);
+        $gateways->type = $this->request->get('type', ['string', 'trim']);
+        $gateways->remark = $this->request->get('remark', ['string', 'trim']);
+        $gateways->currency = $this->request->get('currency', ['string', 'trim']);
         $gateways->parent = $this->request->get('parent', 'int');
         $gateways->sort = $this->request->get('sort', 'int');
         $gateways->sandbox = $this->request->get('sandbox', 'int');
-        $gateways->tips = $this->request->get('tips', ['string','trim']);
+        $gateways->tips = $this->request->get('tips', ['string', 'trim']);
 
         if (!$gateways->name || !$gateways->app_id || !$gateways->gateway) {
             Utils::tips('error', '数据不完整', '/setting/editgateways?id=' . $gateways['id']);
@@ -127,10 +132,11 @@ class SettingController extends ControllerBase
         Utils::tips('success', '修改成功', '/setting/gateways');
     }
 
+
     /**
      * 修改网关
      */
-    private function removegateways()
+    private function _gateways_remove()
     {
         $id = $this->request->get('id', 'int');
         if (!$id) {
@@ -146,14 +152,15 @@ class SettingController extends ControllerBase
         Utils::tips('success', '删除成功', '/setting/gateways');
     }
 
+
     /**
      * 设置时区
      */
     public function timezoneAction()
     {
         if ($_POST) {
-            $timeZone = $this->request->get('timeZone', ['string','trim']);
-            $zonetext = $this->request->get('zonetext', ['string','trim']);
+            $timeZone = $this->request->get('timeZone', ['string', 'trim']);
+            $zonetext = $this->request->get('zonetext', ['string', 'trim']);
 
             if (!$timeZone) {
                 echo json_encode(array('error' => 0, 'data' => '参数错误'));
