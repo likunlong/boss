@@ -14,22 +14,18 @@
                 公告管理
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10 col-md-offset-1">
                     <div class="padder-v padder">
                         <div class="m-b-md">
                             {% for item in lists %}
-                            <div class="alert panel-footer alert-dismissable">
-                                <!--<a class=""><i class="close icon-close m-t-lg m-r"></i></a>-->
-                                <a href="/notice/edit?id={{item['id']}}" data-pjax=""><i class="close icon-wrench m-t-lg m-r"></i></a>
+                            <div class="alert alert-dismissable">
                                 <div ng-transclude="">
-                                    <h4 class="block"><a href="/notice/edit?id={{item['id']}}" class="h4 text-info block m-b-xs" data-pjax="">{{item['title']}}</a></h4>
-                                    {%if item['status'] == 1%}
-                                    <span class="label bg-success" title="">正常</span>
-                                    {% else %}
-                                    <span class="label bg-warning" title="">限制</span>
+                                    <a href="/notice/edit?id={{item['id']}}" class="text-info m-b-xs" style="font-size: x-large" data-pjax="">{{item['title']}}</a>
+                                    {%if item['status'] != 1%}
+                                    <p class="label bg-warning" title="">限制</p>
                                     {% endif %}
                                     <p>{{item['content']}}</p>
-                                    <span>{{item['start_time']}}</span>
+                                    <i class="fa fa-clock-o text-muted"></i><span>{{item['start_time']}} - {{item['end_time']}}</span>
                                 </div>
                             </div>
                             {% endfor %}
