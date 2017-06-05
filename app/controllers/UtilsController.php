@@ -11,6 +11,7 @@ namespace MyApp\Controllers;
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
 use MyApp\Models\Game;
+use MyApp\Models\Utils;
 use Phalcon\DI;
 
 class UtilsController extends Controller
@@ -31,6 +32,11 @@ class UtilsController extends Controller
     public function switch_appAction()
     {
         $allow_game = DI::getDefault()->get('session')->get('resources')['allow_game'];
+
+        if(empty($allow_game)){
+            Utils::tips('error', '没有权限', '',999999);
+        }
+
         if ($_POST) {
             $gameid = $this->request->get('gameid', 'int');
 
