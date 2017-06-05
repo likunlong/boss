@@ -21,6 +21,11 @@
         padding-top: 8px;
         white-space:nowrap;
     }
+
+    #example > thead > tr > th, #example > tbody > tr > td
+    {
+        text-align: center;
+    }
 </style>
 <div class="app-content-body ">
     <div class="bg-light lter b-b wrapper-md">
@@ -48,18 +53,18 @@
                     <div id="myTabContent" class="tab-content">
                         {% for key,item in proData %}
                         <div class="tab-pane fade in {% if key == 0 %}active{% endif %}" id="{{item['gateway']}}" style="background: #fff">
-                            <table ui-jq="dataTable" id="example" class="table table-striped b-t b-b">
+                            <table   id="example" class="table table-striped b-t b-b">
                                 <thead>
                                 <tr>
-                                    <th style="width:5%">ID</th>
-                                    <th style="width:17%">产品名称</th>
-                                    <th style="width:17%">产品ID</th>
-                                    <th style="width:10%">价格</th>
-                                    <th style="width:10%">钻石</th>
-                                    <th style="width:15%">创建时间</th>
-                                    <th style="width:15%">更新时间</th>
-                                    <th style="width:8%">状态</th>
-                                    <th style="width:8%">操作</th>
+                                    <th>ID</th>
+                                    <th>产品名称</th>
+                                    <th>产品ID</th>
+                                    <th>价格</th>
+                                    <th>钻石</th>
+                                    <th>创建时间</th>
+                                    <th>更新时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -80,7 +85,7 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-info" data-pjax="" href="/product/edit?id={{value['id']}}">Edit</a>
+                                        <a class="btn btn-sm btn-info" data-pjax="" href="/product/edit?id={{value['id']}}">修改</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -97,8 +102,33 @@
     </div>
 </div>
 <script>
-    $(document).on('pjax:success', function() {
-        $(".tab-pane > table").dataTable();
-    });
+    $(document).ready(function()
+    {
+        $(".tab-pane > table").dataTable(
+            {
+                'language': {
+                    'emptyTable'    : '没有数据',
+                    'search'        : '搜索:',
+                    'zeroRecords'   : '没有数据'
+                },
+
+                "bSort"         : false,
+                "paging"        : false,
+                "bLengthChange" : false,
+                "bInfo"         : false,
+                "columns"       : [
+                    { "width": "5%" },
+                    { "width": "17%" },
+                    { "width": "17%" },
+                    { "width": "10%" },
+                    { "width": "10%" },
+                    { "width": "15%" },
+                    { "width": "15%" },
+                    { "width": "8%" },
+                    { "width": "8%" }
+                ]
+            }
+        );
+    })
 </script>
 
