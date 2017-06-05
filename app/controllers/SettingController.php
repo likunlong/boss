@@ -186,6 +186,30 @@ class SettingController extends ControllerBase
             exit;
         }
 
+        $userTimeZone = $this->timezoneModel->findOne();
+        $this->session->set('zone_text', $this->timeText($userTimeZone['timezone']));
+
+    }
+
+    private function timeText($key = 0){
+        $timeArray = array(
+            'Asia/Shanghai' => '上海',
+            'Asia/Taipei' => '台北',
+            'Asia/Seoul' => '韩国',
+            'Asia/Tokyo' => '日本',
+            'Asia/Bangkok' => '泰国',
+            'Asia/Hanoi' => '越南',
+            'Asia/Singapore' => '马来西亚',
+            'Europe/London' => '伦敦',
+            'Europe/Paris' => '巴黎',
+            'Europe/Rome' => '罗马',
+            'Europe/Berlin' => '柏林',
+            'America/Los_Angeles' => '洛杉矶',
+            'America/Chicago' => '芝加哥',
+            'America/Vancouver' => '温哥华',
+        );
+
+        return $timeArray[$key];
     }
 
 }
