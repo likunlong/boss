@@ -21,10 +21,11 @@ class UtilsController extends Controller
     public function initialize()
     {
         $this->view->common = [
-            'user_id'  => $this->session->get('user_id'),
-            'name'     => $this->session->get('name'),
-            'username' => $this->session->get('username'),
-            'avatar'   => $this->session->get('avatar'),
+            'user_id'   => $this->session->get('user_id'),
+            'name'      => $this->session->get('name'),
+            'username'  => $this->session->get('username'),
+            'avatar'    => $this->session->get('avatar'),
+            'menu_true' => $this->session->get('resources')['menu_tree'],
         ];
         $this->gameModel = new Game();
     }

@@ -20,6 +20,7 @@ class GameController extends ControllerBase
 
     public function initialize()
     {
+        parent::initialize();
         $this->gameModel = new Game();
         $this->tradeModel = new Trade();
         $this->serverModel = new Server();
