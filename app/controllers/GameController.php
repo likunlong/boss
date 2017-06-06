@@ -92,12 +92,14 @@ class GameController extends ControllerBase
     {
     }
 
+
     /**
      * 充值排行
      */
     public function topAction()
     {
     }
+
 
     /**
      * 补发管理
@@ -156,12 +158,12 @@ class GameController extends ControllerBase
         $this->view->lists = $result['data'];
     }
 
+
     /**
      * 补发记录
      */
-    public function logAction()
+    public function logsAction()
     {
-
     }
 
 }
