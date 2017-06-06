@@ -187,11 +187,13 @@ class SettingController extends ControllerBase
         }
 
         $userTimeZone = $this->timezoneModel->findOne();
-        $this->session->set('zone_text', $this->timeText($userTimeZone['timezone']));
+        if(!empty($userTimeZone)){
+            $this->session->set('zone_text', $this->timeText($userTimeZone['timezone']));
+        }
 
     }
 
-    private function timeText($key = 0){
+    private function timeText($key = 'Asia/Shanghai'){
         $timeArray = array(
             'Asia/Shanghai' => '上海',
             'Asia/Taipei' => '台北',
