@@ -1,3 +1,9 @@
+<style>
+    .table-striped > thead > tr > th, .table-striped > tbody > tr > td
+    {
+        text-align: center;
+    }
+</style>
 <div class="app-content-body ">
     <div class="bg-light lter b-b wrapper-md">
         <h1 class="m-n font-thin h3">Trade Manage</h1>
@@ -113,7 +119,7 @@
                         <td>{{item['trade_no']}}</td>
                         <td>{{item['create_time']}}</td>
                         <td>
-                            <a class="btn btn-sm btn-info" data-pjax="" href="/trade/view?id={{item['id']}}">View</a>
+                            <a class="btn btn-sm btn-info" data-pjax="" href="/trade/view?id={{item['id']}}">查看</a>
                         </td>
                     </tr>
                     {% endfor %}
