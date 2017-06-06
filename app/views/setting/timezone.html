@@ -101,7 +101,7 @@
                 dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success:function(respon){
                     if(respon['error'] == 0){
-                        $('.m-n span').html('当前时区：'+zonetext);
+                        $('.m-n span').html(' - 当前时区：'+zonetext);
                         $('.modal-body').html('<span>'+ respon['data'] +'</span>');
                         $('#myModal').modal();
                     }
