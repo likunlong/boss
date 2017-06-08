@@ -17,7 +17,7 @@ class Gateways extends Model
 
     public function getList()
     {
-        $sql = "SELECT id,app_id,gateway,sub,type,name,remark,currency,parent,sort,sandbox,tips FROM gateways WHERE 1=1 ";
+        $sql = "SELECT id,app_id,gateway,sub,type,visible,name,remark,currency,parent,sort,sandbox,tips FROM gateways WHERE 1=1 ";
         $bind = [];
         if (!empty(DI::getDefault()->get('session')->get('app'))) {
             $sql .= " AND app_id=:app_id";

@@ -95,6 +95,7 @@ class SettingController extends ControllerBase
         $this->gatewaysModel->currency = $this->request->get('currency', ['string', 'trim']);
         $this->gatewaysModel->parent = $this->request->get('parent', 'int');
         $this->gatewaysModel->sort = $this->request->get('sort', 'int');
+        $this->gatewaysModel->visible = $this->request->get('visible', 'int',0);
         $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
         $this->gatewaysModel->tips = $this->request->get('tips', ['string', 'trim']);
 
@@ -121,6 +122,7 @@ class SettingController extends ControllerBase
         $gateways->currency = $this->request->get('currency', ['string', 'trim']);
         $gateways->parent = $this->request->get('parent', 'int');
         $gateways->sort = $this->request->get('sort', 'int');
+        $gateways->visible = $this->request->get('visible', 'int', 0);
         $gateways->sandbox = $this->request->get('sandbox', 'int');
         $gateways->tips = $this->request->get('tips', ['string', 'trim']);
 
@@ -187,28 +189,29 @@ class SettingController extends ControllerBase
         }
 
         $userTimeZone = $this->timezoneModel->findOne();
-        if(!empty($userTimeZone)){
+        if (!empty($userTimeZone)) {
             $this->session->set('zone_text', $this->timeText($userTimeZone['timezone']));
         }
 
     }
 
-    private function timeText($key = 'Asia/Shanghai'){
+    private function timeText($key = 'Asia/Shanghai')
+    {
         $timeArray = array(
-            'Asia/Shanghai' => '上海',
-            'Asia/Taipei' => '台北',
-            'Asia/Seoul' => '韩国',
-            'Asia/Tokyo' => '日本',
-            'Asia/Bangkok' => '泰国',
-            'Asia/Hanoi' => '越南',
-            'Asia/Singapore' => '马来西亚',
-            'Europe/London' => '伦敦',
-            'Europe/Paris' => '巴黎',
-            'Europe/Rome' => '罗马',
-            'Europe/Berlin' => '柏林',
+            'Asia/Shanghai'       => '上海',
+            'Asia/Taipei'         => '台北',
+            'Asia/Seoul'          => '韩国',
+            'Asia/Tokyo'          => '日本',
+            'Asia/Bangkok'        => '泰国',
+            'Asia/Hanoi'          => '越南',
+            'Asia/Singapore'      => '马来西亚',
+            'Europe/London'       => '伦敦',
+            'Europe/Paris'        => '巴黎',
+            'Europe/Rome'         => '罗马',
+            'Europe/Berlin'       => '柏林',
             'America/Los_Angeles' => '洛杉矶',
-            'America/Chicago' => '芝加哥',
-            'America/Vancouver' => '温哥华',
+            'America/Chicago'     => '芝加哥',
+            'America/Vancouver'   => '温哥华',
         );
 
         return $timeArray[$key];
