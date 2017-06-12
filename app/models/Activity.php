@@ -19,7 +19,7 @@ class Activity extends Model
     {
         $result = $this->utilsModel->yarRequest('Activity', 'lists', $data);
         $newData = [];
-        if ($result['count'] > 0) {
+        if (isset($result['count']) && $result['count'] > 0) {
             foreach ($result['data'] as $item) {
                 $item['start_time'] = $this->utilsModel->toTimeZone($item['start_time'],
                     $this->utilsModel->getTimeZone());

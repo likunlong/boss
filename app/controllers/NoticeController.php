@@ -41,7 +41,9 @@ class NoticeController extends ControllerBase
 
         $result = $this->noticeModel->getLists($data);
 
-        $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
+        if (isset($result['count']) && $result['count'] > 0) {
+            $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
+        }
         $this->view->lists = $result['data'];
         $this->view->query = $data;
     }
@@ -55,6 +57,8 @@ class NoticeController extends ControllerBase
             $data['title'] = $this->request->get('title', ['string','trim']);
             $data['start_time'] = $this->request->get('start_time', ['string','trim']);
             $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['zone'] = $this->request->get('zone', ['string','trim']);
+            $data['channel'] = $this->request->get('channel', ['string','trim']);
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
@@ -95,6 +99,8 @@ class NoticeController extends ControllerBase
             $data['title'] = $this->request->get('title', ['string','trim']);
             $data['start_time'] = $this->request->get('start_time', ['string','trim']);
             $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['zone'] = $this->request->get('zone', ['string','trim']);
+            $data['channel'] = $this->request->get('channel', ['string','trim']);
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');

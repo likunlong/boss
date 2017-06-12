@@ -42,7 +42,9 @@ class ActivityController extends ControllerBase
 
         $result = $this->activityModel->getLists($data);
 
-        $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
+        if (isset($result['count']) && $result['count'] > 0) {
+            $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
+        }
         $this->view->lists = $result['data'];
         $this->view->query = $data;
     }
@@ -57,6 +59,8 @@ class ActivityController extends ControllerBase
             $data['type'] = $this->request->get('type', ['string','trim']);
             $data['start_time'] = $this->request->get('start_time', ['string','trim']);
             $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['zone'] = $this->request->get('zone', ['string','trim']);
+            $data['channel'] = $this->request->get('channel', ['string','trim']);
             $data['url'] = $this->request->get('url', ['string','trim']);
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['img_small'] = $this->request->get('img_small', ['string','trim']);
@@ -101,6 +105,8 @@ class ActivityController extends ControllerBase
             $data['type'] = $this->request->get('type', ['string','trim']);
             $data['start_time'] = $this->request->get('start_time', ['string','trim']);
             $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+            $data['zone'] = $this->request->get('zone', ['string','trim']);
+            $data['channel'] = $this->request->get('channel', ['string','trim']);
             $data['url'] = $this->request->get('url', ['string','trim']);
             $data['img'] = $this->request->get('img', ['string','trim']);
             $data['img_small'] = $this->request->get('img_small', ['string','trim']);
