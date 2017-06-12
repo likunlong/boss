@@ -9,25 +9,25 @@ namespace MyApp\Controllers;
 
 use MyApp\Models\Products;
 use Phalcon\Mvc\Dispatcher;
-use MyApp\Models\Gateways;
+use MyApp\Models\Setting;
 use MyApp\Models\Utils;
 
 
 class ProductController extends ControllerBase
 {
-    private $gatewaysModel;
+    private $settingModel;
     private $productModel;
 
     public function initialize()
     {
         parent::initialize();
-        $this->gatewaysModel = new Gateways();
+        $this->settingModel = new Setting();
         $this->productModel = new Products();
     }
 
     public function indexAction()
     {
-        $gateways = $this->gatewaysModel->getGatewaysList();
+        $gateways = $this->settingModel->getGatewaysList();
         $data = [];
         foreach ($gateways as $item) {
             $item['product'] = $this->productModel->getProductList($item['gateway']);
@@ -96,9 +96,9 @@ class ProductController extends ControllerBase
             Utils::tips('success', '添加成功', '/product/index');
         }
 
-        $parent = $this->gatewaysModel->getParent();
+        $parent = $this->settingModel->getParent();
 
-        if(empty($parent)){
+        if (empty($parent)) {
             Utils::tips('error', '请先创建网关', '/setting/gateways?do=create');
         }
         $this->view->parent = $parent;
@@ -154,10 +154,11 @@ class ProductController extends ControllerBase
 
             $product->save();
 
-            if(empty($rpcProduct)){
+            if (empty($rpcProduct)) {
                 $data['type'] = 'normal';
                 $this->productModel->createProduct($data);
-            }else{
+            }
+            else {
                 $this->productModel->editProduct($data);
             }
 
@@ -189,7 +190,7 @@ class ProductController extends ControllerBase
             Utils::tips('success', '修改成功', '/product/index');
         }
 
-        $this->view->parent = $this->gatewaysModel->getParent();
+        $this->view->parent = $this->settingModel->getParent();
         $this->view->pro = $product->toArray();
 
         if (count($rpcProduct['data']['more']) == 1) {
@@ -227,7 +228,7 @@ class ProductController extends ControllerBase
 
         $rpcProduct = $this->productModel->item(array('product_id' => $product->product_id));
 
-        if($rpcProduct['data']['more']){
+        if ($rpcProduct['data']['more']) {
             foreach ($rpcProduct['data']['more'] as $item) {
                 $this->productModel->removeOption(array('id' => $item['id']));
             }
@@ -249,12 +250,12 @@ class ProductController extends ControllerBase
         }
 
         if (!$optionid) {
-            Utils::tips('error', '数据不完整', '/product/edit?id='.$productid);
+            Utils::tips('error', '数据不完整', '/product/edit?id=' . $productid);
         }
 
         $this->productModel->removeOption(array('id' => $optionid));
 
-        Utils::tips('success', '删除配置成功', '/product/edit?id='.$productid);
+        Utils::tips('success', '删除配置成功', '/product/edit?id=' . $productid);
     }
 
 

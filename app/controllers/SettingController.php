@@ -9,22 +9,19 @@ namespace MyApp\Controllers;
 
 use MyApp\Models\Timezone;
 use Phalcon\Mvc\Dispatcher;
-use MyApp\Models\Gateways;
+use MyApp\Models\Setting;
 use MyApp\Models\Utils;
 
 class SettingController extends ControllerBase
 {
 
-    private $gatewaysModel;
-
-    private $timezoneModel;
+    private $settingModel;
 
 
     public function initialize()
     {
         parent::initialize();
-        $this->gatewaysModel = new Gateways();
-        $this->timezoneModel = new Timezone();
+        $this->settingModel = new Setting();
     }
 
 
@@ -36,7 +33,7 @@ class SettingController extends ControllerBase
     /**
      * 网关
      */
-    public function gatewaysAction()
+    public function paymentAction()
     {
 
         $do = $this->request->get('do', ['string', 'trim']);
@@ -49,7 +46,7 @@ class SettingController extends ControllerBase
                 }
 
                 $this->view->pick("setting/gateways_create");
-                $this->view->parent = $this->gatewaysModel->getParent();
+                $this->view->parent = $this->settingModel->getParent();
                 break;
 
             case 'edit':
@@ -58,7 +55,7 @@ class SettingController extends ControllerBase
                     Utils::tips('error', '数据不完整', '/setting/gateways');
                 }
 
-                $gateways = $this->gatewaysModel->findFirst($id);
+                $gateways = $this->settingModel->findFirst($id);
                 if (!$gateways) {
                     Utils::tips('error', '没有此数据', '/setting/gateways');
                 }
@@ -67,7 +64,7 @@ class SettingController extends ControllerBase
                     $this->_gateways_edit($gateways);
                 }
 
-                $this->view->parent = $this->gatewaysModel->getParent();
+                $this->view->parent = $this->settingModel->getParent();
                 $this->view->gateways = $gateways->toArray();
                 $this->view->pick("setting/gateways_edit");
                 break;
@@ -75,7 +72,7 @@ class SettingController extends ControllerBase
             case 'remove':
                 $this->_gateways_remove();
             default:
-                $this->view->gateways = $this->gatewaysModel->getList();
+                $this->view->gateways = $this->settingModel->getList();
                 $this->view->pick("setting/gateways");
         }
     }
@@ -86,25 +83,25 @@ class SettingController extends ControllerBase
      */
     private function _gateways_create()
     {
-        $this->gatewaysModel->app_id = $this->session->get('app');
-        $this->gatewaysModel->gateway = $this->request->get('gateway', ['string', 'trim']);
-        $this->gatewaysModel->name = $this->request->get('name', ['string', 'trim']);
-        $this->gatewaysModel->sub = $this->request->get('sub', ['string', 'trim']);
-        $this->gatewaysModel->type = $this->request->get('type', ['string', 'trim']);
-        $this->gatewaysModel->remark = $this->request->get('remark', ['string', 'trim']);
-        $this->gatewaysModel->currency = $this->request->get('currency', ['string', 'trim']);
-        $this->gatewaysModel->parent = $this->request->get('parent', 'int');
-        $this->gatewaysModel->sort = $this->request->get('sort', 'int');
-        $this->gatewaysModel->visible = $this->request->get('visible', 'int',0);
-        $this->gatewaysModel->sandbox = $this->request->get('sandbox', 'int');
-        $this->gatewaysModel->tips = $this->request->get('tips', ['string', 'trim']);
+        $this->settingModel->app_id = $this->session->get('app');
+        $this->settingModel->gateway = $this->request->get('gateway', ['string', 'trim']);
+        $this->settingModel->name = $this->request->get('name', ['string', 'trim']);
+        $this->settingModel->sub = $this->request->get('sub', ['string', 'trim']);
+        $this->settingModel->type = $this->request->get('type', ['string', 'trim']);
+        $this->settingModel->remark = $this->request->get('remark', ['string', 'trim']);
+        $this->settingModel->currency = $this->request->get('currency', ['string', 'trim']);
+        $this->settingModel->parent = $this->request->get('parent', 'int');
+        $this->settingModel->sort = $this->request->get('sort', 'int');
+        $this->settingModel->visible = $this->request->get('visible', 'int', 0);
+        $this->settingModel->sandbox = $this->request->get('sandbox', 'int');
+        $this->settingModel->tips = $this->request->get('tips', ['string', 'trim']);
 
-        if (!$this->gatewaysModel->name || !$this->gatewaysModel->app_id || !$this->gatewaysModel->gateway) {
+        if (!$this->settingModel->name || !$this->settingModel->app_id || !$this->settingModel->gateway) {
             Utils::tips('error', '数据不完整', '/setting/gateways?do=create');
         }
 
-        $this->gatewaysModel->save();
-        Utils::tips('success', '添加成功', '/setting/gateways');
+        $this->settingModel->save();
+        Utils::tips('success', '添加成功', '/setting/payment');
     }
 
 
@@ -131,7 +128,7 @@ class SettingController extends ControllerBase
         }
 
         $gateways->save();
-        Utils::tips('success', '修改成功', '/setting/gateways');
+        Utils::tips('success', '修改成功', '/setting/payment');
     }
 
 
@@ -142,18 +139,43 @@ class SettingController extends ControllerBase
     {
         $id = $this->request->get('id', 'int');
         if (!$id) {
-            Utils::tips('error', '数据不完整', '/setting/gateways');
+            Utils::tips('error', '数据不完整', '/setting/payment');
         }
 
-        $gateways = $this->gatewaysModel->findFirst($id);
+        $gateways = $this->settingModel->findFirst($id);
         if (!$gateways) {
-            Utils::tips('error', '没有此数据', '/setting/gateways');
+            Utils::tips('error', '没有此数据', '/setting/payment');
         }
 
         $gateways->delete();
-        Utils::tips('success', '删除成功', '/setting/gateways');
+        Utils::tips('success', '删除成功', '/setting/payment');
     }
 
+    /**
+     * 回调
+     */
+
+    public function notifyAction()
+    {
+        if ($_POST) {
+            $secret_key = $this->request->get('secret_key', ['string', 'trim']);
+            $notify_url = $this->request->get('notify_url', ['string', 'trim']);
+            $trade_tip = $this->request->get('trade_tip', ['string', 'trim']);
+
+            if (!$notify_url) {
+                Utils::tips('error', '数据不完整', '/setting/notify');
+            }
+
+            $app['secret_key'] = $secret_key;
+            $app['notify_url'] = $notify_url;
+            $app['trade_tip'] = $trade_tip;
+            $this->settingModel->saveapp($app);
+
+            Utils::tips('success', '保存成功', '/setting/payment');
+        }
+
+        $this->view->app = $this->settingModel->findApp();
+    }
 
     /**
      * 设置时区
@@ -169,18 +191,9 @@ class SettingController extends ControllerBase
                 exit;
             }
 
-            $timezone = $this->timezoneModel->findOne();
+            $timezone['timezone'] = $timeZone;
+            $this->settingModel->saveTimeZone($timezone);
 
-            if ($timezone) {
-                $timezone['timezone'] = $timeZone;
-                $this->timezoneModel->save($timezone);
-            }
-            else {
-                $this->timezoneModel->app_id = $this->session->get('app');
-                $this->timezoneModel->user_id = $this->session->get('user_id');
-                $this->timezoneModel->timezone = $timeZone;
-                $this->timezoneModel->save();
-            }
 
             $this->session->set('timezone', $timeZone);
             $this->session->set('zone_text', $zonetext);
@@ -188,7 +201,7 @@ class SettingController extends ControllerBase
             exit;
         }
 
-        $userTimeZone = $this->timezoneModel->findOne();
+        $userTimeZone = $this->settingModel->findOne();
         if (!empty($userTimeZone)) {
             $this->session->set('zone_text', $this->timeText($userTimeZone['timezone']));
         }
