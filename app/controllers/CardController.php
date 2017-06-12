@@ -17,14 +17,16 @@ class CardController extends ControllerBase
      */
     public function indexAction()
     {
-    }
+        $do = $this->request->get('do', ['string', 'trim']);
 
-
-    /**
-     * 卡片 - 日志
-     */
-    public function logsAction()
-    {
+        switch ($do) {
+            case 'view':
+                $this->view();
+                break;
+            case 'logs':
+                $this->logs();
+                break;
+        }
     }
 
 
@@ -49,6 +51,19 @@ class CardController extends ControllerBase
     }
 
 
+    // 卡片 - 日志
+    private function logs()
+    {
+    }
+
+
+    // 卡片 - 详细预览
+    private function view()
+    {
+    }
+
+
+    // 卡片 - 创建
     private function create()
     {
         if ($_POST) {
@@ -56,6 +71,7 @@ class CardController extends ControllerBase
     }
 
 
+    // 卡片 - 编辑
     private function edit()
     {
         if ($_POST) {
@@ -63,9 +79,9 @@ class CardController extends ControllerBase
     }
 
 
+    // 卡片 - 删除
     private function remove()
     {
     }
-
 
 }
