@@ -7,8 +7,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <ul class="nav nav-pills pull-right">
-                    <li><a href="/setting/notify" data-pjax=""></i> 回调设置 </a></li>
-                    <li><a href="/setting/gateways?do=create" data-pjax=""><i class="fa fa-plus"></i> 添加 </a></li>
+                    <li><a href="/setting/payment?do=notify" data-pjax=""></i> 回调设置 </a></li>
+                    <li><a href="/setting/payment?do=create" data-pjax=""><i class="fa fa-plus"></i> 添加 </a></li>
                 </ul>
                 支付管理
             </div>
@@ -43,7 +43,7 @@
                         <td>{{item['gateway']}}</td>
                         <td>{{item['sub']}} </td>
                         <td>
-                            <a href="/setting/gateways?do=edit&id={{item['id']}}" data-pjax="" class="btn btn-sm btn-info">编辑</a>
+                            <a href="/setting/payment?do=edit&id={{item['id']}}" data-pjax="" class="btn btn-sm btn-info">编辑</a>
                             <!--<a href="/setting/removepay?id={{item['id']}}" class="btn btn-sm btn-danger" ng-click="" onclick="return confirm('确认删除?')">del</a>-->
                         </td>
                     </tr>

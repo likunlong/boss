@@ -12,6 +12,7 @@ class Setting extends Model
     public function initialize()
     {
         $this->setConnectionService('dbTrade');
+        $this->setSource("gateways");
     }
 
     public function getList()
