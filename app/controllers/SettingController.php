@@ -52,12 +52,12 @@ class SettingController extends ControllerBase
             case 'edit':
                 $id = $this->request->get('id', 'int');
                 if (!$id) {
-                    Utils::tips('error', '数据不完整', '/setting/gateways');
+                    Utils::tips('error', '数据不完整', '/setting/payment');
                 }
 
                 $gateways = $this->settingModel->findFirst($id);
                 if (!$gateways) {
-                    Utils::tips('error', '没有此数据', '/setting/gateways');
+                    Utils::tips('error', '没有此数据', '/setting/payment');
                 }
 
                 if ($_POST) {
@@ -71,6 +71,12 @@ class SettingController extends ControllerBase
 
             case 'remove':
                 $this->_gateways_remove();
+                break;
+
+            case 'notify':
+                $this->notify();
+                break;
+
             default:
                 $this->view->gateways = $this->settingModel->getList();
                 $this->view->pick("setting/gateways");
@@ -97,7 +103,7 @@ class SettingController extends ControllerBase
         $this->settingModel->tips = $this->request->get('tips', ['string', 'trim']);
 
         if (!$this->settingModel->name || !$this->settingModel->app_id || !$this->settingModel->gateway) {
-            Utils::tips('error', '数据不完整', '/setting/gateways?do=create');
+            Utils::tips('error', '数据不完整', '/setting/payment?do=create');
         }
 
         $this->settingModel->save();
@@ -124,7 +130,7 @@ class SettingController extends ControllerBase
         $gateways->tips = $this->request->get('tips', ['string', 'trim']);
 
         if (!$gateways->name || !$gateways->app_id || !$gateways->gateway) {
-            Utils::tips('error', '数据不完整', '/setting/editgateways?id=' . $gateways['id']);
+            Utils::tips('error', '数据不完整', '/setting/payment?do=edit&id=' . $gateways['id']);
         }
 
         $gateways->save();
@@ -155,7 +161,7 @@ class SettingController extends ControllerBase
      * 回调
      */
 
-    public function notifyAction()
+    private function notify()
     {
         if ($_POST) {
             $secret_key = $this->request->get('secret_key', ['string', 'trim']);
@@ -175,6 +181,7 @@ class SettingController extends ControllerBase
         }
 
         $this->view->app = $this->settingModel->findApp();
+        $this->view->pick("setting/notify");
     }
 
     /**
