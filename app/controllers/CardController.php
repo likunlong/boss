@@ -50,6 +50,7 @@ class CardController extends ControllerBase
 
         $result = $this->cardModel->getLists($data);
 
+        $this->view->page = '';
         if (isset($result['count']) && $result['count'] > 0) {
             $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
         }
