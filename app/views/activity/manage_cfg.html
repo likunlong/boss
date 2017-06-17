@@ -8,8 +8,6 @@
                 <ul class="nav nav-pills pull-right">
                     <li><a href="/activity/import" data-pjax=""><i class="fa icon-doc"></i> 导入 </a></li>
                     <li><a href="javascript:void(0);"><i class="fa icon-cloud-download"></i> 导出 </a></li>
-                    <li><a href="javascript:void(0);" id="btn_add"><i class="fa fa-eye"></i> 查询 </a></li>
-                    <li><a href="/activity/create" data-pjax=""><i class="fa fa-plus"></i> 添加 </a></li>
                 </ul>
                 活动管理
             </div>
@@ -17,7 +15,7 @@
                 <div class="col-md-12">
                     <div class="padder-v padder">
                         <div class="m-b-md">
-                            <form class="form-horizontal ng-pristine ng-valid" method="post" action="/activity/editCfg">
+                            <form class="form-horizontal ng-pristine ng-valid" method="post" action="/activity/manage?do=cfg">
                                 <input name="id" value="{{activityid}}" type="hidden">
 
                                 <div class="line line-dashed b-b line-lg pull-in"></div>

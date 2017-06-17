@@ -10,7 +10,7 @@
                     <li><a href="javascript:void(0);"><i class="fa icon-cloud-download"></i> 导出 </a></li>
                     <li><a href="/activity/logs"><i class="fa icon-film"></i> 日志 </a></li>
                     <li><a href="javascript:void(0);" id="btn_add"><i class="fa fa-eye"></i> 查询 </a></li>
-                    <li><a href="/activity/create" data-pjax=""><i class="fa fa-plus"></i> 添加 </a></li>
+                    <li><a href="/activity/manage?do=create" data-pjax=""><i class="fa fa-plus"></i> 添加 </a></li>
                 </ul>
                 活动管理
             </div>
@@ -22,15 +22,15 @@
                                 {% for item in lists %}
                                 <div class="panel b-b ">
                                     <div class="wrapper-lg">
-                                        <h2 class="m-t-none"><a class="text-info" href="/activity/edit?id={{item['id']}}" data-pjax>{{item['title']}}</a></h2>
+                                        <h2 class="m-t-none"><a class="text-info" href="/activity/manage?do=edit&id={{item['id']}}" data-pjax>{{item['title']}}</a></h2>
                                         <div>
                                             <p>{{item['content']}}</p>
                                         </div>
                                         <div class="line line-lg b-b b-light"></div>
                                         <div class="text-muted">
                                             <i class="fa fa-clock-o text-muted"></i> {{item['start_time']}} - {{item['end_time']}}
-                                            <a href="/activity/edit?id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-user icon-note text-muted"></i> 修改 </a>
-                                            <a href="/activity/view?id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-comment-o icon-settings text-muted"></i> 查看 </a>
+                                            <a href="/activity/manage?do=edit&id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-user icon-note text-muted"></i> 修改 </a>
+                                            <a href="/activity/manage?do=cfg&id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-comment-o icon-settings text-muted"></i> 查看 </a>
                                             {%if item['status'] == 1%}
                                             <span class="label bg-success m-l-sm" title="">正常</span>
                                             {% else %}
