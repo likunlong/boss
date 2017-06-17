@@ -43,6 +43,8 @@ class TradeController extends ControllerBase
         $data['trade_no'] = $this->request->get('trade_no', ['string','trim']);
 
         $count = $this->tradeModel->getCount($data);
+
+        $this->view->trade = $this->view->page = '';
         $this->view->trade = $this->tradeModel->getList($data, $currentPage, $pagesize);
         $this->view->page = $this->pageModel->getPage($count, $pagesize, $currentPage);
         $this->view->query = $data;

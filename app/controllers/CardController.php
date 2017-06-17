@@ -124,6 +124,10 @@ class CardController extends ControllerBase
                 Utils::tips('error', '数据不完整', '/card/manage?do=create');
             }
 
+            if($data['count'] <= 0 ){
+                Utils::tips('error', '数量必须大于0', '/card/manage?do=create');
+            }
+
             $result = $this->cardModel->createCard($data);
             if ($result) {
                 Utils::tips('success', '添加成功', '/card/index');

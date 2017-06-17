@@ -39,6 +39,7 @@ class VoteController extends ControllerBase
         $list = [];
         $result = $this->voteModel->getLists($data);
 
+        $this->view->page = '';
         $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
         $this->view->lists = $result['data'];
         $this->view->query = $data;
