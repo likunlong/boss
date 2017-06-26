@@ -15,12 +15,14 @@ use Phalcon\Mvc\Dispatcher;
 class NoticeController extends ControllerBase
 {
     private $noticeModel;
+    private $utilsModel;
     private $pageModel;
 
     public function initialize()
     {
         parent::initialize();
         $this->noticeModel = new Notice();
+        $this->utilsModel = new Utils();
         $this->pageModel = new Page();
 
     }
@@ -33,11 +35,14 @@ class NoticeController extends ControllerBase
         $currentPage = $this->request->get('page', 'int') ? $this->request->get('page', 'int') : 1;
         $pagesize = 10;
 
-        $data['title'] = $this->request->get('title', ['string','trim']);
-        $data['start_time'] = $this->request->get('start_time', ['string','trim']);
-        $data['end_time'] = $this->request->get('end_time', ['string','trim']);
+        $data['title'] = $this->request->get('title', ['string', 'trim']);
+        $data['start_time'] = $this->request->get('start_time', ['string', 'trim']);
+        $data['end_time'] = $this->request->get('end_time', ['string', 'trim']);
         $data['page'] = $currentPage;
         $data['size'] = $pagesize;
+
+        $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
+        $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
 
         $result = $this->noticeModel->getLists($data);
 
@@ -55,12 +60,12 @@ class NoticeController extends ControllerBase
     public function createAction()
     {
         if ($_POST) {
-            $data['title'] = $this->request->get('title', ['string','trim']);
-            $data['start_time'] = $this->request->get('start_time', ['string','trim']);
-            $data['end_time'] = $this->request->get('end_time', ['string','trim']);
-            $data['zone'] = $this->request->get('zone', ['string','trim']);
-            $data['channel'] = $this->request->get('channel', ['string','trim']);
-            $data['img'] = $this->request->get('img', ['string','trim']);
+            $data['title'] = $this->request->get('title', ['string', 'trim']);
+            $data['start_time'] = $this->request->get('start_time', ['string', 'trim']);
+            $data['end_time'] = $this->request->get('end_time', ['string', 'trim']);
+            $data['zone'] = $this->request->get('zone', ['string', 'trim']);
+            $data['channel'] = $this->request->get('channel', ['string', 'trim']);
+            $data['img'] = $this->request->get('img', ['string', 'trim']);
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
             $data['content'] = $this->request->get('formcontent');
@@ -70,11 +75,15 @@ class NoticeController extends ControllerBase
                 Utils::tips('error', '数据不完整', '/notice/index');
             }
 
+            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
+            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
+
             $result = $this->noticeModel->createNotice($data);
 
-            if($result){
+            if ($result) {
                 Utils::tips('success', '添加成功', '/notice/index');
-            }else{
+            }
+            else {
                 Utils::tips('error', '添加失败', '/notice/index');
             }
         }
@@ -97,12 +106,12 @@ class NoticeController extends ControllerBase
 
         if ($_POST) {
             $data['id'] = $this->request->get('id', 'int');
-            $data['title'] = $this->request->get('title', ['string','trim']);
-            $data['start_time'] = $this->request->get('start_time', ['string','trim']);
-            $data['end_time'] = $this->request->get('end_time', ['string','trim']);
-            $data['zone'] = $this->request->get('zone', ['string','trim']);
-            $data['channel'] = $this->request->get('channel', ['string','trim']);
-            $data['img'] = $this->request->get('img', ['string','trim']);
+            $data['title'] = $this->request->get('title', ['string', 'trim']);
+            $data['start_time'] = $this->request->get('start_time', ['string', 'trim']);
+            $data['end_time'] = $this->request->get('end_time', ['string', 'trim']);
+            $data['zone'] = $this->request->get('zone', ['string', 'trim']);
+            $data['channel'] = $this->request->get('channel', ['string', 'trim']);
+            $data['img'] = $this->request->get('img', ['string', 'trim']);
             $data['status'] = $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
             $data['content'] = $this->request->get('formcontent');
@@ -111,11 +120,15 @@ class NoticeController extends ControllerBase
                 Utils::tips('error', '数据不完整', '/notice/index');
             }
 
+            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
+            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
+
             $result = $this->noticeModel->editNotice($data);
 
-            if($result){
+            if ($result) {
                 Utils::tips('success', '修改成功', '/notice/index');
-            }else{
+            }
+            else {
                 Utils::tips('error', '修改失败', '/notice/index');
             }
         }
@@ -126,7 +139,8 @@ class NoticeController extends ControllerBase
     /**
      * 删除公告
      */
-    public function removeAction(){
+    public function removeAction()
+    {
         $data['id'] = $this->request->get('id', 'int');
         if (!$data['id']) {
             Utils::tips('error', '数据不完整', '/notice/index');
@@ -139,9 +153,10 @@ class NoticeController extends ControllerBase
 
         $result = $this->noticeModel->removeNotice($data);
 
-        if($result){
+        if ($result) {
             Utils::tips('success', '删除成功', '/notice/index');
-        }else{
+        }
+        else {
             Utils::tips('error', '删除失败', '/notice/index');
         }
     }

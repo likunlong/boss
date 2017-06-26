@@ -16,6 +16,7 @@ class ActivityController extends ControllerBase
 {
 
     private $activityModel;
+    private $utilsModel;
 
     private $pageModel;
 
@@ -24,6 +25,7 @@ class ActivityController extends ControllerBase
     {
         parent::initialize();
         $this->activityModel = new Activity();
+        $this->utilsModel = new Utils();
         $this->pageModel = new Page();
 
     }
@@ -43,6 +45,9 @@ class ActivityController extends ControllerBase
         $data['end_time'] = $this->request->get('end_time', ['string', 'trim']);
         $data['page'] = $currentPage;
         $data['size'] = $pagesize;
+
+        $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
+        $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
 
         $result = $this->activityModel->getLists($data);
 
@@ -139,6 +144,9 @@ class ActivityController extends ControllerBase
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
 
+            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
+            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
+
             $result = $this->activityModel->createActivity($data);
 
             if ($result) {
@@ -187,6 +195,9 @@ class ActivityController extends ControllerBase
             if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible']) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
+
+            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
+            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
 
             $result = $this->activityModel->editActivity($data);
 
