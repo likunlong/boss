@@ -31,15 +31,17 @@
                                             <i class="fa fa-clock-o text-muted"></i> {{item['start_time']}} - {{item['end_time']}}
                                             <a href="/activity/manage?do=edit&id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-user icon-note text-muted"></i> 修改 </a>
                                             <a href="/activity/manage?do=cfg&id={{item['id']}}" data-pjax class="m-l-sm"><i class="fa fa-comment-o icon-settings text-muted"></i> 查看 </a>
-                                            {%if item['status'] == 1%}
-                                            <span class="label bg-success m-l-sm" title="">正常</span>
-                                            {% else %}
+                                            {%if item['status'] != 1%}
                                             <span class="label bg-warning m-l-sm" title="">限制</span>
                                             {% endif %}
-                                            {%if item['visible'] == 1%}
-                                            <span class="label bg-info m-l-sm" title="">显示</span>
-                                            {% else %}
-                                            <span class="label bg-dark m-l-sm" title="">隐藏</span>
+                                            {%if item['type'] == 'prepay' %}
+                                            <span class="label bg-info m-l-sm" title="">充值</span>
+                                            {% elseif item['type'] == 'spend' %}
+                                            <span class="label bg-danger m-l-sm" title="">消费</span>
+                                            {% elseif item['type'] == 'login' %}
+                                            <span class="label bg-primary m-l-sm" title="">登录</span>
+                                            {% elseif item['type'] == 'level' %}
+                                            <span class="label bg-success m-l-sm" title="">等级</span>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -119,7 +121,7 @@
         });
 
         $(".form_datetime").datetimepicker({
-            format: "yyyy-mm-dd",
+            format: "yyyy-mm-dd hh:00:00",
             autoclose: true,
             todayBtn: true,
             todayHighlight: true,

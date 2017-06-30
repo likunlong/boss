@@ -36,13 +36,15 @@ class NoticeController extends ControllerBase
         $pagesize = 10;
 
         $data['title'] = $this->request->get('title', ['string', 'trim']);
-        $data['start_time'] = $this->request->get('start_time', ['string', 'trim']);
-        $data['end_time'] = $this->request->get('end_time', ['string', 'trim']);
+        $start_time = $this->request->get('start_time', ['string', 'trim']);
+        $end_time = $this->request->get('end_time', ['string', 'trim']);
         $data['page'] = $currentPage;
         $data['size'] = $pagesize;
 
-        $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
-        $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
+        $data['start_time'] = !empty($start_time) ? $this->utilsModel->toTimeZone($start_time, 'UTC',
+            $this->utilsModel->getTimeZone()) : '';
+        $data['end_time'] = !empty($end_time) ? $this->utilsModel->toTimeZone($end_time, 'UTC',
+            $this->utilsModel->getTimeZone()) : '';
 
         $result = $this->noticeModel->getLists($data);
 
@@ -51,6 +53,9 @@ class NoticeController extends ControllerBase
             $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
         }
         $this->view->lists = $result['data'];
+
+        $data['start_time'] = $start_time;
+        $data['end_time'] = $end_time;
         $this->view->query = $data;
     }
 
@@ -75,8 +80,10 @@ class NoticeController extends ControllerBase
                 Utils::tips('error', '数据不完整', '/notice/index');
             }
 
-            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
-            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
+            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC',
+                $this->utilsModel->getTimeZone());
+            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC',
+                $this->utilsModel->getTimeZone());
 
             $result = $this->noticeModel->createNotice($data);
 
@@ -120,8 +127,10 @@ class NoticeController extends ControllerBase
                 Utils::tips('error', '数据不完整', '/notice/index');
             }
 
-            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC');
-            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC');
+            $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC',
+                $this->utilsModel->getTimeZone());
+            $data['end_time'] = $this->utilsModel->toTimeZone($data['end_time'], 'UTC',
+                $this->utilsModel->getTimeZone());
 
             $result = $this->noticeModel->editNotice($data);
 

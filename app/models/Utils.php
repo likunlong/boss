@@ -125,7 +125,7 @@ class Utils extends Model
      * 时区转换
      */
 
-    public function toTimeZone($src, $to_tz = '', $from_tz = 'Asia/Shanghai', $fm = 'Y-m-d H:i:s')
+    public function toTimeZone($src, $to_tz = '', $from_tz = 'UTC', $fm = 'Y-m-d H:i:s')
     {
         if($src == '0000-00-00 00:00:00'){
             return '暂无时间';
@@ -134,6 +134,7 @@ class Utils extends Model
 
             $datetime = new \DateTime($src, new \DateTimeZone($from_tz));
             $datetime->setTimezone(new \DateTimeZone($to_tz));
+
             return $datetime->format($fm);
         }
         else {
@@ -161,7 +162,9 @@ class Utils extends Model
             $query = DI::getDefault()->get('dbData')->query($sql, $bind);
             $query->setFetchMode(Db::FETCH_ASSOC);
             $timezone = $query->fetch();
-            DI::getDefault()->set('timezone', $timezone['timezone']);
+
+
+            DI::getDefault()->get('session')->set('timezone', $timezone['timezone']);
         }
         return DI::getDefault()->get('session')->get('timezone');
     }
