@@ -28,12 +28,15 @@ class Server extends Model
 
     public function getLists()
     {
-        $result = $this->utilsModel->yarRequest('Zone', 'lists', array());
-        if(!$result['data']){
-            return array();
-        }else{
-            return $result['data'];
+        if(empty($_COOKIE['serverLists'])){
+            $result = $this->utilsModel->yarRequest('Zone', 'lists', array());
+            if(!$result['data']){
+                return array();
+            }else{
+                setcookie('serverLists', json_encode($result['data']), time()+7200);
+            }
         }
+        return json_decode($_COOKIE['serverLists'], true);
     }
 
     public function findServer($data){
