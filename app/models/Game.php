@@ -32,18 +32,20 @@ class Game extends Model
 
     public function prop($type, $data)
     {
-        if(empty($_COOKIE['attach'])){
+        if (empty($_COOKIE['attach'])) {
             $result = $this->utilsModel->yarRequest('prop', $type, $data);
-            setcookie('attach',json_encode($result),time()+7200);
+            $_COOKIE['attach'] = json_encode($result);
+            setcookie('attach', json_encode($result), time() + 7200, '/');
         }
         return json_decode($_COOKIE['attach'], true);
     }
 
     public function attribute()
     {
-        if(empty($_COOKIE['attach'])){
+        if (empty($_COOKIE['attach'])) {
             $result = $this->utilsModel->yarRequest('prop', 'attribute', array());
-            setcookie('attach', json_encode($result), time()+7200);
+            $_COOKIE['attach'] = json_encode($result);
+            setcookie('attach', json_encode($result), time() + 7200, '/');
         }
         return json_decode($_COOKIE['attach'], true);
     }

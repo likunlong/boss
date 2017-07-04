@@ -92,6 +92,13 @@ class UtilsController extends Controller
             DI::getDefault()->get('session')->set('lang', $game->version);
             DI::getDefault()->get('session')->set('game_name', $game->name);
 
+            if (!empty($_COOKIE['attach'])) {
+                unset($_COOKIE['attach']);
+            }
+            if (!empty($_COOKIE['serverLists'])) {
+                unset($_COOKIE['serverLists']);
+            }
+
             echo json_encode(array('error' => 0, 'data' => array()));
             exit;
         }

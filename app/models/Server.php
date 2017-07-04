@@ -28,12 +28,14 @@ class Server extends Model
 
     public function getLists()
     {
-        if(empty($_COOKIE['serverLists'])){
+        if (empty($_COOKIE['serverLists'])) {
             $result = $this->utilsModel->yarRequest('Zone', 'lists', array());
-            if(!$result['data']){
+            if (!$result['data']) {
                 return array();
-            }else{
-                setcookie('serverLists', json_encode($result['data']), time()+7200);
+            }
+            else {
+                $_COOKIE['serverLists'] = json_encode($result['data']);
+                setcookie('serverLists', json_encode($result['data']), time() + 7200, '/');
             }
         }
         return json_decode($_COOKIE['serverLists'], true);
