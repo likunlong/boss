@@ -17,12 +17,14 @@ class ProductController extends ControllerBase
 {
     private $settingModel;
     private $productModel;
+    private $utilsModel;
 
     public function initialize()
     {
         parent::initialize();
         $this->settingModel = new Setting();
         $this->productModel = new Products();
+        $this->utilsModel = new Utils();
     }
 
     public function indexAction()
@@ -54,8 +56,10 @@ class ProductController extends ControllerBase
             $this->productModel->remark = $this->request->get('remark', ['string', 'trim']);
             $this->productModel->status = $this->request->get('status', 'int');
             $this->productModel->sort = $this->request->get('sort', ['string', 'trim']);
-            $this->productModel->create_time = date('Y-m-d H:i:s');
-            $this->productModel->update_time = date('Y-m-d H:i:s');
+            $this->productModel->create_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
+                $this->utilsModel->getTimeZone());
+            $this->productModel->update_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
+                $this->utilsModel->getTimeZone());
 
             if (!$this->productModel->name || !$this->productModel->app_id || !$this->productModel->price) {
                 Utils::tips('error', '数据不完整', '/product/index');
@@ -134,7 +138,8 @@ class ProductController extends ControllerBase
             $product->remark = $this->request->get('remark', ['string', 'trim']);
             $product->status = $this->request->get('status', 'int');
             $product->sort = $this->request->get('sort', 'int');
-            $product->update_time = date('Y-m-d H:i:s');
+            $product->update_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
+                $this->utilsModel->getTimeZone());
 
             if (!$product->name || !$product->app_id || !$product->price) {
                 Utils::tips('error', '数据不完整', '/product/edit?id=' . $product['id']);
@@ -170,6 +175,11 @@ class ProductController extends ControllerBase
                 $option['prop'] = $this->request->get('prop' . $i, ['string', 'trim']);
                 $option['start_time'] = $this->request->get('start_time' . $i, ['string', 'trim']);
                 $option['end_time'] = $this->request->get('end_time' . $i, ['string', 'trim']);
+
+                $option['start_time'] = $this->utilsModel->toTimeZone($option['start_time'], 'UTC',
+                    $this->utilsModel->getTimeZone());
+                $option['end_time'] = $this->utilsModel->toTimeZone($option['end_time'], 'UTC',
+                    $this->utilsModel->getTimeZone());
 
                 if ($option['id']) {
                     $this->productModel->editOption($option);
