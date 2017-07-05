@@ -139,7 +139,7 @@ class GameController extends ControllerBase
                 unset($data['amount']);
             }
 
-            $result = $this->gameModel->prop($type, $data);
+            $result = $this->gameModel->setProp($type, $data);
 
             if (!empty($result)) {
                 echo json_encode(array('error' => 0, 'data' => '补发成功'));
@@ -151,7 +151,7 @@ class GameController extends ControllerBase
             }
         }
 
-        $result = $this->gameModel->attribute();
+        $result = $this->gameModel->getAttribute();
         $server = $this->serverModel->getLists();
 
         $this->view->server = $server;

@@ -174,8 +174,14 @@
         $('.btn-other').on('click',function(){
             var action = $('#prop').val();
             var server = $('#server').val();
-            var user_id = $('#'+action+'_user_id').val();
-            var amount = $('#'+action+'_amount').val();
+
+            if(action != 'attach' && action != 'mail'){
+                var user_id = $('#coin_user_id').val();
+                var amount = $('#coin_amount').val();
+            }else{
+                var user_id = $('#'+action+'_user_id').val();
+                var amount = $('#'+action+'_amount').val();
+            }
             var title = $('#'+action+'_title').val();
             var msg = $('#'+action+'_msg').val();
 

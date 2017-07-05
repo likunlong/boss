@@ -30,17 +30,19 @@ class Game extends Model
         return $result;
     }
 
-    public function prop($type, $data)
+    /*
+     * 补发操作
+     */
+    public function setProp($type, $data)
     {
-        if (empty($_COOKIE['attach'])) {
-            $result = $this->utilsModel->yarRequest('prop', $type, $data);
-            $_COOKIE['attach'] = json_encode($result);
-            setcookie('attach', json_encode($result), time() + 7200, '/');
-        }
-        return json_decode($_COOKIE['attach'], true);
+        $result = $this->utilsModel->yarRequest('prop', $type, $data);
+        return $result;
     }
 
-    public function attribute()
+    /*
+     * 获取补发项
+     */
+    public function getAttribute()
     {
         if (empty($_COOKIE['attach'])) {
             $result = $this->utilsModel->yarRequest('prop', 'attribute', array());
