@@ -16,12 +16,14 @@ class CardController extends ControllerBase
 {
     private $cardModel;
     private $pageModel;
+    private $utilsModel;
 
     public function initialize()
     {
         parent::initialize();
         $this->cardModel = new Card();
         $this->pageModel = new Page();
+        $this->utilsModel = new Utils();
     }
 
     /**
