@@ -34,8 +34,8 @@ class UtilsController extends Controller
     {
         $allow_game = DI::getDefault()->get('session')->get('resources')['allow_game'];
 
-        if(empty($allow_game)){
-            Utils::tips('error', '没有权限', '',999999);
+        if (empty($allow_game)) {
+            Utils::tips('error', '没有权限', '', 999999);
         }
 
         if ($_POST) {
@@ -92,13 +92,16 @@ class UtilsController extends Controller
             DI::getDefault()->get('session')->set('lang', $game->version);
             DI::getDefault()->get('session')->set('game_name', $game->name);
 
-            if (!empty($_COOKIE['attach'])) {
-                unset($_COOKIE['attach']);
-            }
-            if (!empty($_COOKIE['serverLists'])) {
-                unset($_COOKIE['serverLists']);
+            if (isset($_COOKIE['attach'])) {
+                $_COOKIE['attach'] = '';
+                setcookie('attach', '', time() + 7200, '/');
             }
 
+            if (isset($_COOKIE['serverLists'])) {
+                $_COOKIE['serverLists'] = '';
+                setcookie('serverLists', '', time() + 7200, '/');
+            }
+            
             echo json_encode(array('error' => 0, 'data' => array()));
             exit;
         }
