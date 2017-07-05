@@ -24,7 +24,9 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading font-bold">
                                             <span class="pull-right"><a href="/card/manage?do=edit&id={{item['id']}}" data-pjax=""><i class="fa icon-note"></i> 修改 </a></li> </span>
-                                            操作
+                                            {%if item['type']=='cash'%}钻石卡{%endif%}
+                                            {%if item['type']=='discount'%}折扣卡{%endif%}
+                                            {%if item['type']=='prop'%}道具卡{%endif%}
                                         </div>
                                         <div class="panel-body">
                                             <div class="m-b-md">
@@ -37,7 +39,9 @@
                                                     {{item['expired_in']}}
                                                 </div>
                                                 <div class="col-xs-12">
-                                                    {{item['type']}}
+                                                    {%if item['expire']=='1'%}
+                                                    <p class="label bg-warning" title="">过期</p>
+                                                    {%endif%}
                                                 </div>
                                             </div>
                                         </div>

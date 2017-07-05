@@ -54,6 +54,11 @@ class CardController extends ControllerBase
         if (isset($result['count']) && $result['count'] > 0) {
             $this->view->page = $this->pageModel->getPage($result['count'], $pagesize, $currentPage);
         }
+
+        foreach($result['data'] as $key=>$item){
+            $result['data'][$key]['expire'] = strtotime($item['expired_in']) < time() ? 1 : 0;
+        }
+
         $this->view->lists = $result['data'];
         $this->view->query = $data;
     }
@@ -128,6 +133,9 @@ class CardController extends ControllerBase
                 Utils::tips('error', '数量必须大于0', '/card/manage?do=create');
             }
 
+            $data['expired_in'] = $this->utilsModel->toTimeZone($data['expired_in'], 'UTC',
+                $this->utilsModel->getTimeZone());
+
             $result = $this->cardModel->createCard($data);
             if ($result) {
                 Utils::tips('success', '添加成功', '/card/index');
@@ -152,6 +160,9 @@ class CardController extends ControllerBase
             $data['intro'] = $this->request->get('formcontent');
 
             $result = $this->cardModel->editCard($data);
+
+            $data['expired_in'] = $this->utilsModel->toTimeZone($data['expired_in'], 'UTC',
+                $this->utilsModel->getTimeZone());
 
             if ($result) {
                 Utils::tips('success', '修改成功', '/card/index');
