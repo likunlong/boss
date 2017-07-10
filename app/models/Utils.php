@@ -163,8 +163,9 @@ class Utils extends Model
             $query->setFetchMode(Db::FETCH_ASSOC);
             $timezone = $query->fetch();
 
+            $userTimeZone = empty($timezone) ? 'UTC' : $timezone['timezone'];
 
-            DI::getDefault()->get('session')->set('timezone', $timezone['timezone']);
+            DI::getDefault()->get('session')->set('timezone', $userTimeZone);
         }
         return DI::getDefault()->get('session')->get('timezone');
     }
