@@ -140,11 +140,11 @@ class ActivityController extends ControllerBase
             $data['img_small'] = $this->request->get('img_small', ['string', 'trim']);
             $data['custom'] = $this->request->get('custom', ['string', 'trim']);
             $data['content'] = $this->request->get('formcontent');
-            $data['visible'] = $this->request->get('visible', 'int');
-            $data['status'] = $this->request->get('status', 'int');
+            $data['visible'] = empty($this->request->get('visible', 'int')) ? 0 : $this->request->get('visible', 'int');
+            $data['status'] =  empty($this->request->get('status', 'int')) ? 0 : $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
 
-            if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible']) {
+            if (!$data['title']  || !$data['start_time'] || !$data['end_time'] ) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
 
@@ -194,11 +194,11 @@ class ActivityController extends ControllerBase
             $data['img_small'] = $this->request->get('img_small', ['string', 'trim']);
             $data['custom'] = $this->request->get('custom', ['string', 'trim']);
             $data['content'] = $this->request->get('formcontent');
-            $data['visible'] = $this->request->get('visible', 'int');
-            $data['status'] = $this->request->get('status', 'int');
+            $data['visible'] = empty($this->request->get('visible', 'int')) ? 0 : $this->request->get('visible', 'int');
+            $data['status'] = empty($this->request->get('status', 'int')) ? 0 : $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
 
-            if (!$data['title'] || !$data['type'] || !$data['start_time'] || !$data['end_time'] || !$data['visible']) {
+            if (!$data['title'] || !$data['start_time'] || !$data['end_time'] ) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
             $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC',
