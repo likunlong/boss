@@ -141,10 +141,10 @@ class ActivityController extends ControllerBase
             $data['custom'] = $this->request->get('custom', ['string', 'trim']);
             $data['content'] = $this->request->get('formcontent');
             $data['visible'] = empty($this->request->get('visible', 'int')) ? 0 : $this->request->get('visible', 'int');
-            $data['status'] =  empty($this->request->get('status', 'int')) ? 0 : $this->request->get('status', 'int');
+            $data['status'] = empty($this->request->get('status', 'int')) ? 0 : $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
 
-            if (!$data['title']  || !$data['start_time'] || !$data['end_time'] ) {
+            if (!$data['title'] || !$data['start_time'] || !$data['end_time']) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
 
@@ -198,7 +198,7 @@ class ActivityController extends ControllerBase
             $data['status'] = empty($this->request->get('status', 'int')) ? 0 : $this->request->get('status', 'int');
             $data['sort'] = $this->request->get('sort', 'int');
 
-            if (!$data['title'] || !$data['start_time'] || !$data['end_time'] ) {
+            if (!$data['title'] || !$data['start_time'] || !$data['end_time']) {
                 Utils::tips('error', '数据不完整', '/activity/index');
             }
             $data['start_time'] = $this->utilsModel->toTimeZone($data['start_time'], 'UTC',

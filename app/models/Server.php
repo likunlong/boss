@@ -19,6 +19,7 @@ class Server extends Model
     {
         $result = $this->utilsModel->yarRequest('Zone', 'create', $data);
         if ($result['code'] == 0) {
+            $this->getServerLists();
             return true;
         }
         else {
@@ -29,19 +30,13 @@ class Server extends Model
     public function getLists()
     {
         if (empty($_COOKIE['serverLists'])) {
-            $result = $this->utilsModel->yarRequest('Zone', 'lists', array());
-            if (!$result['data']) {
-                return array();
-            }
-            else {
-                $_COOKIE['serverLists'] = json_encode($result['data']);
-                setcookie('serverLists', json_encode($result['data']), time() + 7200, '/');
-            }
+            $this->getServerLists();
         }
         return json_decode($_COOKIE['serverLists'], true);
     }
 
-    public function findServer($data){
+    public function findServer($data)
+    {
         return $this->utilsModel->yarRequest('Zone', 'item', $data);
     }
 
@@ -49,6 +44,7 @@ class Server extends Model
     {
         $result = $this->utilsModel->yarRequest('Zone', 'modify', $data);
         if ($result['code'] == 0) {
+            $this->getServerLists();
             return true;
         }
         else {
@@ -64,6 +60,18 @@ class Server extends Model
         }
         else {
             return false;
+        }
+    }
+
+    public function getServerLists()
+    {
+        $result = $this->utilsModel->yarRequest('Zone', 'lists', array());
+        if (!$result['data']) {
+            return array();
+        }
+        else {
+            $_COOKIE['serverLists'] = json_encode($result['data']);
+            setcookie('serverLists', json_encode($result['data']), time() + 7200, '/');
         }
     }
 }

@@ -79,8 +79,8 @@ class PublicController extends Controller
     {
         $this->persistent->destroy();
         $this->session->destroy();
-        $callback = 'http://' . $_SERVER['HTTP_HOST'];
-        $logoutUrl = $this->config->sso->base_url . '/logout?redirect=' . urlencode($callback);
+        $callback = 'http://' . $_SERVER['HTTP_HOST'].'/login';
+        $logoutUrl = $this->config->sso->base_url . '?redirect=' . urlencode($callback);
         header('Location:' . $logoutUrl);
         exit;
     }
