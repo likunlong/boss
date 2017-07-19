@@ -25,7 +25,7 @@
                                     <p class="label bg-warning" title="">限制</p>
                                     {% endif %}
                                     <p>{{item['content']}}</p>
-                                    <i class="fa fa-clock-o text-muted"></i><span>{{item['start_time']}} - {{item['end_time']}}</span>
+                                    <i class="fa fa-clock-o text-muted"></i><span class="<?php if( $item['end_time'] < time()){ ?>text-danger-dk<?php }?>">{{item['start_time']}} - {{item['end_time']}}</span>
                                 </div>
                             </div>
                             {% endfor %}
