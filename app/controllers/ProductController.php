@@ -67,7 +67,7 @@ class ProductController extends ControllerBase
 
             $data['product_id'] = $this->productModel->product_id;
             $data['gateway'] = $this->productModel->gateway;
-            $data['type'] = 'normal';
+            $data['custom'] = $this->request->get('custom', ['string', 'trim']);
             $data['price'] = $this->productModel->price;
             $data['currency'] = $this->productModel->currency;
             $data['coin'] = $this->productModel->coin;
@@ -156,11 +156,11 @@ class ProductController extends ControllerBase
             $data['remark'] = $product->remark;
             $data['image'] = $product->image;
             $data['package'] = $product->package;
+            $data['custom'] = $this->request->get('custom', ['string', 'trim']);
 
             $product->save();
 
             if (empty($rpcProduct)) {
-                $data['type'] = 'normal';
                 $this->productModel->createProduct($data);
             }
             else {
@@ -202,6 +202,7 @@ class ProductController extends ControllerBase
 
         $this->view->parent = $this->settingModel->getParent();
         $this->view->pro = $product->toArray();
+        $this->view->custom = $rpcProduct['data']['custom'];
 
         if (count($rpcProduct['data']['more']) == 1) {
             $this->view->more = $rpcProduct['data']['more'];
