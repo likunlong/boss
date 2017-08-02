@@ -53,9 +53,8 @@
                                     <select name="tag" class="form-control" required>
                                         <option value="0" {% if server['tag'] == '' %}selected{% endif %}>请选择</option>
                                         <option value="usual" {% if server['tag'] == 'usual' %}selected{% endif %}>usual</option>
-                                        <option value="recommend" {% if server['tag'] == 'ecommend' %}selected{% endif %}>recommend</option>
+                                        <option value="recommend" {% if server['tag'] == 'recommend' %}selected{% endif %}>recommend</option>
                                         <option value="new" {% if server['tag'] == 'new' %}selected{% endif %}>new</option>
-                                        <option value="hot" {% if server['tag'] == 'hot' %}selected{% endif %}>hot</option>
                                     </select>
                                 </div>
                             </div>

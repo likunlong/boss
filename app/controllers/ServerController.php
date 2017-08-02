@@ -40,6 +40,7 @@ class ServerController extends ControllerBase
             $data['port'] = $this->request->get('port', 'int');
             $data['status'] = $this->request->get('status', ['string','trim']);
             $data['tag'] = $this->request->get('tag', ['string','trim']);
+            $data['custom'] = '';
 
             if (!$data['id'] || !$data['name'] || !$data['host'] || !$data['status'] || !$data['tag']) {
                 Utils::tips('error', '数据不完整', '/server/index');
@@ -76,6 +77,7 @@ class ServerController extends ControllerBase
             $data['port'] = $this->request->get('port', 'int');
             $data['status'] = $this->request->get('status', ['string','trim']);
             $data['tag'] = $this->request->get('tag', ['string','trim']);
+            $data['custom'] = '';
 
             if (!$data['id'] || !$data['name'] || !$data['host'] || !$data['status'] || !$data['tag']) {
                 Utils::tips('error', '数据不完整', '/server/index');
