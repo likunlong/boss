@@ -30,6 +30,8 @@ class ProductController extends ControllerBase
     public function indexAction()
     {
         $gateways = $this->settingModel->getGatewaysList();
+        $gateways[] = array('id'=>9999,'gateway'=>'other','name'=>'Other');
+
         $data = [];
         foreach ($gateways as $item) {
             $item['product'] = $this->productModel->getProductList($item['gateway']);
