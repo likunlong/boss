@@ -43,7 +43,7 @@
                                 <label class="col-sm-2 control-label">网关</label>
                                 <div class="col-sm-4">
                                     <select name="gateway" class="form-control">
-                                        <option value="other" {% if pro['gateway'] == 'other' %}selected{% endif %}>其他 - [Other]</option>
+                                        <option value="others" {% if pro['gateway'] == 'others' %}selected{% endif %}>其他 - [Others]</option>
                                         {% for item in parent %}
                                         <option value="{{item['gateway']}}" {% if pro['gateway'] == item['gateway'] %}selected{% endif %}>{{item['name']}} - [{{item['gateway']}}]</option>
                                         {% endfor %}
