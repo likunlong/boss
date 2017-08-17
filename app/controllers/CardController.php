@@ -125,6 +125,7 @@ class CardController extends ControllerBase
             $data['expired_in'] = $this->request->get('expired_in', ['string', 'trim']);
             $data['data'] = $this->request->get('data', ['string', 'trim']);
             $data['count'] = $this->request->get('count', ['string', 'trim']);
+            $data['limit_times'] = $this->request->get('limit_times', ['string', 'trim']);
             $data['intro'] = $this->request->get('formcontent');
 
             if (!$data['title'] || !$data['type'] || !$data['expired_in'] || !$data['data'] || !$data['count']) {
@@ -158,6 +159,7 @@ class CardController extends ControllerBase
             $data['title'] = $this->request->get('title', ['string', 'trim']);
             $data['type'] = $this->request->get('type', ['string', 'trim']);
             $data['expired_in'] = $this->request->get('expired_in', ['string', 'trim']);
+            $data['limit_times'] = $this->request->get('limit_times', ['string', 'trim']);
             $data['data'] = $this->request->get('data', ['string', 'trim']);
             $data['intro'] = $this->request->get('formcontent');
 
