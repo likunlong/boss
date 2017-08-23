@@ -26,15 +26,6 @@ db_trade:
     dbname      : test
     charset     : utf8mb4
 
-db_log:
-    adapter     : Mysql
-    host        : localhost
-    port        : 3306
-    username    : root
-    password    : 123456
-    dbname      : test
-    charset     : utf8mb4
-
 redis:
     host        : 127.0.0.1
     port        : 6379
@@ -53,5 +44,5 @@ sso:
 
 api:
   # soap yar http
-  rpc_protocol: yar
-  rpc_host: http://*.rpc.localhost.com
+  rpc_protocol  : yar
+  rpc_host      : http://*.rpc.localhost.com
