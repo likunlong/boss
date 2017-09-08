@@ -38,30 +38,39 @@ class UtilsController extends Controller
             Utils::tips('error', '没有权限', '', 999999);
         }
 
-        if ($_POST) {
-            $gameid = $this->request->get('gameid', 'int');
-
-            if (!$gameid) {
-                echo json_encode(array('error' => 1, 'data' => '参数错误'));
-                exit;
-            }
-            $version = $this->gameModel->getVersionList($gameid);
-
-            foreach ($version as $key => $item) {
-                if (!in_array($item['game_id'], $allow_game)) {
-                    unset($version[$key]);
-                }
-            }
-            echo json_encode(array('error' => 0, 'data' => $version));
-            exit;
-        }
 
         foreach ($allow_game as $item) {
             $class_id = substr($item, 0, 3);
-            $gameList[$class_id] = $this->gameModel->getGame($class_id);
+            $classid[] = $class_id;
         }
 
-        $this->view->lists = empty($gameList) ? array() : $gameList;
+        $classid = (array_unique($classid));
+
+        foreach ($classid as $value) {
+            $gameList[] = $this->gameModel->getGame($value);
+        }
+        foreach ($gameList as $game) {
+            $gameid[] = $game['id'];
+            $apps[$game['class_id']]['info'] = $game;
+        }
+        foreach ($gameid as $game_id) {
+            $version[] = $this->gameModel->getVersionList($game_id);
+        }
+
+        foreach ($version as $ver) {
+            foreach ($ver as $v) {
+                $apps[$v['class_id']]['data']["$v[game_id]"] = $v;
+            }
+        }
+
+        foreach ($apps as $app) {
+            $count = count($app);
+            if ($count == 1) {
+                $apps[$app['info']['class_id']]['data'] = array();
+            }
+
+        }
+        $this->view->apps = empty($apps) ? array() : $apps;
     }
 
     /**
@@ -69,7 +78,7 @@ class UtilsController extends Controller
      */
     public function setGameVersionAction()
     {
-        if ($_POST) {
+        if ($_GET) {
             $id = $this->request->get('id', 'int');
 
             if (!$id) {
@@ -101,9 +110,7 @@ class UtilsController extends Controller
                 $_COOKIE['serverLists'] = '';
                 setcookie('serverLists', '', time() + 7200, '/');
             }
-            
-            echo json_encode(array('error' => 0, 'data' => array()));
-            exit;
+
         }
     }
 

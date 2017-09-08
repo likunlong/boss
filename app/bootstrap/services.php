@@ -127,6 +127,18 @@ $di->set('dbData', function () use ($di) {
     $connection->setEventsManager($di['eventsManager']);
     return $connection;
 }, true);
+$di->set('dbTop', function () use ($di) {
+    $connection = new DbAdapter(array(
+        'host'     => $di['config']->db_top->host,
+        'port'     => $di['config']->db_top->port,
+        'username' => $di['config']->db_top->username,
+        'password' => $di['config']->db_top->password,
+        'dbname'   => $di['config']->db_top->dbname,
+        'charset'  => $di['config']->db_top->charset
+    ));
+    $connection->setEventsManager($di['eventsManager']);
+    return $connection;
+}, true);
 
 
 $di->set('dbTrade', function () use ($di) {

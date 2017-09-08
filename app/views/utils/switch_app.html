@@ -1,97 +1,150 @@
-<div class="wrapper-md">
-    <div class="col-md-12">
-        <div class="row row-sm text-center">
-            {% for item in lists %}
-            <div class="col-xs-4">
-                <a href="javascript:void(0);" id="{{item['id']}}" class="block panel padder-v bg-white item btn_add">
-                    <span class="thumb avatar pull-left m-t-n-sm m-b-n-sm m-l-sm">
-                        <img src="{{item['icon']}}">
-                    </span>
-                    <span class="text-black font-thin h2 block">{{item['name']}}</span>
-                </a>
+<style type="text/css">
+    .app-name {
+        display: block;
+        width: 150px;
+    }
+
+    .list-group-item {
+        display: block;
+        width: 200px;
+    }
+
+    .vbox-miniheight {
+        min-height: 560px;
+    }
+
+    .b-c-change > a:hover {
+        background-color: #edf1f2;
+        border-left-color: #23b7e5;
+    }
+
+    .server-change > li:hover {
+        background-color: #edf1f2;
+    }
+
+    .ng-scope {
+        background: #fff;
+    }
+
+    .vbox {
+        background: #fff;
+    }
+
+    .bg-light.lt, .bg-light .lt {
+        background-color: #fff;
+    }
+</style>
+
+<ul class="nav navbar-nav navbar-right">
+    <li id="game_change" class="dropdown pos-stc">
+        <div class="hbox hbox-auto-xs bg-light game  ng-scope">
+            <!-- <div class="col w-lg lt b-r"> -->
+            <!-- <div class="vbox vbox-miniheight"> -->
+            <div class="wrapper">
+                <div class="h4">游戏分类</div>
             </div>
-            {% endfor %}
+            <div class="wrapper b-t m-t-xxs">
+                <div class="input-group">
+                    <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                    <input type="text" class="form-control input-sm" placeholder="游戏搜索" aria-invalid="false"
+                           style="width:200px;">
+                </div>
+            </div>
+            <div class="row-row">
+                <div class="cell scrollable hover">
+                    <div class="cell-inner">
+                        <div class="padder">
+                            {% for index,app in apps %}
+                            <div class="b-c-change list-group">
+                                <a class="list-group-item b-l-3x hover-anchor" href="#{{index}}" data-toggle="tab">
+                                    <span class="app-name">{{app["info"]["name"]}}</span>
+                                    <small class="text-muted ng-binding">版本数量: <span class="app-version">{{app["data"]|length}}</span>
+                                    </small>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col game-name">
+                <div class="vbox">
+                    <div class="wrapper bg-light lt b-b">
+                        <span class="text-muted">游戏名称: <span id="dynamic_write_name"></span></span>
+                        <span class="text-muted pull-right">版本数量: <span id="dynamic_write_version"></span></span>
+                    </div>
+                    <div class="row-row">
+                        <div class="cell" style="background-color: #fff;">
+                            <div class="cell-inner">
+                                <div class="tab-content">
+                                    {% for index,app in apps %}
+                                    <div class="tab-pane fade" id="{{index}}">
+                                        <div class="panel">
+                                            <div class="panel-body" style="padding: 0;">
+                                                <ul class="list-group list-group-lg m-b-none server-change">
+                                                    {% for key,detail in app["data"] %}
+                                                    <li class="list-group-item">
+                                                        <a href="/utils/setgameversion?id={{detail['id']}}"
+                                                           class="show-btn">{{detail["name"]}}</a>
+                                                        <label style="padding-left: 10px;"></label><!--预留-->
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">版本</h4>
-            </div>
-            <div class="modal-body row">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+        <!-- </div> -->
+        <!-- </div> -->
+    </li>
+</ul>
 <script>
+    $(document).ready(function () {
+        // 游戏分类选中样式
+        $('.b-c-change a').click(function () {
+            $('.b-c-change').find('a').css({"border-left-color": "#e7ecee"});
+            $(this).css({"border-left-color": "#23b7e5"});
 
-    $(document).ready(function() {
-        $(".btn_add").click(function () {
-            var gameid = $(this).attr('id');
-            $.ajax({
-                url:'/utils/switch_app',
-                type:'POST', //GET
-                async:true,    //或false,是否异步
-                data:{
-                    gameid:gameid,
-                },
-                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-                success:function(respon){
-                    if(respon['error'] == 0){
-                        var html = '';
-                        var data = respon['data'];
-                        for(var i in data){
-                            html += '<div class="col-xs-4"><button class="btn m-b-xs btn-success btn-rounded" id="'+ data[i]['id'] +'">' + data[i]['name'] + '</button></div>'
-                        }
-                        $('.modal-body').html(html);
-                        $('#myModal').modal();
-                    }else{
-                        $('.modal-body').html('<div class="col-xs-12"><span class="text-danger">'+respon['data']+'</span></div>');
-                        $('#myModal').modal();
-                    }
-                }
-            });
+            $('#dynamic_write_name').text($(this).find('.app-name').text());
+            $('#dynamic_write_version').text($(this).find('.app-version').text());
         });
 
-        $(".modal-body").on("click",'.btn-success',function(){
-            var versionid = $(this).attr('id');
-            $.ajax({
-                url:'/utils/setgameversion',
-                type:'post', //GET
-                async:true,    //或false,是否异步
-                data:{
-                    id:versionid,
-                },
-                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-                success:function(respon){
-                    if(respon['error'] == 0){
-                        $('.modal-body').attr('class', 'modal-body font-thin h1');
-                        $('.modal-body').html('<span>切换版本成功</span>');
-                        $('.btn-default').attr('id','jump');
-                        $('.close').attr('id','close');
-                        $('#myModal').modal();
-                        window.location = '/';
+        var game_change = $('#game_change');
 
-                    }else{
-                        $('.modal-body').attr('class', 'modal-body font-thin h1');
-                        $('.modal-body').html('<span>'+respon['data']+'</span>');
-                        $('#myModal').modal();
-                    }
-                }
-            });
+        // 自定义控制 dropdown 效果的开闭状态
+        game_change.on('hide.bs.dropdown', function () {
+            // do something…
+            return false;
         });
 
-        $("#myModal").on("click","#jump, #close",function(){
-            window.location = "/";
+        // 按钮切换状态1(状态1: 真实按钮, 状态2: 伪造按钮)
+        $('#g_c_show').on('click', function () {
+            $(this).hide();
+            $('#g_c_hide').show();
+        });
+
+        // 按钮切换状态2
+        $('#g_c_hide').click(function () {
+            game_change.closest(".dropdown").toggleClass("open");
+        });
+
+        // 区服选择样式调整
+        $('.server-change').on('click', 'li', function (e) {
+            // var _ele = e.target;
+            // if(_ele.nodeName=='LI'){} 预防节点递归导致的报错 Maximum call stack size exceeded
+            // game_change.closest(".dropdown").toggleClass("open");
+
+            var txt = '切换至【' + $(this).find('a').text() + '】, 请稍后...';
+            loading(txt);
         });
     });
 </script>

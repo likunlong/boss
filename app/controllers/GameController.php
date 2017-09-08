@@ -41,7 +41,6 @@ class GameController extends ControllerBase
         $show = $server = 0;
         $users = [];
         if ($data['zone']) {
-
             $data['user_id'] = $this->request->get('user_id', ['string', 'trim']);
             $data['name'] = $this->request->get('name', ['string', 'trim']);
             $data['account_id'] = $this->request->get('account_id', ['string', 'trim']);
