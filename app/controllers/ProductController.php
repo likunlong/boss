@@ -46,22 +46,22 @@ class ProductController extends ControllerBase
     public function createAction()
     {
         if ($_POST) {
-            $this->productModel->app_id = $this->session->get('app');
-            $this->productModel->gateway = $this->request->get('gateway', ['string', 'trim']);
-            $this->productModel->name = $this->request->get('name', ['string', 'trim']);
-            $this->productModel->product_id = $this->request->get('product_id', ['string', 'trim']);
-            $this->productModel->package = $this->request->get('package', ['string', 'trim']);
-            $this->productModel->price = $this->request->get('price', ['string', 'trim']);
-            $this->productModel->currency = $this->request->get('currency', ['string', 'trim']);
-            $this->productModel->coin = $this->request->get('coin', 'int');
-            $this->productModel->image = $this->request->get('image', ['string', 'trim']);
-            $this->productModel->remark = $this->request->get('remark', ['string', 'trim']);
-            $this->productModel->status = $this->request->get('status', 'int');
-            $this->productModel->sort = $this->request->get('sort', ['string', 'trim']);
-            $this->productModel->create_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
-                $this->utilsModel->getTimeZone());
-            $this->productModel->update_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
-                $this->utilsModel->getTimeZone());
+//            $this->productModel->app_id = $this->session->get('app');
+//            $this->productModel->gateway = $this->request->get('gateway', ['string', 'trim']);
+//            $this->productModel->name = $this->request->get('name', ['string', 'trim']);
+//            $this->productModel->product_id = $this->request->get('product_id', ['string', 'trim']);
+//            $this->productModel->package = $this->request->get('package', ['string', 'trim']);
+//            $this->productModel->price = $this->request->get('price', ['string', 'trim']);
+//            $this->productModel->currency = $this->request->get('currency', ['string', 'trim']);
+//            $this->productModel->coin = $this->request->get('coin', 'int');
+//            $this->productModel->image = $this->request->get('image', ['string', 'trim']);
+//            $this->productModel->remark = $this->request->get('remark', ['string', 'trim']);
+//            $this->productModel->status = $this->request->get('status', 'int');
+//            $this->productModel->sort = $this->request->get('sort', ['string', 'trim']);
+//            $this->productModel->create_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
+//                $this->utilsModel->getTimeZone());
+//            $this->productModel->update_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
+//                $this->utilsModel->getTimeZone());
 
             if (!$this->productModel->name || !$this->productModel->app_id || !$this->productModel->price) {
                 Utils::tips('error', '数据不完整', '/product/index');
@@ -80,7 +80,11 @@ class ProductController extends ControllerBase
             $data['image'] = $this->productModel->image;
             $data['package'] = $this->productModel->package;
 
-            $this->productModel->save();
+            if (!$data['name'] || !$data['price']) {
+                Utils::tips('error', '数据不完整', '/product/index');
+            }
+
+//            $this->productModel->save();
             $this->productModel->createProduct($data);
 
             for ($i = 1; $i <= 2; $i++) {
@@ -120,47 +124,52 @@ class ProductController extends ControllerBase
             Utils::tips('error', '数据不完整', '/product/index');
         }
 
-        $product = $this->productModel->findFirst($id);
-        if (!$product) {
+//        $product = $this->productModel->findProduct($id);
+
+
+        $rpcProduct = $this->productModel->item(array('product_id' => $id));
+        if (!$rpcProduct) {
             Utils::tips('error', '没有此数据', '/product/index');
         }
 
-        $rpcProduct = $this->productModel->item(array('product_id' => $product->product_id));
-
         if ($_POST) {
-            $product->app_id = $this->session->get('app');
-            $product->gateway = $this->request->get('gateway', ['string', 'trim']);
-            $product->name = $this->request->get('name', ['string', 'trim']);
-            $product->product_id = $this->request->get('product_id', ['string', 'trim']);
-            $product->package = $this->request->get('package', ['string', 'trim']);
-            $product->price = $this->request->get('price', ['string', 'trim']);
-            $product->currency = $this->request->get('currency', ['string', 'trim']);
-            $product->coin = $this->request->get('coin', 'int');
-            $product->image = $this->request->get('image', ['string', 'trim']);
-            $product->remark = $this->request->get('remark', ['string', 'trim']);
-            $product->status = $this->request->get('status', 'int');
-            $product->sort = $this->request->get('sort', 'int');
-            $product->update_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
-                $this->utilsModel->getTimeZone());
+//            $product->app_id = $this->session->get('app');
+//            $product->gateway = $this->request->get('gateway', ['string', 'trim']);
+//            $product->name = $this->request->get('name', ['string', 'trim']);
+//            $product->product_id = $this->request->get('product_id', ['string', 'trim']);
+//            $product->package = $this->request->get('package', ['string', 'trim']);
+//            $product->price = $this->request->get('price', ['string', 'trim']);
+//            $product->currency = $this->request->get('currency', ['string', 'trim']);
+//            $product->coin = $this->request->get('coin', 'int');
+//            $product->image = $this->request->get('image', ['string', 'trim']);
+//            $product->remark = $this->request->get('remark', ['string', 'trim']);
+//            $product->status = $this->request->get('status', 'int');
+//            $product->sort = $this->request->get('sort', 'int');
+//            $product->update_time = $this->utilsModel->toTimeZone(date('Y-m-d H:i:s'), 'UTC',
+//                $this->utilsModel->getTimeZone());
+//
+//            if (!$product->name || !$product->app_id || !$product->price) {
+//                Utils::tips('error', '数据不完整', '/product/edit?id=' . $product['id']);
+//            }
 
-            if (!$product->name || !$product->app_id || !$product->price) {
-                Utils::tips('error', '数据不完整', '/product/edit?id=' . $product['id']);
-            }
-
-            $data['product_id'] = $product->product_id;
-            $data['gateway'] = $product->gateway;
-            $data['price'] = $product->price;
-            $data['currency'] = $product->currency;
-            $data['coin'] = $product->coin;
-            $data['status'] = $product->status;
-            $data['sort'] = $product->sort;
-            $data['name'] = $product->name;
-            $data['remark'] = $product->remark;
-            $data['image'] = $product->image;
-            $data['package'] = $product->package;
+            $data['product_id'] = $this->request->get('product_id', ['string', 'trim']);
+            $data['gateway'] = $this->request->get('gateway', ['string', 'trim']);
+            $data['price'] = $this->request->get('price', ['string', 'trim']);
+            $data['currency'] = $this->request->get('currency', ['string', 'trim']);
+            $data['coin'] = $this->request->get('coin', 'int');
+            $data['status'] = $this->request->get('status', 'int');
+            $data['sort'] = $this->request->get('sort', 'int');
+            $data['name'] = $this->request->get('name', ['string', 'trim']);
+            $data['remark'] = $this->request->get('remark', ['string', 'trim']);
+            $data['image'] = $this->request->get('image', ['string', 'trim']);
+            $data['package'] = $this->request->get('package', ['string', 'trim']);
             $data['custom'] = $this->request->get('custom', ['string', 'trim']);
 
-            $product->save();
+            if (!$data['name'] || !$data['price']) {
+                Utils::tips('error', '数据不完整', '/product/edit?id=' . $rpcProduct['product_id']);
+            }
+
+//            $product->save();
 
             if (empty($rpcProduct)) {
                 $this->productModel->createProduct($data);
@@ -188,7 +197,7 @@ class ProductController extends ControllerBase
                 }
                 else {
                     if ($option['id'] == '' && $option['type'] && $option['start_time'] && $option['end_time']) {
-                        $option['product_id'] = $product->product_id;
+                        $option['product_id'] = $rpcProduct['product_id'];
                         unset($option['id']);
                         $this->productModel->createOption($option);
                     }
@@ -203,7 +212,7 @@ class ProductController extends ControllerBase
         }
 
         $this->view->parent = $this->settingModel->getParent();
-        $this->view->pro = $product->toArray();
+        $this->view->pro = $rpcProduct['data'];
         $this->view->custom = $rpcProduct['data']['custom'];
 
         if (count($rpcProduct['data']['more']) == 1) {
@@ -234,12 +243,12 @@ class ProductController extends ControllerBase
             Utils::tips('error', '数据不完整', '/product/index');
         }
 
-        $product = $this->productModel->findFirst($id);
-        if (!$product) {
+//        $product = $this->productModel->findFirst($id);
+
+        $rpcProduct = $this->productModel->item(array('product_id' => $id));
+        if (!$rpcProduct) {
             Utils::tips('error', '没有此数据', '/product/index');
         }
-
-        $rpcProduct = $this->productModel->item(array('product_id' => $product->product_id));
 
         if ($rpcProduct['data']['more']) {
             foreach ($rpcProduct['data']['more'] as $item) {
@@ -247,8 +256,8 @@ class ProductController extends ControllerBase
             }
         }
 
-        $product->delete();
-        $this->productModel->removeProduct(array('product_id' => $product->product_id));
+//        $product->delete();
+        $this->productModel->removeProduct(array('product_id' => $id));
 
         Utils::tips('success', '删除成功', '/product/index');
     }
