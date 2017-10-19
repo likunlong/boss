@@ -56,10 +56,13 @@
                             <table   id="example" class="table table-striped b-t b-b">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>产品名称</th>
                                     <th>产品ID</th>
                                     <th>价格</th>
                                     <th>钻石</th>
+                                    <th>创建时间</th>
+                                    <th>更新时间</th>
                                     <th>状态</th>
                                     <th>操作</th>
                                 </tr>
@@ -67,10 +70,13 @@
                                 <tbody>
                                 {% for value in item['product'] %}
                                 <tr>
+                                    <td>{{value['id']}}</td>
                                     <td>{{value['name']}}</td>
                                     <td>{{value['product_id']}}</td>
                                     <td>{{value['currency']}}&nbsp;{{value['price']}}</td>
                                     <td>{{value['coin']}}</td>
+                                    <td>{{value['create_time']}}</td>
+                                    <td>{{value['update_time']}}</td>
                                     <td>
                                         {%if value['status'] == 1%}
                                         <span class="label bg-success" title="">正常</span>
@@ -79,7 +85,7 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-info" data-pjax="" href="/product/edit?id={{value['product_id']}}">修改</a>
+                                        <a class="btn btn-sm btn-info" data-pjax="" href="/product/edit?id={{value['id']}}">修改</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -113,8 +119,11 @@
                 "columns"       : [
                     { "width": "5%" },
                     { "width": "17%" },
+                    { "width": "17%" },
                     { "width": "10%" },
                     { "width": "10%" },
+                    { "width": "15%" },
+                    { "width": "15%" },
                     { "width": "8%" },
                     { "width": "8%" }
                 ]

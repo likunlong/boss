@@ -19,34 +19,27 @@ class Products extends Model
 
     public function getProductList($gateway)
     {
-//        $sql = "SELECT id,app_id,package,name,product_id,gateway,price,currency,coin,status,remark,create_time,update_time FROM products WHERE 1=1 AND gateway=:gateway";
-//        $bind = array('gateway' => $gateway);
-//        if (!empty(DI::getDefault()->get('session')->get('app'))) {
-//            $sql .= " AND app_id=:app_id";
-//            $bind['app_id'] = DI::getDefault()->get('session')->get('app');
-//        }
-//        $sql .= " ORDER BY product_id DESC, sort DESC";
-//
-//        $query = DI::getDefault()->get('dbTrade')->query($sql, $bind);
-//        $query->setFetchMode(Db::FETCH_ASSOC);
-//        $data = $query->fetchAll();
-//        $newData = [];
-//        foreach ($data as $item) {
-//            $item['create_time'] = $this->utilsModel->toTimeZone($item['create_time'],
-//                $this->utilsModel->getTimeZone());
-//            $item['update_time'] = $this->utilsModel->toTimeZone($item['update_time'],
-//                $this->utilsModel->getTimeZone());
-//            $newData[] = $item;
-//        }
-
-
-        $result = $this->utilsModel->yarRequest('Product', 'lists', array('gateway' => $gateway));
-        if ($result['code'] == 0) {
-            return $result['data'];
+        $sql = "SELECT id,app_id,package,name,product_id,gateway,price,currency,coin,status,remark,create_time,update_time FROM products WHERE 1=1 AND gateway=:gateway";
+        $bind = array('gateway' => $gateway);
+        if (!empty(DI::getDefault()->get('session')->get('app'))) {
+            $sql .= " AND app_id=:app_id";
+            $bind['app_id'] = DI::getDefault()->get('session')->get('app');
         }
-        else {
-            return [];
+        $sql .= " ORDER BY product_id DESC, sort DESC";
+
+        $query = DI::getDefault()->get('dbTrade')->query($sql, $bind);
+        $query->setFetchMode(Db::FETCH_ASSOC);
+        $data = $query->fetchAll();
+        $newData = [];
+        foreach ($data as $item) {
+            $item['create_time'] = $this->utilsModel->toTimeZone($item['create_time'],
+                $this->utilsModel->getTimeZone());
+            $item['update_time'] = $this->utilsModel->toTimeZone($item['update_time'],
+                $this->utilsModel->getTimeZone());
+            $newData[] = $item;
         }
+
+        return $newData;
     }
 
     public function createProduct($data)
@@ -62,6 +55,7 @@ class Products extends Model
 
     public function editProduct($data){
         $result = $this->utilsModel->yarRequest('Product', 'modify', $data);
+
         if ($result['code'] == 0) {
             return true;
         }
@@ -89,8 +83,8 @@ class Products extends Model
 
         if($result['data']['more']){
             foreach($result['data']['more'] as $key=>$item)
-            $result['data']['more'][$key]['start_time'] = $this->utilsModel->toTimeZone($item['start_time'],
-                $this->utilsModel->getTimeZone());
+                $result['data']['more'][$key]['start_time'] = $this->utilsModel->toTimeZone($item['start_time'],
+                    $this->utilsModel->getTimeZone());
             $result['data']['more'][$key]['end_time'] = $this->utilsModel->toTimeZone($item['end_time'],
                 $this->utilsModel->getTimeZone());
         }
@@ -127,5 +121,4 @@ class Products extends Model
             return false;
         }
     }
-
 }
