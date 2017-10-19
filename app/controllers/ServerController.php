@@ -38,6 +38,7 @@ class ServerController extends ControllerBase
             $data['name'] = $this->request->get('name', ['string','trim']);
             $data['host'] = $this->request->get('host', ['string','trim']);
             $data['port'] = $this->request->get('port', 'int');
+            $data['key'] = $this->request->get('key', ['string','trim']);
             $data['status'] = $this->request->get('status', ['string','trim']);
             $data['tag'] = $this->request->get('tag', ['string','trim']);
             $data['custom'] = '';
@@ -75,6 +76,7 @@ class ServerController extends ControllerBase
             $data['name'] = $this->request->get('name', ['string','trim']);
             $data['host'] = $this->request->get('host', ['string','trim']);
             $data['port'] = $this->request->get('port', 'int');
+            $data['key'] = $this->request->get('key', ['string','trim']);
             $data['status'] = $this->request->get('status', ['string','trim']);
             $data['tag'] = $this->request->get('tag', ['string','trim']);
             $data['custom'] = '';
