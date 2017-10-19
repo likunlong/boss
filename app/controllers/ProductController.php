@@ -119,7 +119,7 @@ class ProductController extends ControllerBase
      */
     public function editAction()
     {
-        $id = $this->request->get('id', 'int');
+        $id = $this->request->get('id', ['string', 'trim']);
         if (!$id) {
             Utils::tips('error', '数据不完整', '/product/index');
         }
@@ -238,7 +238,7 @@ class ProductController extends ControllerBase
      */
     public function removeAction()
     {
-        $id = $this->request->get('id', 'int');
+        $id = $this->request->get('id', ['string', 'trim']);
         if (!$id) {
             Utils::tips('error', '数据不完整', '/product/index');
         }
