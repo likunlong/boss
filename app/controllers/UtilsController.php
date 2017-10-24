@@ -38,39 +38,15 @@ class UtilsController extends Controller
             Utils::tips('error', '没有权限', '', 999999);
         }
 
-
         foreach ($allow_game as $item) {
             $class_id = substr($item, 0, 3);
-            $classid[] = $class_id;
+            $info = $this->gameModel->getGame($class_id);
+            $version = $this->gameModel->getVersionList($info['id']);
+            $gameList[$info['class_id']]['info'] = $info;
+            $gameList[$info['class_id']]['data'] = $version;
         }
 
-        $classid = (array_unique($classid));
-
-        foreach ($classid as $value) {
-            $gameList[] = $this->gameModel->getGame($value);
-        }
-        foreach ($gameList as $game) {
-            $gameid[] = $game['id'];
-            $apps[$game['class_id']]['info'] = $game;
-        }
-        foreach ($gameid as $game_id) {
-            $version[] = $this->gameModel->getVersionList($game_id);
-        }
-
-        foreach ($version as $ver) {
-            foreach ($ver as $v) {
-                $apps[$v['class_id']]['data']["$v[game_id]"] = $v;
-            }
-        }
-
-        foreach ($apps as $app) {
-            $count = count($app);
-            if ($count == 1) {
-                $apps[$app['info']['class_id']]['data'] = array();
-            }
-
-        }
-        $this->view->apps = empty($apps) ? array() : $apps;
+        $this->view->apps = empty($gameList) ? array() : $gameList;
     }
 
     /**
