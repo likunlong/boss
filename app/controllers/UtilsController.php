@@ -103,14 +103,14 @@ class UtilsController extends Controller
 
             if (isset($_COOKIE['attach'])) {
                 $_COOKIE['attach'] = '';
-                setcookie('attach', '', time() + 7200, '/');
+                setcookie('attach', '', -86400, '/');
             }
 
             if (isset($_COOKIE['serverLists'])) {
                 $_COOKIE['serverLists'] = '';
-                setcookie('serverLists', '', time() + 7200, '/');
+                setcookie('serverLists', '', -86400, '/');
             }
-
+            
         }
     }
 

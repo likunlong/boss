@@ -56,6 +56,7 @@ class Server extends Model
     {
         $result = $this->utilsModel->yarRequest('Zone', 'remove', $data);
         if ($result['code'] == 0) {
+            $this->getServerLists();
             return true;
         }
         else {
