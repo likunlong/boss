@@ -88,9 +88,9 @@ class ServerController extends ControllerBase
             $result = $this->serverModel->editServer($data);
 
             if($result){
-                header('Location: /server/index');
+                Utils::tips('success', '修改成功', '/server/index');
             }else{
-                header('Location: /server/index');
+                Utils::tips('error', '修改失败', '/server/index');
             }
         }
 

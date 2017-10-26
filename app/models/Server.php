@@ -72,7 +72,7 @@ class Server extends Model
         }
         else {
             $_COOKIE['serverLists'] = json_encode($result['data']);
-            setcookie('serverLists', json_encode($result['data']), time() + 7200, '/');
+            //setcookie('serverLists', json_encode($result['data']), time() + 7200, '/');    //线上不生效，线下没事
         }
     }
 }
