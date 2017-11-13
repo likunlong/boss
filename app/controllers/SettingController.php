@@ -10,18 +10,21 @@ namespace MyApp\Controllers;
 use MyApp\Models\Timezone;
 use Phalcon\Mvc\Dispatcher;
 use MyApp\Models\Setting;
+use MyApp\Models\Game;
 use MyApp\Models\Utils;
 
 class SettingController extends ControllerBase
 {
 
     private $settingModel;
+    private $gameModel;
 
 
     public function initialize()
     {
         parent::initialize();
         $this->settingModel = new Setting();
+        $this->gameModel = new Game();
     }
 
 
@@ -182,6 +185,20 @@ class SettingController extends ControllerBase
 
         $this->view->app = $this->settingModel->findApp();
         $this->view->pick("setting/notify");
+    }
+
+    public function synchroAction()
+    {
+        $secret_key = 'PkJ5qj';
+        $time = time();
+
+        $base_url = $this->config->sso->api_url.'?time='.$time.'&key='.md5($secret_key.$time);
+
+        $gameList = json_decode(file_get_contents($base_url), true);
+
+        $this->gameModel->saveData($gameList);
+
+        Utils::tips('success', '同步成功', '/');
     }
 
     /**
