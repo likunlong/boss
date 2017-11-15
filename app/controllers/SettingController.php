@@ -189,7 +189,7 @@ class SettingController extends ControllerBase
 
     public function synchroAction()
     {
-        $secret_key = 'PkJ5qj';
+        $secret_key = $secret_key = $this->config->setting->secret_key;
         $time = time();
 
         $base_url = $this->config->sso->api_url.'?time='.$time.'&key='.md5($secret_key.$time);
