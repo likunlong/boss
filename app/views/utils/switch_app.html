@@ -86,7 +86,7 @@
                                                 <ul class="list-group list-group-lg m-b-none server-change">
                                                     {% for key,detail in app["data"] %}
                                                     <li class="list-group-item">
-                                                        <a href="/utils/setgameversion?id={{detail['id']}}"
+                                                        <a href="<?php if($detail['id']==1016){ echo 'http://hk.boss.gamehetu.com'; }else{ echo '/utils/setgameversion?id='.$detail['id']; }?>"
                                                            class="show-btn">{{detail["name"]}}</a>
                                                         <label style="padding-left: 10px;"></label><!--预留-->
                                                     </li>
