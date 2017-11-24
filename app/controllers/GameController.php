@@ -61,7 +61,7 @@ class GameController extends ControllerBase
                 exit;
             }
             if ($result['count'] == 1) {
-                $where['user_id'] = $result['data']['user_id'];
+                $where['user_id'] = $result['data']['account_id'];
                 $count = $this->tradeModel->getCount($where);
                 $this->view->trade = $this->tradeModel->getList($where, 1, $count);
 
