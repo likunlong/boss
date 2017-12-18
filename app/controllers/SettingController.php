@@ -196,6 +196,10 @@ class SettingController extends ControllerBase
 
         $gameList = json_decode(file_get_contents($base_url), true);
 
+        if($gameList['code'] == 1){
+            Utils::tips('error', '同步失败', '/');
+        }
+
         $this->gameModel->saveData($gameList);
 
         Utils::tips('success', '同步成功', '/');
